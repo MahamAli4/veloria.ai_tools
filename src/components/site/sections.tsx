@@ -38,15 +38,22 @@ export function SectionHeading({
 
 /* ---------- Featured Tools ---------- */
 export function FeaturedTools() {
+  const { data: tools = [], isLoading } = useTools();
   return (
     <section className="px-4 py-20" id="tools">
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Curated collection" title="Featured AI tools" subtitle="Hand-picked subscriptions at prices that actually make sense." />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.map((t, i) => (
-            <ToolCard key={t.slug} tool={t} index={i} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="mt-16 flex justify-center">
+            <Loader2 className="animate-spin text-brand-deep" />
+          </div>
+        ) : (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {tools.map((t, i) => (
+              <ToolCard key={t.slug} tool={t} index={i} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

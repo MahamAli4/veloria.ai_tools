@@ -2,6 +2,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
 import type { Tool } from "@/data/tools";
 import { ToolLogo } from "./primitives";
+import { OrderDialog } from "./OrderDialog";
 
 export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const mx = useMotionValue(0);

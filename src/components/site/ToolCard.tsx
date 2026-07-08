@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
 import type { Tool } from "@/data/tools";

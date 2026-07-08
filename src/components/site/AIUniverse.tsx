@@ -262,7 +262,7 @@ function World({ onSelect }: { onSelect: (slug: string) => void }) {
   });
 
   return (
-    <group ref={ref}>
+    <group ref={ref} scale={0.82}>
       <AICore />
       {orbitTools.map((tool, i) => (
         <OrbitCard

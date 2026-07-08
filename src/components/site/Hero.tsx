@@ -111,39 +111,8 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Floating cards stage */}
-        <motion.div
-          style={{ rotateX: rx, rotateY: ry, transformPerspective: 1000 }}
-          className="relative hidden h-[520px] lg:block"
-        >
-          {floatCards.map((c, i) => {
-            const tool = tools.find((t) => t.slug === c.slug)!;
-            const px = useTransform(mx, [-0.5, 0.5], [-c.depth, c.depth]);
-            const py = useTransform(my, [-0.5, 0.5], [-c.depth, c.depth]);
-            return (
-              <motion.div
-                key={c.slug}
-                initial={{ opacity: 0, scale: 0.8, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.3 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                style={{ position: "absolute", top: c.top, left: c.left, x: px, y: py }}
-              >
-                <div className="animate-float" style={{ ["--r" as string]: `${c.rot}deg`, animationDelay: `${c.delay}s` }}>
-                  <div className="glass flex w-max items-center gap-3 rounded-2xl p-3 pr-5 shadow-[0_24px_60px_-24px_rgba(109,110,176,0.7)]">
-                    <ToolLogo mark={tool.mark} gradient={tool.gradient} size={c.size} />
-                    <div>
-                      <p className="text-sm font-semibold text-ink">{tool.name}</p>
-                      <p className="text-xs text-ink-soft">
-                        <span className="text-brand-deep font-semibold">${tool.ourPrice}</span>{" "}
-                        <span className="line-through opacity-60">${tool.originalPrice}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+        {/* Real 3D orbit scene */}
+        <Orbit3D className="hidden lg:flex" />
       </div>
     </section>
   );

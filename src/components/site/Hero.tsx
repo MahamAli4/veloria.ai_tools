@@ -4,15 +4,6 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Magnetic } from "./primitives";
 import { Orbit3D } from "./Orbit3D";
 
-const floatCards = [
-  { slug: "chatgpt-plus", top: "6%", left: "4%", delay: 0, rot: -8, depth: 34, size: 62 },
-  { slug: "lovable", top: "2%", left: "62%", delay: 0.6, rot: 7, depth: 26, size: 58 },
-  { slug: "claude-pro", top: "34%", left: "84%", delay: 1.1, rot: 10, depth: 44, size: 60 },
-  { slug: "cursor-ai", top: "66%", left: "72%", delay: 0.3, rot: -6, depth: 30, size: 56 },
-  { slug: "perplexity-pro", top: "72%", left: "8%", delay: 0.9, rot: 8, depth: 40, size: 58 },
-  { slug: "google-ai-pro", top: "40%", left: "-2%", delay: 1.4, rot: -10, depth: 22, size: 60 },
-  { slug: "linkedin-premium", top: "16%", left: "34%", delay: 1.7, rot: 4, depth: 50, size: 52 },
-];
 
 export function Hero() {
   const mx = useMotionValue(0);

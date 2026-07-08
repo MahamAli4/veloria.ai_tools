@@ -176,6 +176,7 @@ function OrbitCard({
   const group = useRef<THREE.Group>(null);
   const scaleRef = useRef(1);
   const color = useMemo(() => hex(tool.gradient), [tool.gradient]);
+  const label = useMemo(() => makeLabelTexture(tool), [tool]);
 
   useFrame(({ clock }, dt) => {
     if (!group.current) return;
@@ -223,31 +224,22 @@ function OrbitCard({
               clearcoatRoughness={0.15}
               ior={1.35}
               transparent
-              opacity={0.92}
+              opacity={0.94}
               emissive={color}
               emissiveIntensity={hovered ? 0.55 : 0.22}
             />
           </RoundedBox>
-          {/* colored logo chip */}
-          <mesh position={[-0.42, 0, 0.06]}>
-            <boxGeometry args={[0.28, 0.28, 0.05]} />
-            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.7} roughness={0.3} />
+          {/* baked label (logo + name + price) sitting just above the glass */}
+          <mesh position={[0, 0, 0.056]}>
+            <planeGeometry args={[1.15, 0.45]} />
+            <meshBasicMaterial map={label} transparent toneMapped={false} />
           </mesh>
-          <Text position={[-0.42, 0, 0.1]} fontSize={0.15} color="#ffffff" anchorX="center" anchorY="middle">
-            {tool.mark}
-          </Text>
-          <Text position={[0.14, 0.08, 0.06]} fontSize={0.13} color="#ffffff" anchorX="center" anchorY="middle" maxWidth={0.8}>
-            {tool.name}
-          </Text>
-          <Text position={[0.14, -0.11, 0.06]} fontSize={0.095} color="#c9b8ff" anchorX="center" anchorY="middle">
-            {`$${tool.price}/mo`}
-          </Text>
-
         </group>
       </Billboard>
     </group>
   );
 }
+
 
 
 /* ---------------- background star / dust field ---------------- */

@@ -1,85 +1,122 @@
-import { Link } from "@tanstack/react-router";
-import { motion, useMotionValue } from "motion/react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { motion } from "motion/react";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Magnetic } from "./primitives";
-import { Orbit3D } from "./Orbit3D";
+import { AIUniverse } from "./AIUniverse";
 
+const headline = ["Enter", "the", "AI", "Universe."];
 
 export function Hero() {
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
+  const [mounted, setMounted] = useState(false);
+  const scrollRef = useRef(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
-  const words = "Upgrade Your AI Workflow.".split(" ");
+  useEffect(() => setMounted(true), []);
+
+  // scroll progress through the hero -> drives the camera dolly into the core
+  useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const h = el.offsetHeight - window.innerHeight;
+      const p = h > 0 ? Math.min(Math.max(-el.getBoundingClientRect().top / h, 0), 1) : 0;
+      scrollRef.current = p;
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // custom glow cursor
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }
+    };
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
+  }, []);
 
   return (
     <section
-      className="relative overflow-hidden px-4 pb-16 pt-36 md:pt-44"
-      onMouseMove={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        mx.set((e.clientX - r.left) / r.width - 0.5);
-        my.set((e.clientY - r.top) / r.height - 0.5);
-      }}
+      ref={sectionRef}
+      className="relative h-[190vh]"
     >
-      {/* soft aura backgrounds */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-24 h-[420px] w-[720px] -translate-x-1/2 rounded-full opacity-60 blur-[100px]" style={{ background: "radial-gradient(circle, #c0c9ee, transparent 70%)" }} />
-        <div className="absolute right-10 top-72 h-72 w-72 rounded-full opacity-50 blur-[90px]" style={{ background: "radial-gradient(circle, #a2aadb, transparent 70%)" }} />
-      </div>
+      {/* custom cursor */}
+      <div ref={cursorRef} className="hero-cursor hidden md:block" aria-hidden />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
-        {/* Copy */}
-        <div className="relative z-10">
+      {/* sticky cinematic stage */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        {/* luxury gradient + fog backdrop */}
+        <div className="hero-backdrop" aria-hidden />
+        <div className="hero-noise" aria-hidden />
+        <div className="hero-rays" aria-hidden />
+
+        {/* 3D universe */}
+        <div className="absolute inset-0">
+          {mounted && (
+            <AIUniverse
+              scrollRef={scrollRef}
+              onSelect={(slug) => navigate({ to: "/tools/$slug", params: { slug } })}
+            />
+          )}
+        </div>
+
+        {/* overlay copy */}
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-white/50 px-4 py-1.5 text-xs font-medium text-ink-soft backdrop-blur"
+            transition={{ duration: 0.8 }}
+            className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur"
           >
-            <Sparkles size={13} className="text-brand" />
+            <Sparkles size={13} className="text-white" />
             Premium AI subscriptions, up to 60% off
           </motion.div>
 
-          <h1 className="mt-6 font-display text-[3.1rem] font-semibold leading-[0.98] tracking-tight text-ink sm:text-6xl lg:text-7xl">
-            {words.map((w, i) => (
-              <span key={i} className="mr-3 inline-block overflow-hidden align-top">
-                <motion.span
-                  className="inline-block"
-                  initial={{ y: "110%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.15 + i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+          <h1 className="mt-7 font-display text-[3.4rem] font-semibold leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl">
+            {headline.map((w, i) => (
+              <span key={i} className="mx-2 inline-block overflow-hidden align-top pb-[0.12em]">
+                <span
+                  className="hero-word inline-block"
+                  style={{ animationDelay: `${0.2 + i * 0.12}s` }}
                 >
-                  {w === "Workflow." ? (
-                    <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-brand)" }}>
+                  {w === "Universe." ? (
+                    <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(120deg,#e7e2ff,#b9a7ff,#ff9a8b)" }}>
                       {w}
                     </span>
                   ) : (
                     w
                   )}
-                </motion.span>
+                </span>
               </span>
             ))}
           </h1>
 
+
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="mt-6 max-w-md text-lg text-ink-soft"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.9 }}
+            className="mt-6 max-w-md text-lg text-white/70"
           >
-            Access premium AI tools at affordable subscription prices — original accounts, delivered in minutes.
+            Every premium AI tool, orbiting one core. Original accounts, delivered in minutes.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.62 }}
-            className="mt-9 flex flex-wrap items-center gap-3"
+            transition={{ duration: 0.8, delay: 1.05 }}
+            className="pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-3"
           >
             <Magnetic>
               <Link
                 to="/tools"
-                className="group inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-[0_16px_40px_-14px_rgba(109,110,176,0.8)] transition-transform hover:scale-[1.03]"
-                style={{ background: "var(--gradient-brand)" }}
+                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#241f45] shadow-[0_16px_50px_-12px_rgba(185,167,255,0.8)] transition-transform hover:scale-[1.03]"
               >
                 Browse Tools
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -88,7 +125,7 @@ export function Hero() {
             <Magnetic>
               <Link
                 to="/compare"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-white/50 px-7 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-colors hover:bg-white/80"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/15"
               >
                 Compare Plans
               </Link>
@@ -98,19 +135,16 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="mt-10 flex items-center gap-6 text-sm text-ink-soft"
+            transition={{ duration: 1, delay: 1.4 }}
+            className="absolute bottom-10 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/50"
           >
-            <div><span className="font-display text-2xl font-semibold text-ink">12+</span><br />AI tools</div>
-            <div className="h-8 w-px" style={{ background: "var(--hairline)" }} />
-            <div><span className="font-display text-2xl font-semibold text-ink">20k+</span><br />happy users</div>
-            <div className="h-8 w-px" style={{ background: "var(--hairline)" }} />
-            <div><span className="font-display text-2xl font-semibold text-ink">4.9</span><br />avg rating</div>
+            Scroll to enter
+            <span className="hero-scroll-dot" />
           </motion.div>
         </div>
 
-        {/* Real 3D orbit scene */}
-        <Orbit3D className="hidden lg:flex" />
+        {/* bottom fade blends the universe into the cream sections below */}
+        <div className="hero-fade" aria-hidden />
       </div>
     </section>
   );

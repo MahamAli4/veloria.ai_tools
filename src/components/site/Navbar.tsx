@@ -28,7 +28,7 @@ export function Navbar() {
           scrolled ? "glass shadow-[0_12px_40px_-12px_rgba(137,138,196,0.45)]" : "border border-transparent"
         }`}
       >
-        <Link to="/" className="flex items-center gap-2.5">
+        <a href="#top" className="flex items-center gap-2.5">
           <span
             className="grid h-9 w-9 place-items-center rounded-xl font-display text-lg font-semibold text-white"
             style={{ background: "var(--gradient-brand)" }}
@@ -36,31 +36,29 @@ export function Navbar() {
             A
           </span>
           <span className="font-display text-xl font-semibold tracking-tight text-ink">AI Vault</span>
-        </Link>
+        </a>
 
         <nav className="hidden items-center gap-1 md:flex">
           {links.map((l) => (
-            <Link
+            <a
               key={l.to}
-              to={l.to}
+              href={l.to}
               className="rounded-full px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
-              activeProps={{ className: "text-ink bg-white/50" }}
-              activeOptions={{ exact: l.to === "/" }}
             >
               {l.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
           <Magnetic className="hidden md:block">
-            <Link
-              to="/tools"
+            <a
+              href="#tools"
               className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgba(109,110,176,0.7)] transition-transform hover:scale-[1.03]"
               style={{ background: "var(--gradient-brand)" }}
             >
               Browse Tools
-            </Link>
+            </a>
           </Magnetic>
           <button
             onClick={() => setOpen((o) => !o)}
@@ -75,15 +73,14 @@ export function Navbar() {
       {open && (
         <div className="mx-auto mt-2 max-w-6xl rounded-2xl glass p-3 md:hidden">
           {links.map((l) => (
-            <Link
+            <a
               key={l.to}
-              to={l.to}
+              href={l.to}
+              onClick={() => setOpen(false)}
               className="block rounded-xl px-4 py-3 text-sm font-medium text-ink"
-              activeProps={{ className: "bg-white/60" }}
-              activeOptions={{ exact: l.to === "/" }}
             >
               {l.label}
-            </Link>
+            </a>
           ))}
         </div>
       )}

@@ -76,7 +76,7 @@ function ProductCard({ tool }: { tool: Tool }) {
           View <ArrowUpRight size={13} />
         </span>
       </div>
-    </Link>
+    </a>
   );
 }
 

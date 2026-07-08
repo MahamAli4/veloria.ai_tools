@@ -309,10 +309,10 @@
 
 /* mask-reveal headline words */
 .hero-word {
-  transform: translateY(115%);
-  animation: hero-word-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: hero-word-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 @keyframes hero-word-rise {
+  from { transform: translateY(115%); }
   to { transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {

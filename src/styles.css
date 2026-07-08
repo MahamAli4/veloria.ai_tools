@@ -306,3 +306,15 @@
   .hero-noise, .hero-rays, .hero-scroll-dot { animation: none; }
 }
 
+
+/* mask-reveal headline words */
+.hero-word {
+  transform: translateY(115%);
+  animation: hero-word-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes hero-word-rise {
+  to { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-word { animation: none; transform: none; }
+}

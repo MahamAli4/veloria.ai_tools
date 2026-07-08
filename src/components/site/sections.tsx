@@ -3,9 +3,12 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import {
   ShieldCheck, Zap, BadgeCheck, Lock, Headphones, Sparkles,
-  ChevronDown, MousePointerClick, CreditCard, Mail, Rocket, ArrowRight,
+  ChevronDown, MousePointerClick, CreditCard, Mail, Rocket, Loader2,
 } from "lucide-react";
-import { tools, testimonials, faqs } from "@/data/tools";
+import { testimonials, faqs } from "@/data/tools";
+import { useTools } from "@/lib/tools";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { ToolCard } from "./ToolCard";
 import { Reveal, CountUp, Magnetic } from "./primitives";
 

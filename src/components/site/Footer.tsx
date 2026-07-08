@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Twitter, Github, Linkedin, Instagram, ArrowUpRight } from "lucide-react";
 
@@ -66,9 +65,9 @@ export function Footer() {
             </p>
           </div>
 
-          <FooterCol title="Explore" items={[["All Tools", "/tools"], ["Compare Plans", "/compare"], ["Home", "/"]]} />
-          <FooterCol title="Company" items={[["About", "/"], ["Contact", "/#contact"], ["Reviews", "/#testimonials"]]} />
-          <FooterCol title="Legal" items={[["Terms", "/"], ["Privacy", "/"], ["Refunds", "/"]]} />
+          <FooterCol title="Explore" items={[["Tools", "#tools"], ["How it works", "#how"], ["FAQ", "#faq"]]} />
+          <FooterCol title="Company" items={[["Reviews", "#testimonials"], ["Contact", "#contact"], ["Home", "#top"]]} />
+          <FooterCol title="Legal" items={[["Terms", "#top"], ["Privacy", "#top"], ["Refunds", "#top"]]} />
         </div>
 
         <div className="my-8 h-px w-full" style={{ background: "var(--hairline)" }} />
@@ -100,13 +99,13 @@ function FooterCol({ title, items }: { title: string; items: [string, string][] 
       <ul className="mt-4 space-y-2.5">
         {items.map(([label, to]) => (
           <li key={label}>
-            <Link
-              to={to}
+            <a
+              href={to}
               className="group inline-flex items-center gap-1 text-sm text-ink-soft transition-colors hover:text-brand"
             >
               {label}
               <ArrowUpRight size={13} className="opacity-0 transition-opacity group-hover:opacity-100" />
-            </Link>
+            </a>
           </li>
         ))}
       </ul>

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+
 import { motion } from "motion/react";
 import { useState } from "react";
 import {
@@ -38,17 +38,9 @@ export function FeaturedTools() {
   return (
     <section className="px-4 py-20" id="tools">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading eyebrow="Curated collection" title="Featured AI tools" subtitle="Hand-picked subscriptions at prices that actually make sense." />
-          <Reveal delay={0.15}>
-            <Link to="/tools" className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-white/50 px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-white/80">
-              View all
-              <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </Reveal>
-        </div>
+        <SectionHeading eyebrow="Curated collection" title="Featured AI tools" subtitle="Hand-picked subscriptions at prices that actually make sense." />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.slice(0, 6).map((t, i) => (
+          {tools.map((t, i) => (
             <ToolCard key={t.slug} tool={t} index={i} />
           ))}
         </div>
@@ -67,7 +59,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="px-4 py-20">
+    <section className="px-4 py-20" id="how">
       <div className="mx-auto max-w-6xl">
         <SectionHeading center eyebrow="Simple process" title="How it works" subtitle="From browsing to premium access in four effortless steps." />
         <div className="relative mt-16 grid gap-6 md:grid-cols-4">
@@ -268,14 +260,14 @@ export function CTABand() {
         <Reveal delay={0.15}>
           <div className="relative mt-8 flex flex-wrap justify-center gap-3">
             <Magnetic>
-              <Link to="/tools" className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-brand-deep transition-transform hover:scale-[1.03]">
+              <a href="#tools" className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-brand-deep transition-transform hover:scale-[1.03]">
                 Browse Tools <ArrowRight size={16} />
-              </Link>
+              </a>
             </Magnetic>
             <Magnetic>
-              <Link to="/compare" className="inline-flex items-center rounded-full border border-white/40 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
-                Compare Plans
-              </Link>
+              <a href="#contact" className="inline-flex items-center rounded-full border border-white/40 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+                Contact Us
+              </a>
             </Magnetic>
           </div>
         </Reveal>

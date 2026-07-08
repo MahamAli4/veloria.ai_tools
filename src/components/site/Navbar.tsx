@@ -1,18 +1,18 @@
-import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Magnetic } from "./primitives";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/tools", label: "Tools" },
-  { to: "/compare", label: "Compare" },
+  { to: "#tools", label: "Tools" },
+  { to: "#how", label: "How it works" },
+  { to: "#testimonials", label: "Reviews" },
+  { to: "#faq", label: "FAQ" },
+  { to: "#contact", label: "Contact" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -20,8 +20,6 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => setOpen(false), [pathname]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">

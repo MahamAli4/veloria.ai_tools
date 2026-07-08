@@ -190,57 +190,35 @@
   width: 1px;
   height: 1px;
   transform-style: preserve-3d;
-  transform: rotateX(-14deg);
 }
 
-.orbit-ring {
+.orbit-node {
   position: absolute;
   top: 0;
   left: 0;
   transform-style: preserve-3d;
-  animation: orbit-spin var(--dur, 24s) linear infinite;
+  will-change: transform;
 }
 
-.orbit-ring--rev {
-  animation-direction: reverse;
-}
-
-.orbit-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-style: preserve-3d;
-}
-
-.orbit-face {
-  transform-style: preserve-3d;
-  animation: orbit-face var(--dur, 24s) linear infinite;
-}
-
-.orbit-face--rev {
-  animation-direction: reverse;
+.orbit-float {
+  animation: orbit-bob 6s ease-in-out infinite;
 }
 
 .orbit-core {
   position: absolute;
-  width: 260px;
-  height: 260px;
+  width: 300px;
+  height: 300px;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(137, 138, 196, 0.55), transparent 70%);
-  filter: blur(50px);
+  background: radial-gradient(circle, rgba(137, 138, 196, 0.5), transparent 70%);
+  filter: blur(55px);
   animation: orbit-pulse 6s ease-in-out infinite;
 }
 
-@keyframes orbit-spin {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
+@keyframes orbit-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
 }
 
-/* counter-rotate so tiles keep facing the viewer */
-@keyframes orbit-face {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(-360deg); }
-}
 
 @keyframes orbit-pulse {
   0%, 100% { transform: scale(1); opacity: 0.7; }

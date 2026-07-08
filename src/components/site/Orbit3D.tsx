@@ -18,13 +18,13 @@ type Node = {
 };
 
 const nodes: Node[] = [
-  { slug: "chatgpt-plus", x: 60, y: -160, z: 120, size: 46, delay: 0 },
-  { slug: "claude-pro", x: 170, y: -30, z: 30, size: 42, delay: 0.5 },
-  { slug: "lovable", x: -170, y: -120, z: 60, size: 44, delay: 0.9 },
-  { slug: "cursor-ai", x: -30, y: 30, z: 170, size: 48, delay: 0.3 },
-  { slug: "perplexity-pro", x: 150, y: 160, z: 80, size: 42, delay: 1.2 },
-  { slug: "google-ai-pro", x: -190, y: 130, z: -10, size: 40, delay: 0.7 },
-  { slug: "linkedin-premium", x: 20, y: 210, z: -50, size: 38, delay: 1.5 },
+  { slug: "chatgpt-plus", x: 40, y: -160, z: 120, size: 46, delay: 0 },
+  { slug: "claude-pro", x: 130, y: -20, z: 20, size: 42, delay: 0.5 },
+  { slug: "lovable", x: -180, y: -120, z: 60, size: 44, delay: 0.9 },
+  { slug: "cursor-ai", x: -40, y: 30, z: 170, size: 48, delay: 0.3 },
+  { slug: "perplexity-pro", x: 120, y: 150, z: 70, size: 42, delay: 1.2 },
+  { slug: "google-ai-pro", x: -200, y: 130, z: -10, size: 40, delay: 0.7 },
+  { slug: "linkedin-premium", x: 0, y: 210, z: -50, size: 38, delay: 1.5 },
 ];
 
 export function Orbit3D({ className }: { className?: string }) {

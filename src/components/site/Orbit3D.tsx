@@ -50,7 +50,7 @@ export function Orbit3D({ className }: { className?: string }) {
 
       <motion.div
         className="orbit-world"
-        style={{ rotateX: rotX, rotateY: rotY }}
+        style={{ rotateX: rotX, rotateY: rotY, x: -30 }}
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}

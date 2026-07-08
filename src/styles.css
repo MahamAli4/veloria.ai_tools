@@ -226,5 +226,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orbit-ring, .orbit-face, .orbit-core { animation: none; }
+  .orbit-float, .orbit-core { animation: none; }
 }

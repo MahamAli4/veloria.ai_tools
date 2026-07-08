@@ -59,7 +59,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="px-4 py-20">
+    <section className="px-4 py-20" id="how">
       <div className="mx-auto max-w-6xl">
         <SectionHeading center eyebrow="Simple process" title="How it works" subtitle="From browsing to premium access in four effortless steps." />
         <div className="relative mt-16 grid gap-6 md:grid-cols-4">

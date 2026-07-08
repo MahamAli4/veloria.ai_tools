@@ -8,8 +8,6 @@ import { Orbit3D } from "./Orbit3D";
 export function Hero() {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 80, damping: 20 });
-  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-10, 10]), { stiffness: 80, damping: 20 });
 
   const words = "Upgrade Your AI Workflow.".split(" ");
 

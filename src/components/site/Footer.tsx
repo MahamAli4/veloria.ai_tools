@@ -65,9 +65,9 @@ export function Footer() {
             </p>
           </div>
 
-          <FooterCol title="Explore" items={[["All Tools", "/tools"], ["Compare Plans", "/compare"], ["Home", "/"]]} />
-          <FooterCol title="Company" items={[["About", "/"], ["Contact", "/#contact"], ["Reviews", "/#testimonials"]]} />
-          <FooterCol title="Legal" items={[["Terms", "/"], ["Privacy", "/"], ["Refunds", "/"]]} />
+          <FooterCol title="Explore" items={[["Tools", "#tools"], ["How it works", "#how"], ["FAQ", "#faq"]]} />
+          <FooterCol title="Company" items={[["Reviews", "#testimonials"], ["Contact", "#contact"], ["Home", "#top"]]} />
+          <FooterCol title="Legal" items={[["Terms", "#top"], ["Privacy", "#top"], ["Refunds", "#top"]]} />
         </div>
 
         <div className="my-8 h-px w-full" style={{ background: "var(--hairline)" }} />

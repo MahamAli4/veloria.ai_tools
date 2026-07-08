@@ -178,21 +178,21 @@ export function Hero() {
             className="mt-9 flex flex-wrap items-center gap-3"
           >
             <Magnetic>
-              <Link
-                to="/tools"
+              <a
+                href="#tools"
                 className="group inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-semibold text-background shadow-[0_16px_40px_-16px_rgba(30,25,45,0.6)] transition-transform hover:scale-[1.03]"
               >
                 Browse Tools
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </Link>
+              </a>
             </Magnetic>
             <Magnetic>
-              <Link
-                to="/compare"
+              <a
+                href="#faq"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-7 py-3.5 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-card"
               >
-                Compare Plans
-              </Link>
+                Learn more
+              </a>
             </Magnetic>
           </motion.div>
 

@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ArrowRight, Sparkles, ArrowUpRight } from "lucide-react";
 import { useEffect, useRef } from "react";

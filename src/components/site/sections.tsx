@@ -260,14 +260,14 @@ export function CTABand() {
         <Reveal delay={0.15}>
           <div className="relative mt-8 flex flex-wrap justify-center gap-3">
             <Magnetic>
-              <Link to="/tools" className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-brand-deep transition-transform hover:scale-[1.03]">
+              <a href="#tools" className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-brand-deep transition-transform hover:scale-[1.03]">
                 Browse Tools <ArrowRight size={16} />
-              </Link>
+              </a>
             </Magnetic>
             <Magnetic>
-              <Link to="/compare" className="inline-flex items-center rounded-full border border-white/40 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
-                Compare Plans
-              </Link>
+              <a href="#contact" className="inline-flex items-center rounded-full border border-white/40 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+                Contact Us
+              </a>
             </Magnetic>
           </div>
         </Reveal>

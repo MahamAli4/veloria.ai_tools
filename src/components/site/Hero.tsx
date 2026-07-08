@@ -79,6 +79,14 @@ function CardColumn({ items, direction }: { items: Tool[]; direction: "up" | "do
 
 export function Hero() {
   const stageRef = useRef<HTMLDivElement>(null);
+  const { data: tools = [] } = useTools();
+  const { colA, colB } = useMemo(() => {
+    const list = tools.slice(0, 9);
+    return {
+      colA: list.filter((_, i) => i % 2 === 0),
+      colB: list.filter((_, i) => i % 2 === 1),
+    };
+  }, [tools]);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const rotY = useSpring(useTransform(mx, [-0.5, 0.5], [10, -10]), { stiffness: 120, damping: 20 });

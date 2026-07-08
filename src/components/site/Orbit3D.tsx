@@ -3,88 +3,35 @@ import { tools } from "@/data/tools";
 import { ToolLogo } from "./primitives";
 
 /**
- * A genuine 3D scene: two rings of tool logos orbiting in real perspective
- * space, tilted on the X axis, continuously rotating, and reacting to the
- * pointer. Each tile is counter-rotated so it always faces the viewer.
+ * A genuine 3D scene built in real perspective space. Cards are positioned
+ * with translate3d on different depth planes, gently float, and the whole
+ * "world" tilts toward the pointer on the X/Y axes — so you get real
+ * parallax and depth, while every card stays readable (front-facing).
  */
-type OrbitTile = { slug: string; size: number };
+type Node = {
+  slug: string;
+  x: number; // px
+  y: number; // px
+  z: number; // px depth (+ = closer)
+  size: number;
+  delay: number;
+};
 
-function Ring({
-  slugs,
-  radius,
-  duration,
-  reverse = false,
-  tileSize,
-}: {
-  slugs: string[];
-  radius: number;
-  duration: number;
-  reverse?: boolean;
-  tileSize: number;
-}) {
-  const count = slugs.length;
-  return (
-    <div
-      className={reverse ? "orbit-ring orbit-ring--rev" : "orbit-ring"}
-      style={{ ["--dur" as string]: `${duration}s` }}
-    >
-      {slugs.map((slug, i) => {
-        const tool = tools.find((t) => t.slug === slug);
-        if (!tool) return null;
-        const angle = (360 / count) * i;
-        return (
-          <div
-            key={slug}
-            className="orbit-item"
-            style={{
-              transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
-            }}
-          >
-            {/* counter-spin keeps the tile facing forward */}
-            <div
-              className={reverse ? "orbit-face orbit-face--rev" : "orbit-face"}
-              style={{ ["--dur" as string]: `${duration}s` }}
-            >
-              <div style={{ transform: `rotateY(${-angle}deg)` }}>
-                <div className="glass flex items-center gap-2.5 rounded-2xl p-2.5 pr-4 shadow-[0_24px_60px_-24px_rgba(109,110,176,0.7)]">
-                  <ToolLogo mark={tool.mark} gradient={tool.gradient} size={tileSize} />
-                  <div className="hidden sm:block">
-                    <p className="text-xs font-semibold leading-tight text-ink">{tool.name}</p>
-                    <p className="text-[11px] leading-tight text-ink-soft">
-                      <span className="font-semibold text-brand-deep">${tool.ourPrice}</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+const nodes: Node[] = [
+  { slug: "chatgpt-plus", x: 40, y: -170, z: 120, size: 48, delay: 0 },
+  { slug: "claude-pro", x: 210, y: -60, z: 30, size: 44, delay: 0.5 },
+  { slug: "lovable", x: -190, y: -110, z: 60, size: 46, delay: 0.9 },
+  { slug: "cursor-ai", x: -60, y: 40, z: 180, size: 50, delay: 0.3 },
+  { slug: "perplexity-pro", x: 180, y: 150, z: 90, size: 44, delay: 1.2 },
+  { slug: "google-ai-pro", x: -210, y: 120, z: -20, size: 42, delay: 0.7 },
+  { slug: "linkedin-premium", x: 30, y: 200, z: -60, size: 40, delay: 1.5 },
+];
 
 export function Orbit3D({ className }: { className?: string }) {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  // pointer tilts the whole stage in 3D
-  const rotX = useSpring(useTransform(my, [-0.5, 0.5], [8, -22]), { stiffness: 60, damping: 18 });
-  const rotY = useSpring(useTransform(mx, [-0.5, 0.5], [-24, 24]), { stiffness: 60, damping: 18 });
-
-  const outer: OrbitTile[] = [
-    { slug: "chatgpt-plus", size: 40 },
-    { slug: "claude-pro", size: 40 },
-    { slug: "lovable", size: 40 },
-    { slug: "cursor-ai", size: 40 },
-    { slug: "perplexity-pro", size: 40 },
-    { slug: "google-ai-pro", size: 40 },
-  ];
-  const inner: OrbitTile[] = [
-    { slug: "linkedin-premium", size: 34 },
-    { slug: "lovable", size: 34 },
-    { slug: "chatgpt-plus", size: 34 },
-    { slug: "claude-pro", size: 34 },
-  ];
+  const rotX = useSpring(useTransform(my, [-0.5, 0.5], [16, -16]), { stiffness: 70, damping: 18 });
+  const rotY = useSpring(useTransform(mx, [-0.5, 0.5], [-22, 22]), { stiffness: 70, damping: 18 });
 
   return (
     <div
@@ -99,7 +46,6 @@ export function Orbit3D({ className }: { className?: string }) {
         my.set(0);
       }}
     >
-      {/* central glow core */}
       <div className="orbit-core" aria-hidden />
 
       <motion.div
@@ -109,8 +55,34 @@ export function Orbit3D({ className }: { className?: string }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
-        <Ring slugs={outer.map((t) => t.slug)} radius={240} duration={26} tileSize={40} />
-        <Ring slugs={inner.map((t) => t.slug)} radius={140} duration={18} reverse tileSize={34} />
+        {nodes.map((n) => {
+          const tool = tools.find((t) => t.slug === n.slug);
+          if (!tool) return null;
+          const scale = 1 + n.z / 900;
+          return (
+            <motion.div
+              key={n.slug + n.x}
+              className="orbit-node"
+              style={{ transform: `translate3d(${n.x}px, ${n.y}px, ${n.z}px) scale(${scale})` }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 + n.delay * 0.25 }}
+            >
+              <div className="orbit-float" style={{ animationDelay: `${n.delay}s` }}>
+                <div className="glass flex items-center gap-2.5 rounded-2xl p-2.5 pr-4 shadow-[0_28px_70px_-24px_rgba(109,110,176,0.75)]">
+                  <ToolLogo mark={tool.mark} gradient={tool.gradient} size={n.size} />
+                  <div>
+                    <p className="text-xs font-semibold leading-tight text-ink">{tool.name}</p>
+                    <p className="text-[11px] leading-tight text-ink-soft">
+                      <span className="font-semibold text-brand-deep">${tool.ourPrice}</span>{" "}
+                      <span className="line-through opacity-60">${tool.originalPrice}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
       </motion.div>
     </div>
   );

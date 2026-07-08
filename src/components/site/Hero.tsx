@@ -1,27 +1,9 @@
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ArrowRight, Sparkles, ArrowUpRight } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Magnetic } from "./primitives";
-import { tools, type Tool } from "@/data/tools";
-
-const heroSlugs = [
-  "chatgpt-plus",
-  "lovable",
-  "google-ai-pro",
-  "claude-pro",
-  "cursor-ai",
-  "linkedin-premium",
-  "perplexity-pro",
-  "canva-pro",
-  "notion-ai",
-];
-
-const heroTools = heroSlugs
-  .map((s) => tools.find((t) => t.slug === s))
-  .filter(Boolean) as Tool[];
-
-const colA = heroTools.filter((_, i) => i % 2 === 0);
-const colB = heroTools.filter((_, i) => i % 2 === 1);
+import type { Tool } from "@/data/tools";
+import { useTools } from "@/lib/tools";
 
 const stats = [
   { value: "20+", label: "Premium AI Tools" },
@@ -35,6 +17,7 @@ const headlineBottom = ["Without", "Premium", "Prices"];
 function discount(t: Tool) {
   return Math.round(((t.originalPrice - t.ourPrice) / t.originalPrice) * 100);
 }
+
 
 /* one premium acrylic product card */
 function ProductCard({ tool }: { tool: Tool }) {

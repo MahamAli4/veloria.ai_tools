@@ -14,16 +14,195 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_read: boolean
+          message: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_read?: boolean
+          message: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          created_at: string
+          customer_email: string
+          customer_name: string
+          id: string
+          note: string
+          plan_name: string
+          price: number
+          status: string
+          tool_name: string
+          tool_slug: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          id?: string
+          note?: string
+          plan_name?: string
+          price?: number
+          status?: string
+          tool_name?: string
+          tool_slug?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Update: {
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          id?: string
+          note?: string
+          plan_name?: string
+          price?: number
+          status?: string
+          tool_name?: string
+          tool_slug?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      tools: {
+        Row: {
+          advantages: Json
+          benefits: Json
+          category: string
+          created_at: string
+          description: string
+          duration: string
+          faqs: Json
+          features: Json
+          gradient: string
+          id: string
+          is_active: boolean
+          mark: string
+          name: string
+          original_price: number
+          our_price: number
+          overview: string
+          plans: Json
+          slug: string
+          sort_order: number
+          tagline: string
+          updated_at: string
+          use_cases: Json
+          what_it_does: string
+          who_for: string
+        }
+        Insert: {
+          advantages?: Json
+          benefits?: Json
+          category?: string
+          created_at?: string
+          description?: string
+          duration?: string
+          faqs?: Json
+          features?: Json
+          gradient?: string
+          id?: string
+          is_active?: boolean
+          mark?: string
+          name: string
+          original_price?: number
+          our_price?: number
+          overview?: string
+          plans?: Json
+          slug: string
+          sort_order?: number
+          tagline?: string
+          updated_at?: string
+          use_cases?: Json
+          what_it_does?: string
+          who_for?: string
+        }
+        Update: {
+          advantages?: Json
+          benefits?: Json
+          category?: string
+          created_at?: string
+          description?: string
+          duration?: string
+          faqs?: Json
+          features?: Json
+          gradient?: string
+          id?: string
+          is_active?: boolean
+          mark?: string
+          name?: string
+          original_price?: number
+          our_price?: number
+          overview?: string
+          plans?: Json
+          slug?: string
+          sort_order?: number
+          tagline?: string
+          updated_at?: string
+          use_cases?: Json
+          what_it_does?: string
+          who_for?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +329,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const

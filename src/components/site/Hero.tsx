@@ -80,12 +80,10 @@ export function Hero() {
 
           <h1 className="mt-7 font-display text-[3.4rem] font-semibold leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl">
             {headline.map((w, i) => (
-              <span key={i} className="mx-2 inline-block overflow-hidden align-top">
-                <motion.span
-                  className="inline-block"
-                  initial={{ y: "115%" }}
-                  animate={{ y: "0%" }}
-                  transition={{ duration: 0.9, delay: 0.2 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              <span key={i} className="mx-2 inline-block overflow-hidden align-top pb-[0.12em]">
+                <span
+                  className="hero-word inline-block"
+                  style={{ animationDelay: `${0.2 + i * 0.12}s` }}
                 >
                   {w === "Universe." ? (
                     <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(120deg,#e7e2ff,#b9a7ff,#ff9a8b)" }}>
@@ -94,10 +92,11 @@ export function Hero() {
                   ) : (
                     w
                   )}
-                </motion.span>
+                </span>
               </span>
             ))}
           </h1>
+
 
           <motion.p
             initial={{ opacity: 0 }}

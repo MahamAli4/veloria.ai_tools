@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import {
   ShieldCheck, Zap, BadgeCheck, Lock, Headphones, Sparkles,
-  ChevronDown, MousePointerClick, CreditCard, Mail, Rocket, Loader2,
+  ChevronDown, MousePointerClick, CreditCard, Mail, Rocket, Loader2, ArrowRight,
 } from "lucide-react";
 import { testimonials, faqs } from "@/data/tools";
 import { useTools } from "@/lib/tools";

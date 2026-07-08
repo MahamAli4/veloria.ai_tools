@@ -39,9 +39,8 @@ function discount(t: Tool) {
 /* one premium acrylic product card */
 function ProductCard({ tool }: { tool: Tool }) {
   return (
-    <Link
-      to="/tools/$slug"
-      params={{ slug: tool.slug }}
+    <a
+      href="#tools"
       className="acrylic-card group block"
     >
       <div className="flex items-center gap-3">

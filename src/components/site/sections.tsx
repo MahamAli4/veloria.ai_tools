@@ -214,6 +214,27 @@ export function FAQSection({ items = faqs }: { items?: { q: string; a: string }[
 /* ---------- Contact ---------- */
 export function Contact() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      message: form.message.trim(),
+    });
+    setLoading(false);
+    if (error) {
+      toast.error("Message send nahi ho saka. Dobara try karein.");
+      return;
+    }
+    setSent(true);
+    setForm({ name: "", email: "", message: "" });
+    toast.success("Aap ka message mil gaya — hum jald reply karenge!");
+  };
+
   return (
     <section className="px-4 py-20" id="contact">
       <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-border bg-white/50 backdrop-blur-xl">
@@ -226,15 +247,13 @@ export function Contact() {
               <p className="flex items-center gap-3"><ShieldCheck size={16} className="text-brand-deep" /> Money-back guarantee</p>
             </div>
           </div>
-          <form
-            onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-            className="space-y-4 p-8 md:p-12"
-          >
-            <Field label="Name"><input required className="w-full rounded-xl border border-border bg-white/70 px-4 py-3 text-ink outline-none focus:border-brand" placeholder="Your name" /></Field>
-            <Field label="Email"><input required type="email" className="w-full rounded-xl border border-border bg-white/70 px-4 py-3 text-ink outline-none focus:border-brand" placeholder="you@email.com" /></Field>
-            <Field label="Message"><textarea required rows={4} className="w-full resize-none rounded-xl border border-border bg-white/70 px-4 py-3 text-ink outline-none focus:border-brand" placeholder="How can we help?" /></Field>
+          <form onSubmit={submit} className="space-y-4 p-8 md:p-12">
+            <Field label="Name"><input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} maxLength={100} className="w-full rounded-xl border border-border bg-white/70 px-4 py-3 text-ink outline-none focus:border-brand" placeholder="Your name" /></Field>
+            <Field label="Email"><input required type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} maxLength={255} className="w-full rounded-xl border border-border bg-white/70 px-4 py-3 text-ink outline-none focus:border-brand" placeholder="you@email.com" /></Field>
+            <Field label="Message"><textarea required value={form.message} onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))} maxLength={1000} rows={4} className="w-full resize-none rounded-xl border border-border bg-white/70 px-4 py-3 text-ink outline-none focus:border-brand" placeholder="How can we help?" /></Field>
             <Magnetic>
-              <button type="submit" className="w-full rounded-full py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02]" style={{ background: "var(--gradient-brand)" }}>
+              <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] disabled:opacity-70" style={{ background: "var(--gradient-brand)" }}>
+                {loading && <Loader2 size={15} className="animate-spin" />}
                 {sent ? "Message sent ✓" : "Send message"}
               </button>
             </Magnetic>

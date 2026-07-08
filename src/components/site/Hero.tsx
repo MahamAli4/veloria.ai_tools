@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { motion, useMotionValue } from "motion/react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Magnetic } from "./primitives";
 import { Orbit3D } from "./Orbit3D";

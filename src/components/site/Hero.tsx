@@ -1,122 +1,188 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { motion } from "motion/react";
-import { ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { ArrowRight, Sparkles, ArrowUpRight } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { Magnetic } from "./primitives";
-import { AIUniverse } from "./AIUniverse";
+import { tools, type Tool } from "@/data/tools";
 
-const headline = ["Enter", "the", "AI", "Universe."];
+const heroSlugs = [
+  "chatgpt-plus",
+  "lovable",
+  "google-ai-pro",
+  "claude-pro",
+  "cursor-ai",
+  "linkedin-premium",
+  "perplexity-pro",
+  "canva-pro",
+  "notion-ai",
+];
+
+const heroTools = heroSlugs
+  .map((s) => tools.find((t) => t.slug === s))
+  .filter(Boolean) as Tool[];
+
+const colA = heroTools.filter((_, i) => i % 2 === 0);
+const colB = heroTools.filter((_, i) => i % 2 === 1);
+
+const stats = [
+  { value: "20+", label: "Premium AI Tools" },
+  { value: "5000+", label: "Customers" },
+  { value: "24/7", label: "Support" },
+];
+
+const headlineTop = ["Premium", "AI", "Tools"];
+const headlineBottom = ["Without", "Premium", "Prices"];
+
+function discount(t: Tool) {
+  return Math.round(((t.originalPrice - t.ourPrice) / t.originalPrice) * 100);
+}
+
+/* one premium acrylic product card */
+function ProductCard({ tool }: { tool: Tool }) {
+  return (
+    <Link
+      to="/tools/$slug"
+      params={{ slug: tool.slug }}
+      className="acrylic-card group block"
+    >
+      <div className="flex items-center gap-3">
+        <span className="acrylic-mark" style={{ background: tool.gradient }}>
+          {tool.mark}
+        </span>
+        <div className="min-w-0">
+          <div className="truncate font-display text-[15px] font-semibold leading-tight text-foreground">
+            {tool.name}
+          </div>
+          <div className="truncate text-[11px] uppercase tracking-wide text-muted-foreground">
+            {tool.category}
+          </div>
+        </div>
+        <span className="acrylic-badge ml-auto">-{discount(tool)}%</span>
+      </div>
+
+      <p className="mt-3 line-clamp-2 text-[12.5px] leading-relaxed text-muted-foreground">
+        {tool.description}
+      </p>
+
+      <div className="mt-4 flex items-end justify-between">
+        <div className="flex items-baseline gap-2">
+          <span className="font-display text-xl font-semibold text-foreground">
+            ${tool.ourPrice}
+          </span>
+          <span className="text-xs text-muted-foreground line-through">
+            ${tool.originalPrice}
+          </span>
+          <span className="text-[11px] text-muted-foreground">/mo</span>
+        </div>
+        <span className="acrylic-cta">
+          View <ArrowUpRight size={13} />
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+/* an infinite vertical marquee column of cards */
+function CardColumn({ items, direction }: { items: Tool[]; direction: "up" | "down" }) {
+  const loop = [...items, ...items];
+  return (
+    <div className="acrylic-col">
+      <div className={direction === "up" ? "acrylic-track-up" : "acrylic-track-down"}>
+        {loop.map((t, i) => (
+          <ProductCard key={`${t.slug}-${i}`} tool={t} />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function Hero() {
-  const [mounted, setMounted] = useState(false);
-  const scrollRef = useRef(0);
-  const sectionRef = useRef<HTMLElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const stageRef = useRef<HTMLDivElement>(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotY = useSpring(useTransform(mx, [-0.5, 0.5], [10, -10]), { stiffness: 120, damping: 20 });
+  const rotX = useSpring(useTransform(my, [-0.5, 0.5], [-8, 8]), { stiffness: 120, damping: 20 });
 
-  useEffect(() => setMounted(true), []);
-
-  // scroll progress through the hero -> drives the camera dolly into the core
   useEffect(() => {
-    const onScroll = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const h = el.offsetHeight - window.innerHeight;
-      const p = h > 0 ? Math.min(Math.max(-el.getBoundingClientRect().top / h, 0), 1) : 0;
-      scrollRef.current = p;
+    const el = stageRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      mx.set((e.clientX - r.left) / r.width - 0.5);
+      my.set((e.clientY - r.top) / r.height - 0.5);
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // custom glow cursor
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      }
+    const onLeave = () => {
+      mx.set(0);
+      my.set(0);
     };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => {
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
+    };
+  }, [mx, my]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-[190vh]"
-    >
-      {/* custom cursor */}
-      <div ref={cursorRef} className="hero-cursor hidden md:block" aria-hidden />
+    <section className="relative overflow-hidden">
+      {/* soft luxury background accents */}
+      <div className="hero-glow hero-glow-1" aria-hidden />
+      <div className="hero-glow hero-glow-2" aria-hidden />
 
-      {/* sticky cinematic stage */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* luxury gradient + fog backdrop */}
-        <div className="hero-backdrop" aria-hidden />
-        <div className="hero-noise" aria-hidden />
-        <div className="hero-rays" aria-hidden />
-
-        {/* 3D universe */}
-        <div className="absolute inset-0">
-          {mounted && (
-            <AIUniverse
-              scrollRef={scrollRef}
-              onSelect={(slug) => navigate({ to: "/tools/$slug", params: { slug } })}
-            />
-          )}
-        </div>
-
-        {/* overlay copy */}
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
+      <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 pb-24 pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pt-36">
+        {/* LEFT — editorial */}
+        <div className="relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur"
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur"
           >
-            <Sparkles size={13} className="text-white" />
-            Premium AI subscriptions, up to 60% off
+            <Sparkles size={13} className="text-primary" />
+            Curated premium AI subscriptions
           </motion.div>
 
-          <h1 className="mt-7 font-display text-[3.4rem] font-semibold leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl">
-            {headline.map((w, i) => (
-              <span key={i} className="mx-2 inline-block overflow-hidden align-top pb-[0.12em]">
-                <span
-                  className="hero-word inline-block"
-                  style={{ animationDelay: `${0.2 + i * 0.12}s` }}
-                >
-                  {w === "Universe." ? (
-                    <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(120deg,#e7e2ff,#b9a7ff,#ff9a8b)" }}>
-                      {w}
+          <h1 className="mt-6 font-display text-[3.1rem] font-semibold leading-[0.98] tracking-tight text-foreground sm:text-6xl lg:text-[4.6rem]">
+            {[headlineTop, headlineBottom].map((line, li) => (
+              <span key={li} className="block">
+                {line.map((w, i) => (
+                  <span key={i} className="mr-[0.28em] inline-block overflow-hidden align-top pb-[0.08em]">
+                    <span
+                      className="hero-word inline-block"
+                      style={{ animationDelay: `${0.15 + (li * line.length + i) * 0.08}s` }}
+                    >
+                      {li === 1 && w === "Premium" ? (
+                        <span className="italic text-primary">{w}</span>
+                      ) : (
+                        w
+                      )}
                     </span>
-                  ) : (
-                    w
-                  )}
-                </span>
+                  </span>
+                ))}
               </span>
             ))}
           </h1>
 
-
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.9 }}
-            className="mt-6 max-w-md text-lg text-white/70"
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground"
           >
-            Every premium AI tool, orbiting one core. Original accounts, delivered in minutes.
+            Access original subscriptions for the world&apos;s best AI tools with affordable
+            pricing, instant delivery and trusted support.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.05 }}
-            className="pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-3"
+            transition={{ duration: 0.7, delay: 0.6 }}
+            className="mt-9 flex flex-wrap items-center gap-3"
           >
             <Magnetic>
               <Link
                 to="/tools"
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#241f45] shadow-[0_16px_50px_-12px_rgba(185,167,255,0.8)] transition-transform hover:scale-[1.03]"
+                className="group inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-semibold text-background shadow-[0_16px_40px_-16px_rgba(30,25,45,0.6)] transition-transform hover:scale-[1.03]"
               >
                 Browse Tools
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -125,26 +191,42 @@ export function Hero() {
             <Magnetic>
               <Link
                 to="/compare"
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/15"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-7 py-3.5 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-card"
               >
                 Compare Plans
               </Link>
             </Magnetic>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.4 }}
-            className="absolute bottom-10 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/50"
+          <motion.dl
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mt-12 flex max-w-md items-center gap-8 border-t border-border pt-8"
           >
-            Scroll to enter
-            <span className="hero-scroll-dot" />
-          </motion.div>
+            {stats.map((s) => (
+              <div key={s.label}>
+                <dt className="font-display text-3xl font-semibold text-foreground">{s.value}</dt>
+                <dd className="mt-1 text-xs leading-tight text-muted-foreground">{s.label}</dd>
+              </div>
+            ))}
+          </motion.dl>
         </div>
 
-        {/* bottom fade blends the universe into the cream sections below */}
-        <div className="hero-fade" aria-hidden />
+        {/* RIGHT — floating acrylic showcase */}
+        <div ref={stageRef} className="relative hidden lg:block" style={{ perspective: "1400px" }}>
+          <motion.div
+            style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
+            className="acrylic-stage"
+          >
+            <div className="acrylic-grid">
+              <CardColumn items={colA} direction="up" />
+              <CardColumn items={colB} direction="down" />
+            </div>
+          </motion.div>
+          <div className="acrylic-mask-top" aria-hidden />
+          <div className="acrylic-mask-bottom" aria-hidden />
+        </div>
       </div>
     </section>
   );

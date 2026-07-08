@@ -45,13 +45,15 @@ function Ring({
               className={reverse ? "orbit-face orbit-face--rev" : "orbit-face"}
               style={{ ["--dur" as string]: `${duration}s` }}
             >
-              <div className="glass flex items-center gap-2.5 rounded-2xl p-2.5 pr-4 shadow-[0_24px_60px_-24px_rgba(109,110,176,0.7)]">
-                <ToolLogo mark={tool.mark} gradient={tool.gradient} size={tileSize} />
-                <div className="hidden sm:block">
-                  <p className="text-xs font-semibold leading-tight text-ink">{tool.name}</p>
-                  <p className="text-[11px] leading-tight text-ink-soft">
-                    <span className="font-semibold text-brand-deep">${tool.ourPrice}</span>
-                  </p>
+              <div style={{ transform: `rotateY(${-angle}deg)` }}>
+                <div className="glass flex items-center gap-2.5 rounded-2xl p-2.5 pr-4 shadow-[0_24px_60px_-24px_rgba(109,110,176,0.7)]">
+                  <ToolLogo mark={tool.mark} gradient={tool.gradient} size={tileSize} />
+                  <div className="hidden sm:block">
+                    <p className="text-xs font-semibold leading-tight text-ink">{tool.name}</p>
+                    <p className="text-[11px] leading-tight text-ink-soft">
+                      <span className="font-semibold text-brand-deep">${tool.ourPrice}</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

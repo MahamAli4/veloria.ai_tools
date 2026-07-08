@@ -1,10 +1,53 @@
 import { useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Billboard, Line, MeshTransmissionMaterial, RoundedBox, Text } from "@react-three/drei";
+import { Billboard, Line, MeshTransmissionMaterial, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 
 
 const hex = (g: string) => (g.match(/#([0-9a-f]{6})/i)?.[0] ?? "#8f7bff");
+
+/* crisp text/logo baked to a canvas texture (no external font fetch) */
+function makeLabelTexture(tool: { name: string; mark: string; price: number; gradient: string }) {
+  const w = 640;
+  const h = 250;
+  const c = document.createElement("canvas");
+  c.width = w;
+  c.height = h;
+  const ctx = c.getContext("2d")!;
+  const cols = tool.gradient.match(/#([0-9a-f]{6})/gi) ?? ["#8f7bff", "#b9a7ff"];
+  // logo chip
+  const chip = 132;
+  const cx = 40;
+  const cy = (h - chip) / 2;
+  const grad = ctx.createLinearGradient(cx, cy, cx + chip, cy + chip);
+  grad.addColorStop(0, cols[0]);
+  grad.addColorStop(1, cols[1] ?? cols[0]);
+  const r = 30;
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.roundRect(cx, cy, chip, chip, r);
+  ctx.fill();
+  // mark
+  ctx.fillStyle = "#ffffff";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = "600 74px Georgia, serif";
+  ctx.fillText(tool.mark, cx + chip / 2, cy + chip / 2 + 4);
+  // name
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "600 62px Georgia, serif";
+  ctx.fillText(tool.name, cx + chip + 34, h / 2 - 26);
+  // price
+  ctx.fillStyle = "#c9b8ff";
+  ctx.font = "400 44px Helvetica, Arial, sans-serif";
+  ctx.fillText(`$${tool.price}/mo`, cx + chip + 34, h / 2 + 40);
+  const tex = new THREE.CanvasTexture(c);
+  tex.anisotropy = 4;
+  tex.needsUpdate = true;
+  return tex;
+}
+
 
 
 /* ---------------- tool definitions for the orbit ---------------- */

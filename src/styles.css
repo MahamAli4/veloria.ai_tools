@@ -173,59 +173,136 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ---------- Real 3D orbit scene ---------- */
-.orbit-stage {
-  position: relative;
-  width: 100%;
-  height: 560px;
-  perspective: 1200px;
-  perspective-origin: 50% 45%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible;
-}
-
-.orbit-world {
-  position: relative;
-  width: 1px;
-  height: 1px;
-  transform-style: preserve-3d;
-}
-
-.orbit-node {
+/* ---------- Cinematic AI Universe hero ---------- */
+.hero-backdrop {
   position: absolute;
-  top: 0;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 50% 15%, #3a3170 0%, #2a2350 40%, #1a1734 75%, #14101f 100%);
+}
+
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: hero-noise-shift 0.9s steps(3) infinite;
+}
+
+.hero-rays {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 120%;
+  background:
+    conic-gradient(from 200deg at 60% 0%, transparent 0deg, rgba(185, 167, 255, 0.18) 30deg, transparent 60deg),
+    conic-gradient(from 150deg at 30% 0%, transparent 0deg, rgba(255, 154, 139, 0.12) 25deg, transparent 55deg);
+  filter: blur(20px);
+  animation: hero-rays-drift 16s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.hero-fade {
+  position: absolute;
   left: 0;
-  transform-style: preserve-3d;
+  right: 0;
+  bottom: 0;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent, var(--cream) 92%);
+  pointer-events: none;
+}
+
+.hero-cursor {
+  position: fixed;
+  left: -14px;
+  top: -14px;
+  z-index: 70;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(201, 184, 255, 0.9), rgba(201, 184, 255, 0) 70%);
+  mix-blend-mode: screen;
   will-change: transform;
 }
 
-.orbit-float {
-  animation: orbit-bob 6s ease-in-out infinite;
+.hero-scroll-dot {
+  width: 1px;
+  height: 30px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
+  animation: hero-scroll 1.8s ease-in-out infinite;
 }
 
-.orbit-core {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(137, 138, 196, 0.5), transparent 70%);
-  filter: blur(55px);
-  animation: orbit-pulse 6s ease-in-out infinite;
+/* orbiting glass cards (rendered via drei Html) */
+.orbit3d-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px 9px 9px;
+  border-radius: 18px;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 20px 50px -20px rgba(20, 16, 40, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s, background 0.35s;
+  cursor: pointer;
 }
 
-@keyframes orbit-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+.orbit3d-card[data-hovered="true"] {
+  transform: scale(1.18);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 30px 70px -18px rgba(185, 167, 255, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
+.orbit3d-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.5);
+}
 
-@keyframes orbit-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.12); opacity: 1; }
+.orbit3d-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.orbit3d-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.orbit3d-price {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes hero-noise-shift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-4%, 3%); }
+  100% { transform: translate(3%, -2%); }
+}
+
+@keyframes hero-rays-drift {
+  from { transform: translateX(-4%) rotate(-2deg); opacity: 0.8; }
+  to { transform: translateX(4%) rotate(2deg); opacity: 1; }
+}
+
+@keyframes hero-scroll {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.3; transform-origin: top; }
+  50% { transform: scaleY(1); opacity: 1; transform-origin: top; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orbit-float, .orbit-core { animation: none; }
+  .hero-noise, .hero-rays, .hero-scroll-dot { animation: none; }
 }
+

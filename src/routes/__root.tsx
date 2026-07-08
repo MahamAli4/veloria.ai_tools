@@ -15,6 +15,8 @@ import { Navbar } from "../components/site/Navbar";
 import { Footer } from "../components/site/Footer";
 import { WhatsAppButton } from "../components/site/WhatsAppButton";
 import { ScrollProgress, CursorGlow } from "../components/site/primitives";
+import { Toaster } from "../components/ui/sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (

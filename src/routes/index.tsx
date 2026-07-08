@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <>
+    <div id="top">
       <Hero />
       <FeaturedTools />
       <HowItWorks />
@@ -19,6 +19,6 @@ function Index() {
       <FAQSection />
       <Contact />
       <CTABand />
-    </>
+    </div>
   );
 }

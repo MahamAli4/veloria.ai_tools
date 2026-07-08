@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Twitter, Github, Linkedin, Instagram, ArrowUpRight } from "lucide-react";
 

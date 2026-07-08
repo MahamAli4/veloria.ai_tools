@@ -168,37 +168,38 @@ function OrbitCard({
             onSelect(tool.slug);
           }}
         >
-          {/* glass slab with real thickness */}
-          <RoundedBox args={[1.5, 0.62, 0.12]} radius={0.09} smoothness={4}>
+          {/* dark premium glass slab with real thickness */}
+          <RoundedBox args={[1.28, 0.5, 0.1]} radius={0.08} smoothness={4}>
             <meshPhysicalMaterial
-              color="#ffffff"
-              transmission={0.9}
-              thickness={0.6}
-              roughness={0.18}
-              metalness={0}
+              color="#1c1836"
+              transmission={0.55}
+              thickness={0.5}
+              roughness={0.15}
+              metalness={0.1}
               clearcoat={1}
-              clearcoatRoughness={0.2}
-              ior={1.3}
+              clearcoatRoughness={0.15}
+              ior={1.35}
               transparent
-              opacity={0.9}
+              opacity={0.92}
               emissive={color}
-              emissiveIntensity={hovered ? 0.5 : 0.18}
+              emissiveIntensity={hovered ? 0.55 : 0.22}
             />
           </RoundedBox>
           {/* colored logo chip */}
-          <mesh position={[-0.5, 0, 0.08]}>
-            <boxGeometry args={[0.34, 0.34, 0.05]} />
-            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.6} roughness={0.3} />
+          <mesh position={[-0.42, 0, 0.06]}>
+            <boxGeometry args={[0.28, 0.28, 0.05]} />
+            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.7} roughness={0.3} />
           </mesh>
-          <Text position={[-0.5, 0, 0.12]} fontSize={0.18} color="#ffffff" anchorX="center" anchorY="middle">
+          <Text position={[-0.42, 0, 0.1]} fontSize={0.15} color="#ffffff" anchorX="center" anchorY="middle">
             {tool.mark}
           </Text>
-          <Text position={[0.12, 0.1, 0.09]} fontSize={0.15} color="#ffffff" anchorX="center" anchorY="middle" maxWidth={0.9}>
+          <Text position={[0.14, 0.08, 0.06]} fontSize={0.13} color="#ffffff" anchorX="center" anchorY="middle" maxWidth={0.8}>
             {tool.name}
           </Text>
-          <Text position={[0.12, -0.13, 0.09]} fontSize={0.11} color="#d9d2ff" anchorX="center" anchorY="middle">
+          <Text position={[0.14, -0.11, 0.06]} fontSize={0.095} color="#c9b8ff" anchorX="center" anchorY="middle">
             {`$${tool.price}/mo`}
           </Text>
+
         </group>
       </Billboard>
     </group>

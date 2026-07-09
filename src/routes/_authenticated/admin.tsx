@@ -451,7 +451,7 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
           </button>
         </div>
       </div>
-
+    </div>
   );
 }
 

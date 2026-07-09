@@ -23,7 +23,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-1">
       <div
         className={`mx-auto flex max-w-6xl items-center justify-between rounded-2xl px-4 py-0 transition-all duration-500 md:px-6 ${
           scrolled ? "glass shadow-[0_12px_40px_-12px_rgba(137,138,196,0.45)]" : "border border-transparent"

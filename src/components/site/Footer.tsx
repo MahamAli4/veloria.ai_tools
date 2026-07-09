@@ -7,8 +7,17 @@ export function Footer() {
   const [done, setDone] = useState(false);
 
   return (
-    <footer className="relative mt-24 overflow-hidden px-4 pb-10 pt-16">
+    <footer className="relative mt-24 overflow-hidden px-4 pb-10 pt-16" style={{ background: "#153179" }}>
       <div className="mx-auto max-w-6xl">
+        {/* Brand logo */}
+        <div className="flex justify-center pb-10">
+          <img
+            src={veloriaLogoLight.url}
+            alt="Veloria.AI"
+            className="h-40 w-auto object-contain md:h-56"
+          />
+        </div>
+
         {/* Newsletter */}
         <div
           className="relative overflow-hidden rounded-[2rem] p-8 md:p-14"

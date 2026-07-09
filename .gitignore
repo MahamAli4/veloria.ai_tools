@@ -30,3 +30,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Credentials and secrets
+*.pem
+*.key
+*.cert
+credentials.json
+secrets.json

@@ -6,7 +6,7 @@ import { uploadImage } from "@/lib/upload";
 import { toast } from "sonner";
 import {
   Loader2, LogOut, Plus, Pencil, Trash2, Package, MessageSquare, Wrench, ShieldAlert, X,
-  Upload, ImageIcon, Link2, Star,
+  Upload, ImageIcon, Link2, Star, TrendingUp,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -58,7 +58,7 @@ function AdminPage() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const { data: isAdmin, isLoading: checking } = useIsAdmin();
-  const [tab, setTab] = useState<"tools" | "reviews" | "orders" | "messages">("tools");
+  const [tab, setTab] = useState<"analytics" | "tools" | "reviews" | "orders" | "messages">("analytics");
 
   const signOut = async () => {
     await qc.cancelQueries();
@@ -95,7 +95,7 @@ function AdminPage() {
       </div>
 
       <div className="mt-8 flex gap-1 rounded-full border border-border bg-white/50 p-1 text-sm">
-        {([["tools", "Tools", Wrench], ["reviews", "Reviews", Star], ["orders", "Orders", Package], ["messages", "Messages", MessageSquare]] as const).map(([id, label, Icon]) => (
+        {([["analytics", "Analytics", TrendingUp], ["tools", "Tools", Wrench], ["reviews", "Reviews", Star], ["orders", "Orders", Package], ["messages", "Messages", MessageSquare]] as const).map(([id, label, Icon]) => (
           <button key={id} onClick={() => setTab(id)} className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 font-medium transition-colors ${tab === id ? "bg-white text-ink shadow-sm" : "text-ink-soft"}`}>
             <Icon size={15} /> {label}
           </button>
@@ -103,12 +103,70 @@ function AdminPage() {
       </div>
 
       <div className="mt-8">
+        {tab === "analytics" && <AnalyticsTab />}
         {tab === "tools" && <ToolsTab />}
         {tab === "reviews" && <ReviewsTab />}
         {tab === "orders" && <OrdersTab />}
         {tab === "messages" && <MessagesTab />}
       </div>
     </section>
+  );
+}
+
+/* ---------------- Analytics ---------------- */
+function AnalyticsTab() {
+  const { data: analytics, isLoading } = useQuery({
+    queryKey: ["admin-analytics"],
+    queryFn: async () => {
+      // Fetch delivered orders for tools and revenue
+      const { data: ordersData, error: ordersError } = await supabase
+        .from("orders")
+        .select("price")
+        .eq("status", "delivered");
+        
+      if (ordersError) throw ordersError;
+
+      // Fetch total page views (traffic)
+      const { count: trafficCount, error: trafficError } = await supabase
+        .from("page_views")
+        .select("*", { count: "exact", head: true });
+        
+      if (trafficError && trafficError.code !== '42P01') { 
+         // Ignore missing table error so dashboard works even before SQL is run
+         console.error(trafficError);
+      }
+
+      const deliveredCount = ordersData?.length || 0;
+      const totalRevenue = ordersData?.reduce((sum, order) => sum + (Number(order.price) || 0), 0) || 0;
+
+      return {
+        traffic: trafficCount || 0,
+        delivered: deliveredCount,
+        revenue: totalRevenue,
+      };
+    },
+  });
+
+  if (isLoading) return <Loader2 className="mx-auto animate-spin text-brand-deep" />;
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-3">
+      <div className="rounded-2xl border border-border bg-white/55 p-6 shadow-sm">
+        <p className="text-sm font-semibold uppercase tracking-wider text-ink-soft">Total Traffic</p>
+        <p className="mt-2 font-display text-4xl font-bold text-ink">{analytics?.traffic}</p>
+        <p className="mt-1 text-xs text-ink-soft">Page views recorded</p>
+      </div>
+      <div className="rounded-2xl border border-border bg-white/55 p-6 shadow-sm">
+        <p className="text-sm font-semibold uppercase tracking-wider text-ink-soft">Tools Delivered</p>
+        <p className="mt-2 font-display text-4xl font-bold text-ink">{analytics?.delivered}</p>
+        <p className="mt-1 text-xs text-ink-soft">Completed orders</p>
+      </div>
+      <div className="rounded-2xl border border-border bg-white/55 p-6 shadow-sm">
+        <p className="text-sm font-semibold uppercase tracking-wider text-ink-soft">Total Revenue</p>
+        <p className="mt-2 font-display text-4xl font-bold text-ink">${analytics?.revenue?.toFixed(2)}</p>
+        <p className="mt-1 text-xs text-ink-soft">From delivered tools</p>
+      </div>
+    </div>
   );
 }
 

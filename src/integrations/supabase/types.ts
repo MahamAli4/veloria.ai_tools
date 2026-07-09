@@ -86,6 +86,24 @@ export type Database = {
         }
         Relationships: []
       }
+      page_views: {
+        Row: {
+          id: string
+          path: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          path: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          path?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           avatar_url: string

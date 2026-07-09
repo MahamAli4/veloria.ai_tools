@@ -146,6 +146,14 @@ function RootComponent() {
     return () => sub.subscription.unsubscribe();
   }, [router, queryClient]);
 
+  useEffect(() => {
+    if (!isAdminArea) {
+      supabase.from("page_views").insert({ path: pathname }).then(({ error }) => {
+        if (error) console.error("Failed to log page view:", error);
+      });
+    }
+  }, [pathname, isAdminArea]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollProgress />

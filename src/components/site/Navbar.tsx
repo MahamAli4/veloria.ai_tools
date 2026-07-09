@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Magnetic } from "./primitives";
-import veloriaLogo from "@/assets/veloria-logo.png.asset.json";
 
 const links = [
   { to: "#tools", label: "Tools" },
@@ -29,11 +28,16 @@ export function Navbar() {
           scrolled ? "glass shadow-[0_12px_40px_-12px_rgba(137,138,196,0.45)]" : "border border-transparent"
         }`}
       >
-        <a href="#top" className="flex items-center gap-2.5">
+        <a href="#top" className="flex items-center gap-0">
           <img
-            src={veloriaLogo.url}
-            alt="Veloria.AI"
-            className="h-32 w-auto object-contain md:h-40"
+            src="/favicon.png"
+            alt="Logo"
+            className="h-10 w-auto my-1 object-contain md:h-12"
+          />
+          <img
+            src="/favicon-text.png"
+            alt="Veloria"
+            className="h-6 w-auto my-1  object-contain md:h-8"
           />
         </a>
 

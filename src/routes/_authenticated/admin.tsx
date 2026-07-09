@@ -186,6 +186,106 @@ function ToolsTab() {
   );
 }
 
+/* --- reusable form primitives (module scope so they don't remount on keystroke) --- */
+function FieldLabel({ children }: { children: React.ReactNode }) {
+  return <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-ink-soft">{children}</span>;
+}
+function TextInput({ label, value, onChange, ph, type = "text" }: { label: string; value: string; onChange: (v: string) => void; ph?: string; type?: string }) {
+  return (
+    <label className="block">
+      <FieldLabel>{label}</FieldLabel>
+      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={ph} className="w-full rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand" />
+    </label>
+  );
+}
+function TextArea({ label, value, onChange, rows = 3, ph }: { label: string; value: string; onChange: (v: string) => void; rows?: number; ph?: string }) {
+  return (
+    <label className="block">
+      <FieldLabel>{label}</FieldLabel>
+      <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={rows} placeholder={ph} className="w-full resize-y rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand" />
+    </label>
+  );
+}
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl border border-border bg-white/40 p-4">
+      <p className="mb-3 font-display text-sm font-semibold text-ink">{title}</p>
+      {children}
+    </div>
+  );
+}
+
+function ImageUpload({ label, value, onChange, folder, aspect }: { label: string; value: string; onChange: (url: string) => void; folder: string; aspect: "cover" | "logo" }) {
+  const ref = useRef<HTMLInputElement>(null);
+  const [busy, setBusy] = useState(false);
+  const pick = async (file?: File) => {
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return toast.error("Image 5MB se choti honi chahiye.");
+    setBusy(true);
+    try {
+      const url = await uploadImage(file, folder);
+      onChange(url);
+      toast.success("Image uploaded");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const box = aspect === "cover" ? "aspect-[16/9] w-full" : "h-24 w-24";
+  return (
+    <div>
+      <FieldLabel>{label}</FieldLabel>
+      <div className="flex items-center gap-3">
+        <button type="button" onClick={() => ref.current?.click()} className={`relative grid ${box} place-items-center overflow-hidden rounded-xl border border-dashed border-border bg-white/60 text-ink-soft transition-colors hover:border-brand`}>
+          {value ? (
+            <img src={value} alt={label} className="h-full w-full object-cover" />
+          ) : busy ? (
+            <Loader2 size={20} className="animate-spin" />
+          ) : (
+            <span className="flex flex-col items-center gap-1 text-xs"><ImageIcon size={20} /> Upload</span>
+          )}
+          {busy && value && <span className="absolute inset-0 grid place-items-center bg-black/30"><Loader2 size={20} className="animate-spin text-white" /></span>}
+        </button>
+        <div className="flex flex-col gap-2">
+          <button type="button" onClick={() => ref.current?.click()} className="inline-flex items-center gap-2 rounded-lg border border-border bg-white/70 px-3 py-1.5 text-xs font-semibold text-ink">
+            <Upload size={13} /> {value ? "Change" : "Choose image"}
+          </button>
+          {value && <button type="button" onClick={() => onChange("")} className="text-xs text-ink-soft hover:text-red-500">Remove</button>}
+        </div>
+      </div>
+      <input ref={ref} type="file" accept="image/*" className="hidden" onChange={(e) => pick(e.target.files?.[0])} />
+    </div>
+  );
+}
+
+function CategorySelect({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
+  const [custom, setCustom] = useState("");
+  const toggle = (c: string) => onChange(value.includes(c) ? value.filter((x) => x !== c) : [...value, c]);
+  const addCustom = () => {
+    const v = custom.trim();
+    if (v && !value.includes(v)) onChange([...value, v]);
+    setCustom("");
+  };
+  const options = Array.from(new Set([...CATEGORY_PRESETS, ...value]));
+  return (
+    <div>
+      <FieldLabel>Categories (select one or more)</FieldLabel>
+      <div className="flex flex-wrap gap-2">
+        {options.map((c) => (
+          <button type="button" key={c} onClick={() => toggle(c)} className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${value.includes(c) ? "border-brand bg-brand/10 text-ink" : "border-border bg-white/60 text-ink-soft"}`}>
+            {c}
+          </button>
+        ))}
+      </div>
+      <div className="mt-2 flex gap-2">
+        <input value={custom} onChange={(e) => setCustom(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCustom(); } }} placeholder="Add custom category" className="flex-1 rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand" />
+        <button type="button" onClick={addCustom} className="rounded-lg border border-border bg-white/70 px-3 py-2 text-xs font-semibold text-ink">Add</button>
+      </div>
+    </div>
+  );
+}
+
 function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClose: () => void; onSaved: () => void }) {
   const [saving, setSaving] = useState(false);
   const [f, setF] = useState({
@@ -193,7 +293,11 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
     name: tool.name ?? "",
     mark: tool.mark ?? "",
     gradient: tool.gradient ?? "linear-gradient(135deg,#6d6eb0,#a5a6dc)",
-    category: tool.category ?? "",
+    image_url: (tool as { image_url?: string }).image_url ?? "",
+    logo_url: (tool as { logo_url?: string }).logo_url ?? "",
+    categories: (Array.isArray((tool as { categories?: unknown }).categories) ? ((tool as { categories?: string[] }).categories as string[]) : (tool.category ? [tool.category] : [])),
+    currency: (tool as { currency?: string }).currency ?? "USD",
+    post_link: (tool as { post_link?: string }).post_link ?? "",
     tagline: tool.tagline ?? "",
     description: tool.description ?? "",
     overview: tool.overview ?? "",
@@ -211,9 +315,10 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
     is_active: tool.is_active ?? true,
   });
 
-  const set = (k: keyof typeof f, v: string | boolean) => setF((p) => ({ ...p, [k]: v }));
+  const set = <K extends keyof typeof f>(k: K, v: (typeof f)[K]) => setF((p) => ({ ...p, [k]: v }));
 
   const save = async () => {
+    if (!f.name.trim() || !f.slug.trim()) return toast.error("Name aur slug zaroori hain.");
     setSaving(true);
     let plans, faqs;
     try {
@@ -228,7 +333,12 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
       name: f.name.trim(),
       mark: f.mark,
       gradient: f.gradient,
-      category: f.category,
+      image_url: f.image_url,
+      logo_url: f.logo_url,
+      categories: f.categories,
+      category: f.categories[0] ?? "",
+      currency: f.currency,
+      post_link: f.post_link.trim(),
       tagline: f.tagline,
       description: f.description,
       overview: f.overview,
@@ -244,7 +354,7 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
       plans,
       faqs,
       is_active: f.is_active,
-    };
+    } as never;
     const res = tool.id
       ? await supabase.from("tools").update(payload).eq("id", tool.id)
       : await supabase.from("tools").insert(payload);
@@ -254,62 +364,94 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
     onSaved();
   };
 
-  const Input = ({ label, k, ph }: { label: string; k: keyof typeof f; ph?: string }) => (
-    <label className="block">
-      <span className="mb-1 block text-xs font-medium uppercase tracking-wider text-ink-soft">{label}</span>
-      <input value={f[k] as string} onChange={(e) => set(k, e.target.value)} placeholder={ph} className="w-full rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand" />
-    </label>
-  );
-  const Area = ({ label, k, rows = 3 }: { label: string; k: keyof typeof f; rows?: number }) => (
-    <label className="block">
-      <span className="mb-1 block text-xs font-medium uppercase tracking-wider text-ink-soft">{label}</span>
-      <textarea value={f[k] as string} onChange={(e) => set(k, e.target.value)} rows={rows} className="w-full resize-y rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand" />
-    </label>
-  );
-
   return (
     <div className="fixed inset-0 z-[70] flex items-start justify-center overflow-y-auto bg-black/40 p-4 backdrop-blur-sm">
-      <div className="my-8 w-full max-w-2xl rounded-[1.6rem] border border-border bg-[#fff7ec] p-6 shadow-2xl">
-        <div className="flex items-center justify-between">
+      <div className="my-8 w-full max-w-3xl rounded-[1.6rem] border border-border bg-[#fff7ec] shadow-2xl">
+        <div className="sticky top-0 z-10 flex items-center justify-between rounded-t-[1.6rem] border-b border-border bg-[#fff7ec]/95 px-6 py-4 backdrop-blur">
           <h3 className="font-display text-2xl font-semibold text-ink">{tool.id ? "Edit tool" : "New tool"}</h3>
           <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-white/60"><X size={16} /></button>
         </div>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <Input label="Name" k="name" />
-          <Input label="Slug" k="slug" ph="chatgpt-plus" />
-          <Input label="Mark (letter/icon)" k="mark" />
-          <Input label="Category" k="category" />
-          <Input label="Original price" k="original_price" />
-          <Input label="Our price" k="our_price" />
-          <Input label="Duration" k="duration" />
-          <Input label="Gradient (CSS)" k="gradient" />
-        </div>
-        <div className="mt-3 space-y-3">
-          <Input label="Tagline" k="tagline" />
-          <Area label="Short description" k="description" rows={2} />
-          <Area label="Overview" k="overview" />
-          <Area label="What it does" k="what_it_does" rows={2} />
-          <Area label="Who it's for" k="who_for" rows={2} />
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Area label="Benefits (one per line)" k="benefits" />
-            <Area label="Features (one per line)" k="features" />
-            <Area label="Advantages (one per line)" k="advantages" />
-            <Area label="Use cases (one per line)" k="use_cases" />
-          </div>
-          <Area label="Plans (JSON)" k="plans" rows={5} />
-          <Area label="FAQs (JSON)" k="faqs" rows={4} />
+
+        <div className="space-y-4 p-6">
+          <Section title="Media">
+            <div className="grid gap-4 sm:grid-cols-[2fr_1fr]">
+              <ImageUpload label="Cover image" value={f.image_url} onChange={(v) => set("image_url", v)} folder="covers" aspect="cover" />
+              <ImageUpload label="Logo" value={f.logo_url} onChange={(v) => set("logo_url", v)} folder="logos" aspect="logo" />
+            </div>
+          </Section>
+
+          <Section title="Basic info">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <TextInput label="Tool name" value={f.name} onChange={(v) => set("name", v)} ph="ChatGPT Plus" />
+              <TextInput label="Slug (URL)" value={f.slug} onChange={(v) => set("slug", v)} ph="chatgpt-plus" />
+            </div>
+            <div className="mt-3">
+              <CategorySelect value={f.categories} onChange={(v) => set("categories", v)} />
+            </div>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <TextInput label="Tagline" value={f.tagline} onChange={(v) => set("tagline", v)} />
+              <TextInput label="Post / product link" value={f.post_link} onChange={(v) => set("post_link", v)} ph="https://..." />
+            </div>
+          </Section>
+
+          <Section title="Pricing">
+            <div className="grid gap-3 sm:grid-cols-4">
+              <label className="block">
+                <FieldLabel>Currency</FieldLabel>
+                <select value={f.currency} onChange={(e) => set("currency", e.target.value)} className="w-full rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand">
+                  {CURRENCIES.map((c) => <option key={c.code} value={c.code}>{c.code} ({c.symbol})</option>)}
+                </select>
+              </label>
+              <TextInput label="Original price" value={f.original_price} onChange={(v) => set("original_price", v)} type="number" />
+              <TextInput label="Discounted price" value={f.our_price} onChange={(v) => set("our_price", v)} type="number" />
+              <TextInput label="Duration" value={f.duration} onChange={(v) => set("duration", v)} ph="per month" />
+            </div>
+          </Section>
+
+          <Section title="Descriptions">
+            <div className="space-y-3">
+              <TextArea label="Short description" value={f.description} onChange={(v) => set("description", v)} rows={2} />
+              <TextArea label="Overview" value={f.overview} onChange={(v) => set("overview", v)} />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <TextArea label="What it does" value={f.what_it_does} onChange={(v) => set("what_it_does", v)} rows={2} />
+                <TextArea label="Who it's for" value={f.who_for} onChange={(v) => set("who_for", v)} rows={2} />
+              </div>
+            </div>
+          </Section>
+
+          <Section title="Highlights (one per line)">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <TextArea label="Benefits" value={f.benefits} onChange={(v) => set("benefits", v)} />
+              <TextArea label="Features" value={f.features} onChange={(v) => set("features", v)} />
+              <TextArea label="Advantages" value={f.advantages} onChange={(v) => set("advantages", v)} />
+              <TextArea label="Use cases" value={f.use_cases} onChange={(v) => set("use_cases", v)} />
+            </div>
+          </Section>
+
+          <Section title="Advanced (optional)">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <TextInput label="Mark (letter fallback)" value={f.mark} onChange={(v) => set("mark", v)} />
+              <TextInput label="Gradient (CSS fallback)" value={f.gradient} onChange={(v) => set("gradient", v)} />
+            </div>
+            <div className="mt-3 space-y-3">
+              <TextArea label="Plans (JSON)" value={f.plans} onChange={(v) => set("plans", v)} rows={5} />
+              <TextArea label="FAQs (JSON)" value={f.faqs} onChange={(v) => set("faqs", v)} rows={4} />
+            </div>
+          </Section>
+
           <label className="flex items-center gap-2 text-sm text-ink">
             <input type="checkbox" checked={f.is_active} onChange={(e) => set("is_active", e.target.checked)} /> Active (visible on site)
           </label>
         </div>
-        <div className="mt-6 flex justify-end gap-3">
+
+        <div className="sticky bottom-0 flex justify-end gap-3 rounded-b-[1.6rem] border-t border-border bg-[#fff7ec]/95 px-6 py-4 backdrop-blur">
           <button onClick={onClose} className="rounded-full border border-border bg-white/60 px-5 py-2.5 text-sm font-semibold text-ink">Cancel</button>
           <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-70" style={{ background: "var(--gradient-brand)" }}>
-            {saving && <Loader2 size={15} className="animate-spin" />} Save
+            {saving && <Loader2 size={15} className="animate-spin" />} Save tool
           </button>
         </div>
       </div>
-    </div>
+
   );
 }
 

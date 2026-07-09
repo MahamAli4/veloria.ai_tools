@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Twitter, Github, Linkedin, Instagram, ArrowUpRight } from "lucide-react";
+import veloriaLogo from "@/assets/veloria-logo.png.asset.json";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -51,15 +52,13 @@ export function Footer() {
         {/* Links */}
         <div className="mt-14 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span
-                className="grid h-9 w-9 place-items-center rounded-xl font-display text-lg font-semibold text-white"
-                style={{ background: "var(--gradient-brand)" }}
-              >
-                A
-              </span>
-              <span className="font-display text-xl font-semibold text-ink">AI Vault</span>
-            </div>
+            <a href="#top" className="inline-flex items-center">
+              <img
+                src={veloriaLogo.url}
+                alt="Veloria.AI"
+                className="h-20 w-auto object-contain md:h-24"
+              />
+            </a>
             <p className="mt-4 max-w-xs text-sm text-ink-soft">
               The premium marketplace for AI subscriptions. Original accounts, honest prices, instant delivery.
             </p>

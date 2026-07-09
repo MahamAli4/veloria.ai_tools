@@ -72,16 +72,16 @@ export function Footer() {
           <FooterCol title="Legal" items={[["Terms", "#top"], ["Privacy", "#top"], ["Refunds", "#top"]]} />
         </div>
 
-        <div className="my-8 h-px w-full" style={{ background: "var(--hairline)" }} />
+        <div className="my-8 h-px w-full bg-white/15" />
 
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-ink-soft">© {new Date().getFullYear()} AI Vault. Crafted with care.</p>
+          <p className="text-sm text-white/70">© {new Date().getFullYear()} Veloria.AI. Crafted with care.</p>
           <div className="flex items-center gap-2">
             {[Twitter, Github, Linkedin, Instagram].map((Icon, i) => (
               <a
                 key={i}
                 href="#"
-                className="grid h-10 w-10 place-items-center rounded-full border border-border bg-white/50 text-ink-soft transition-all hover:scale-110 hover:text-brand"
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:scale-110 hover:text-white"
                 aria-label="social link"
               >
                 <Icon size={16} />

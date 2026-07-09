@@ -9,15 +9,6 @@ export function Footer() {
   return (
     <footer className="relative mt-24 overflow-hidden px-4 pb-10 pt-16" style={{ background: "#153179" }}>
       <div className="mx-auto max-w-6xl">
-        {/* Brand logo */}
-        <div className="flex justify-center pb-10">
-          <img
-            src={veloriaLogoLight.url}
-            alt="Veloria.AI"
-            className="h-40 w-auto object-contain md:h-56"
-          />
-        </div>
-
         {/* Newsletter */}
         <div
           className="relative overflow-hidden rounded-[2rem] p-8 md:p-14"
@@ -57,6 +48,16 @@ export function Footer() {
             </form>
           </div>
         </div>
+
+        {/* Brand logo */}
+        <div className="flex justify-center py-12">
+          <img
+            src={veloriaLogoLight.url}
+            alt="Veloria.AI"
+            className="h-56 w-auto object-contain md:h-80"
+          />
+        </div>
+
 
         {/* Links */}
         <div className="mt-14 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">

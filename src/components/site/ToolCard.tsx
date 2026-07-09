@@ -56,7 +56,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
 
         {tool.imageUrl && (
           <div className="mt-5 overflow-hidden rounded-xl" style={{ transform: "translateZ(15px)" }}>
-            <img src={tool.imageUrl} alt={tool.name} className="aspect-[16/9] w-full object-cover" />
+            <img src={tool.imageUrl} alt={tool.name} loading="lazy" decoding="async" className="aspect-[16/9] w-full object-cover" />
           </div>
         )}
 

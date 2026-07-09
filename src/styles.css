@@ -154,6 +154,10 @@
   font-family: var(--font-display);
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: var(--logo-blue);
+}
+
 @keyframes float-slow {
   0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
   50% { transform: translateY(-18px) rotate(var(--r, 0deg)); }

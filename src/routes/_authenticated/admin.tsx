@@ -1,12 +1,31 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { uploadImage } from "@/lib/upload";
 import { toast } from "sonner";
 import {
   Loader2, LogOut, Plus, Pencil, Trash2, Package, MessageSquare, Wrench, ShieldAlert, X,
+  Upload, ImageIcon, Link2,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
+
+const CURRENCIES = [
+  { code: "USD", symbol: "$" },
+  { code: "PKR", symbol: "₨" },
+  { code: "EUR", symbol: "€" },
+  { code: "GBP", symbol: "£" },
+  { code: "INR", symbol: "₹" },
+  { code: "AED", symbol: "د.إ" },
+  { code: "SAR", symbol: "﷼" },
+];
+
+const CATEGORY_PRESETS = [
+  "Conversational AI", "AI App Builder", "Productivity AI", "AI Search",
+  "AI Coding", "Career & Networking", "Design & Creative", "Writing AI",
+  "Video AI", "Image AI", "Music AI", "Marketing",
+];
+
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — AI Vault" }, { name: "robots", content: "noindex" }] }),

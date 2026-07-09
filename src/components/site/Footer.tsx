@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { Twitter, Github, Linkedin, Instagram, ArrowUpRight } from "lucide-react";
-import veloriaLogo from "@/assets/veloria-logo.png.asset.json";
+import veloriaLogoLight from "@/assets/veloria-logo-light.png.asset.json";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
 
   return (
-    <footer className="relative mt-24 overflow-hidden px-4 pb-10 pt-16">
+    <footer className="relative mt-24 overflow-hidden px-4 pb-10 pt-16" style={{ background: "#153179" }}>
       <div className="mx-auto max-w-6xl">
+        {/* Brand logo */}
+        <div className="flex justify-center pb-10">
+          <img
+            src={veloriaLogoLight.url}
+            alt="Veloria.AI"
+            className="h-40 w-auto object-contain md:h-56"
+          />
+        </div>
+
         {/* Newsletter */}
         <div
           className="relative overflow-hidden rounded-[2rem] p-8 md:p-14"
@@ -52,14 +61,8 @@ export function Footer() {
         {/* Links */}
         <div className="mt-14 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <a href="#top" className="inline-flex items-center">
-              <img
-                src={veloriaLogo.url}
-                alt="Veloria.AI"
-                className="h-20 w-auto object-contain md:h-24"
-              />
-            </a>
-            <p className="mt-4 max-w-xs text-sm text-ink-soft">
+            <span className="font-display text-xl font-semibold text-white">Veloria.AI</span>
+            <p className="mt-4 max-w-xs text-sm text-white/70">
               The premium marketplace for AI subscriptions. Original accounts, honest prices, instant delivery.
             </p>
           </div>
@@ -69,16 +72,16 @@ export function Footer() {
           <FooterCol title="Legal" items={[["Terms", "#top"], ["Privacy", "#top"], ["Refunds", "#top"]]} />
         </div>
 
-        <div className="my-8 h-px w-full" style={{ background: "var(--hairline)" }} />
+        <div className="my-8 h-px w-full bg-white/15" />
 
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-ink-soft">© {new Date().getFullYear()} AI Vault. Crafted with care.</p>
+          <p className="text-sm text-white/70">© {new Date().getFullYear()} Veloria.AI. Crafted with care.</p>
           <div className="flex items-center gap-2">
             {[Twitter, Github, Linkedin, Instagram].map((Icon, i) => (
               <a
                 key={i}
                 href="#"
-                className="grid h-10 w-10 place-items-center rounded-full border border-border bg-white/50 text-ink-soft transition-all hover:scale-110 hover:text-brand"
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:scale-110 hover:text-white"
                 aria-label="social link"
               >
                 <Icon size={16} />
@@ -94,13 +97,13 @@ export function Footer() {
 function FooterCol({ title, items }: { title: string; items: [string, string][] }) {
   return (
     <div>
-      <h4 className="text-sm font-semibold text-ink">{title}</h4>
+      <h4 className="text-sm font-semibold text-white">{title}</h4>
       <ul className="mt-4 space-y-2.5">
         {items.map(([label, to]) => (
           <li key={label}>
             <a
               href={to}
-              className="group inline-flex items-center gap-1 text-sm text-ink-soft transition-colors hover:text-brand"
+              className="group inline-flex items-center gap-1 text-sm text-white/70 transition-colors hover:text-white"
             >
               {label}
               <ArrowUpRight size={13} className="opacity-0 transition-opacity group-hover:opacity-100" />

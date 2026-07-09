@@ -97,13 +97,13 @@ export function Footer() {
 function FooterCol({ title, items }: { title: string; items: [string, string][] }) {
   return (
     <div>
-      <h4 className="text-sm font-semibold text-ink">{title}</h4>
+      <h4 className="text-sm font-semibold text-white">{title}</h4>
       <ul className="mt-4 space-y-2.5">
         {items.map(([label, to]) => (
           <li key={label}>
             <a
               href={to}
-              className="group inline-flex items-center gap-1 text-sm text-ink-soft transition-colors hover:text-brand"
+              className="group inline-flex items-center gap-1 text-sm text-white/70 transition-colors hover:text-white"
             >
               {label}
               <ArrowUpRight size={13} className="opacity-0 transition-opacity group-hover:opacity-100" />

@@ -12,6 +12,9 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
 
   const discount = Math.round(((tool.originalPrice - tool.ourPrice) / tool.originalPrice) * 100);
   const comingSoon = (tool as { status?: string }).status === "coming_soon";
+  const CUR: Record<string, string> = { USD: "$", PKR: "₨", EUR: "€", GBP: "£", INR: "₹", AED: "د.إ", SAR: "﷼" };
+  const cur = CUR[tool.currency ?? "USD"] ?? "$";
+  const primaryCategory = tool.categories?.length ? tool.categories[0] : tool.category;
 
   return (
     <motion.div
@@ -41,17 +44,28 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         />
 
         <div className="flex items-start justify-between" style={{ transform: "translateZ(30px)" }}>
-          <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
+          {tool.logoUrl ? (
+            <img src={tool.logoUrl} alt={tool.name} className="h-[54px] w-[54px] rounded-2xl object-cover transition-transform duration-500 group-hover:scale-110" />
+          ) : (
+            <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
+          )}
           <span className="rounded-full bg-brand/12 px-3 py-1 text-xs font-semibold text-brand-deep">
             {comingSoon ? "Coming soon" : `−${discount}%`}
           </span>
         </div>
 
+        {tool.imageUrl && (
+          <div className="mt-5 overflow-hidden rounded-xl" style={{ transform: "translateZ(15px)" }}>
+            <img src={tool.imageUrl} alt={tool.name} className="aspect-[16/9] w-full object-cover" />
+          </div>
+        )}
+
         <div className="mt-5" style={{ transform: "translateZ(20px)" }}>
-          <p className="text-xs font-medium uppercase tracking-wider text-brand-deep">{tool.category}</p>
+          <p className="text-xs font-medium uppercase tracking-wider text-brand-deep">{primaryCategory}</p>
           <h3 className="mt-1 font-display text-2xl font-semibold text-ink">{tool.name}</h3>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft">{tool.description}</p>
         </div>
+
 
         <ul className="mt-4 space-y-1.5">
           {tool.benefits.slice(0, 3).map((b) => (
@@ -64,8 +78,9 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         <div className="mt-auto flex items-end justify-between pt-6">
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="font-display text-3xl font-semibold text-ink">${tool.ourPrice}</span>
-              <span className="text-sm text-ink-soft line-through opacity-60">${tool.originalPrice}</span>
+              <span className="font-display text-3xl font-semibold text-ink">{cur}{tool.ourPrice}</span>
+              <span className="text-sm text-ink-soft line-through opacity-60">{cur}{tool.originalPrice}</span>
+
             </div>
             <p className="text-xs text-ink-soft">{tool.duration}</p>
           </div>

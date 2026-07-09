@@ -26,6 +26,11 @@ export type Tool = {
   useCases: string[];
   plans: Plan[];
   faqs: { q: string; a: string }[];
+  imageUrl?: string;
+  logoUrl?: string;
+  categories?: string[];
+  currency?: string;
+  postLink?: string;
 };
 
 export const tools: Tool[] = [

@@ -11,6 +11,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 150, damping: 15 });
 
   const discount = Math.round(((tool.originalPrice - tool.ourPrice) / tool.originalPrice) * 100);
+  const comingSoon = (tool as { status?: string }).status === "coming_soon";
 
   return (
     <motion.div

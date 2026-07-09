@@ -44,17 +44,28 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         />
 
         <div className="flex items-start justify-between" style={{ transform: "translateZ(30px)" }}>
-          <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
+          {tool.logoUrl ? (
+            <img src={tool.logoUrl} alt={tool.name} className="h-[54px] w-[54px] rounded-2xl object-cover transition-transform duration-500 group-hover:scale-110" />
+          ) : (
+            <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
+          )}
           <span className="rounded-full bg-brand/12 px-3 py-1 text-xs font-semibold text-brand-deep">
             {comingSoon ? "Coming soon" : `−${discount}%`}
           </span>
         </div>
 
+        {tool.imageUrl && (
+          <div className="mt-5 overflow-hidden rounded-xl" style={{ transform: "translateZ(15px)" }}>
+            <img src={tool.imageUrl} alt={tool.name} className="aspect-[16/9] w-full object-cover" />
+          </div>
+        )}
+
         <div className="mt-5" style={{ transform: "translateZ(20px)" }}>
-          <p className="text-xs font-medium uppercase tracking-wider text-brand-deep">{tool.category}</p>
+          <p className="text-xs font-medium uppercase tracking-wider text-brand-deep">{primaryCategory}</p>
           <h3 className="mt-1 font-display text-2xl font-semibold text-ink">{tool.name}</h3>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft">{tool.description}</p>
         </div>
+
 
         <ul className="mt-4 space-y-1.5">
           {tool.benefits.slice(0, 3).map((b) => (

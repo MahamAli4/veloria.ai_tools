@@ -117,8 +117,11 @@ function ToolsTab() {
     refresh();
   };
 
-  const toggleActive = async (t: ToolRow) => {
-    const { error } = await supabase.from("tools").update({ is_active: !t.is_active }).eq("id", t.id);
+  const setStatus = async (t: ToolRow, status: string) => {
+    const { error } = await supabase
+      .from("tools")
+      .update({ status, is_active: status === "active" } as never)
+      .eq("id", t.id);
     if (error) return toast.error(error.message);
     refresh();
   };

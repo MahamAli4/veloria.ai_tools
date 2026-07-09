@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Twitter, Github, Linkedin, Instagram, ArrowUpRight } from "lucide-react";
+import veloriaLogo from "@/assets/veloria-logo.png.asset.json";
 
 export function Footer() {
   const [email, setEmail] = useState("");

@@ -58,7 +58,7 @@ function AdminPage() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const { data: isAdmin, isLoading: checking } = useIsAdmin();
-  const [tab, setTab] = useState<"tools" | "orders" | "messages">("tools");
+  const [tab, setTab] = useState<"tools" | "reviews" | "orders" | "messages">("tools");
 
   const signOut = async () => {
     await qc.cancelQueries();

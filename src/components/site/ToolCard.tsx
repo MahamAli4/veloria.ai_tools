@@ -69,16 +69,26 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
             </div>
             <p className="text-xs text-ink-soft">{tool.duration}</p>
           </div>
-          <OrderDialog tool={tool}>
+          {comingSoon ? (
             <button
               type="button"
-              className="group/btn inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
-              style={{ background: "var(--gradient-brand)" }}
+              disabled
+              className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full border border-border bg-white/50 px-4 py-2.5 text-sm font-semibold text-ink-soft"
             >
-              Get
-              <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-0.5" />
+              Coming soon
             </button>
-          </OrderDialog>
+          ) : (
+            <OrderDialog tool={tool}>
+              <button
+                type="button"
+                className="group/btn inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
+                style={{ background: "var(--gradient-brand)" }}
+              >
+                Get
+                <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-0.5" />
+              </button>
+            </OrderDialog>
+          )}
         </div>
       </motion.div>
     </motion.div>

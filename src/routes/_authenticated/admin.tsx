@@ -6,7 +6,7 @@ import { uploadImage } from "@/lib/upload";
 import { toast } from "sonner";
 import {
   Loader2, LogOut, Plus, Pencil, Trash2, Package, MessageSquare, Wrench, ShieldAlert, X,
-  Upload, ImageIcon, Link2,
+  Upload, ImageIcon, Link2, Star,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -35,6 +35,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
 type ToolRow = Tables<"tools">;
 type OrderRow = Tables<"orders">;
 type MsgRow = Tables<"contact_messages">;
+type ReviewRow = Tables<"testimonials">;
 
 const linesToArr = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
 const arrToLines = (v: unknown) => (Array.isArray(v) ? (v as unknown[]).map(String).join("\n") : "");
@@ -57,7 +58,7 @@ function AdminPage() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const { data: isAdmin, isLoading: checking } = useIsAdmin();
-  const [tab, setTab] = useState<"tools" | "orders" | "messages">("tools");
+  const [tab, setTab] = useState<"tools" | "reviews" | "orders" | "messages">("tools");
 
   const signOut = async () => {
     await qc.cancelQueries();
@@ -94,7 +95,7 @@ function AdminPage() {
       </div>
 
       <div className="mt-8 flex gap-1 rounded-full border border-border bg-white/50 p-1 text-sm">
-        {([["tools", "Tools", Wrench], ["orders", "Orders", Package], ["messages", "Messages", MessageSquare]] as const).map(([id, label, Icon]) => (
+        {([["tools", "Tools", Wrench], ["reviews", "Reviews", Star], ["orders", "Orders", Package], ["messages", "Messages", MessageSquare]] as const).map(([id, label, Icon]) => (
           <button key={id} onClick={() => setTab(id)} className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 font-medium transition-colors ${tab === id ? "bg-white text-ink shadow-sm" : "text-ink-soft"}`}>
             <Icon size={15} /> {label}
           </button>
@@ -103,6 +104,7 @@ function AdminPage() {
 
       <div className="mt-8">
         {tab === "tools" && <ToolsTab />}
+        {tab === "reviews" && <ReviewsTab />}
         {tab === "orders" && <OrdersTab />}
         {tab === "messages" && <MessagesTab />}
       </div>
@@ -582,6 +584,151 @@ function MessagesTab() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Reviews ---------------- */
+function ReviewsTab() {
+  const qc = useQueryClient();
+  const { data: reviews = [], isLoading } = useQuery({
+    queryKey: ["admin-reviews"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("testimonials").select("*").order("sort_order");
+      if (error) throw error;
+      return data as ReviewRow[];
+    },
+  });
+  const [editing, setEditing] = useState<Partial<ReviewRow> | null>(null);
+
+  const refresh = () => {
+    qc.invalidateQueries({ queryKey: ["admin-reviews"] });
+    qc.invalidateQueries({ queryKey: ["testimonials"] });
+  };
+
+  const remove = async (id: string) => {
+    if (!confirm("Is review ko delete karein?")) return;
+    const { error } = await supabase.from("testimonials").delete().eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success("Review deleted");
+    refresh();
+  };
+
+  const toggleActive = async (r: ReviewRow) => {
+    const { error } = await supabase.from("testimonials").update({ is_active: !r.is_active }).eq("id", r.id);
+    if (error) return toast.error(error.message);
+    refresh();
+  };
+
+  if (isLoading) return <Loader2 className="mx-auto animate-spin text-brand-deep" />;
+
+  return (
+    <div>
+      <div className="mb-4 flex justify-end">
+        <button onClick={() => setEditing({})} className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white" style={{ background: "var(--gradient-brand)" }}>
+          <Plus size={15} /> Add review
+        </button>
+      </div>
+      {!reviews.length ? (
+        <p className="py-12 text-center text-ink-soft">Abhi koi review nahi.</p>
+      ) : (
+        <div className="grid gap-3">
+          {reviews.map((r) => (
+            <div key={r.id} className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-white/55 p-4">
+              {r.avatar_url ? (
+                <img src={r.avatar_url} alt={r.name} className="h-11 w-11 shrink-0 rounded-full object-cover" />
+              ) : (
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full font-semibold text-white" style={{ background: "var(--gradient-brand)" }}>{r.name[0]}</span>
+              )}
+              <div className="min-w-0 flex-1">
+                <p className="font-display font-semibold text-ink">{r.name} <span className="text-xs font-normal text-ink-soft">· {r.role}</span></p>
+                <p className="truncate text-sm text-ink-soft">"{r.quote}"</p>
+                <p className="mt-0.5 text-xs text-brand">{"★".repeat(Math.max(1, Math.min(5, r.rating)))}</p>
+              </div>
+              <button onClick={() => toggleActive(r)} className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${r.is_active ? "border-brand bg-brand/10 text-ink" : "border-border bg-white/70 text-ink-soft"}`}>
+                {r.is_active ? "Active" : "Hidden"}
+              </button>
+              <button onClick={() => setEditing(r)} className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-white/60 text-ink-soft hover:text-ink"><Pencil size={15} /></button>
+              <button onClick={() => remove(r.id)} className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-white/60 text-ink-soft hover:text-red-500"><Trash2 size={15} /></button>
+            </div>
+          ))}
+        </div>
+      )}
+      {editing && <ReviewEditor review={editing} onClose={() => setEditing(null)} onSaved={() => { setEditing(null); refresh(); }} />}
+    </div>
+  );
+}
+
+function ReviewEditor({ review, onClose, onSaved }: { review: Partial<ReviewRow>; onClose: () => void; onSaved: () => void }) {
+  const [saving, setSaving] = useState(false);
+  const [f, setF] = useState({
+    name: review.name ?? "",
+    role: review.role ?? "",
+    quote: review.quote ?? "",
+    avatar_url: review.avatar_url ?? "",
+    rating: String(review.rating ?? 5),
+    sort_order: String(review.sort_order ?? 0),
+    is_active: review.is_active ?? true,
+  });
+  const set = <K extends keyof typeof f>(k: K, v: (typeof f)[K]) => setF((p) => ({ ...p, [k]: v }));
+
+  const save = async () => {
+    if (!f.name.trim() || !f.quote.trim()) return toast.error("Name aur quote zaroori hain.");
+    setSaving(true);
+    const payload = {
+      name: f.name.trim(),
+      role: f.role.trim(),
+      quote: f.quote.trim(),
+      avatar_url: f.avatar_url,
+      rating: Math.max(1, Math.min(5, Number(f.rating) || 5)),
+      sort_order: Number(f.sort_order) || 0,
+      is_active: f.is_active,
+    } as never;
+    const res = review.id
+      ? await supabase.from("testimonials").update(payload).eq("id", review.id)
+      : await supabase.from("testimonials").insert(payload);
+    setSaving(false);
+    if (res.error) return toast.error(res.error.message);
+    toast.success("Saved");
+    onSaved();
+  };
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-start justify-center overflow-y-auto bg-black/40 p-4 backdrop-blur-sm">
+      <div className="my-8 w-full max-w-lg rounded-[1.6rem] border border-border bg-[#fff7ec] shadow-2xl">
+        <div className="sticky top-0 z-10 flex items-center justify-between rounded-t-[1.6rem] border-b border-border bg-[#fff7ec]/95 px-6 py-4 backdrop-blur">
+          <p className="font-display text-lg font-semibold text-ink">{review.id ? "Edit review" : "Add review"}</p>
+          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-lg text-ink-soft hover:text-ink"><X size={18} /></button>
+        </div>
+
+        <div className="space-y-4 px-6 py-5">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <TextInput label="Name" value={f.name} onChange={(v) => set("name", v)} ph="Sarah Chen" />
+            <TextInput label="Role" value={f.role} onChange={(v) => set("role", v)} ph="Product Designer" />
+          </div>
+          <TextArea label="Quote" value={f.quote} onChange={(v) => set("quote", v)} rows={4} ph="Loved the experience..." />
+          <ImageUpload label="Avatar (optional)" value={f.avatar_url} onChange={(url) => set("avatar_url", url)} folder="testimonials" aspect="logo" />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="block">
+              <FieldLabel>Rating (1-5)</FieldLabel>
+              <select value={f.rating} onChange={(e) => set("rating", e.target.value)} className="w-full rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand">
+                {[5, 4, 3, 2, 1].map((n) => <option key={n} value={n}>{n} ★</option>)}
+              </select>
+            </label>
+            <TextInput label="Sort order" value={f.sort_order} onChange={(v) => set("sort_order", v)} type="number" />
+          </div>
+          <label className="flex items-center gap-2 text-sm text-ink">
+            <input type="checkbox" checked={f.is_active} onChange={(e) => set("is_active", e.target.checked)} /> Active (visible on site)
+          </label>
+        </div>
+
+        <div className="sticky bottom-0 flex justify-end gap-3 rounded-b-[1.6rem] border-t border-border bg-[#fff7ec]/95 px-6 py-4 backdrop-blur">
+          <button onClick={onClose} className="rounded-full border border-border bg-white/60 px-5 py-2.5 text-sm font-semibold text-ink">Cancel</button>
+          <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-70" style={{ background: "var(--gradient-brand)" }}>
+            {saving && <Loader2 size={15} className="animate-spin" />} Save review
+          </button>
+        </div>
       </div>
     </div>
   );

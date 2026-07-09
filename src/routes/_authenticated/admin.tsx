@@ -157,11 +157,16 @@ function ToolsTab() {
       <div className="grid gap-3">
         {tools.map((t) => (
           <div key={t.id} className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-white/55 p-4">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl font-semibold text-white" style={{ background: t.gradient }}>{t.mark || t.name[0]}</span>
+            {(t as { logo_url?: string }).logo_url ? (
+              <img src={(t as { logo_url?: string }).logo_url} alt={t.name} className="h-11 w-11 shrink-0 rounded-xl object-cover" />
+            ) : (
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl font-semibold text-white" style={{ background: t.gradient }}>{t.mark || t.name[0]}</span>
+            )}
             <div className="min-w-0 flex-1">
               <p className="font-display font-semibold text-ink">{t.name}</p>
-              <p className="text-xs text-ink-soft">{t.category} · ${Number(t.our_price)} <span className="line-through opacity-60">${Number(t.original_price)}</span></p>
+              <p className="text-xs text-ink-soft">{(Array.isArray((t as { categories?: string[] }).categories) && (t as { categories?: string[] }).categories!.length ? (t as { categories?: string[] }).categories!.join(", ") : t.category)} · {Number(t.our_price)} <span className="line-through opacity-60">{Number(t.original_price)}</span> {(t as { currency?: string }).currency ?? ""}</p>
             </div>
+
             <select
               value={(t as { status?: string }).status ?? (t.is_active ? "active" : "inactive")}
               onChange={(e) => setStatus(t, e.target.value)}

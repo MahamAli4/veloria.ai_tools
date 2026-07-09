@@ -35,6 +35,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
 type ToolRow = Tables<"tools">;
 type OrderRow = Tables<"orders">;
 type MsgRow = Tables<"contact_messages">;
+type ReviewRow = Tables<"testimonials">;
 
 const linesToArr = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
 const arrToLines = (v: unknown) => (Array.isArray(v) ? (v as unknown[]).map(String).join("\n") : "");

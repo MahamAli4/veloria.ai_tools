@@ -8,7 +8,10 @@ type ToolRow = Tables<"tools">;
 const asStrings = (v: unknown): string[] =>
   Array.isArray(v) ? (v as unknown[]).map((x) => String(x)) : [];
 
-export function mapTool(row: ToolRow): Tool & { id: string; isActive: boolean; sortOrder: number } {
+export type ToolStatus = "active" | "inactive" | "coming_soon";
+
+export function mapTool(row: ToolRow): Tool & { id: string; isActive: boolean; status: ToolStatus; sortOrder: number } {
+  const status = ((row as { status?: string }).status ?? (row.is_active ? "active" : "inactive")) as ToolStatus;
   return {
     id: row.id,
     slug: row.slug,
@@ -31,6 +34,7 @@ export function mapTool(row: ToolRow): Tool & { id: string; isActive: boolean; s
     plans: (Array.isArray(row.plans) ? row.plans : []) as unknown as Plan[],
     faqs: (Array.isArray(row.faqs) ? row.faqs : []) as unknown as { q: string; a: string }[],
     isActive: row.is_active,
+    status,
     sortOrder: row.sort_order,
   };
 }
@@ -41,7 +45,7 @@ async function fetchTools(): Promise<UITool[]> {
   const { data, error } = await supabase
     .from("tools")
     .select("*")
-    .eq("is_active", true)
+    .neq("status", "inactive")
     .order("sort_order", { ascending: true });
   if (error) throw error;
   return (data ?? []).map(mapTool);

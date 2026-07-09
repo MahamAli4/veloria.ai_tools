@@ -11,6 +11,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 150, damping: 15 });
 
   const discount = Math.round(((tool.originalPrice - tool.ourPrice) / tool.originalPrice) * 100);
+  const comingSoon = (tool as { status?: string }).status === "coming_soon";
 
   return (
     <motion.div
@@ -42,7 +43,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         <div className="flex items-start justify-between" style={{ transform: "translateZ(30px)" }}>
           <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
           <span className="rounded-full bg-brand/12 px-3 py-1 text-xs font-semibold text-brand-deep">
-            −{discount}%
+            {comingSoon ? "Coming soon" : `−${discount}%`}
           </span>
         </div>
 
@@ -68,16 +69,26 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
             </div>
             <p className="text-xs text-ink-soft">{tool.duration}</p>
           </div>
-          <OrderDialog tool={tool}>
+          {comingSoon ? (
             <button
               type="button"
-              className="group/btn inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
-              style={{ background: "var(--gradient-brand)" }}
+              disabled
+              className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full border border-border bg-white/50 px-4 py-2.5 text-sm font-semibold text-ink-soft"
             >
-              Get
-              <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-0.5" />
+              Coming soon
             </button>
-          </OrderDialog>
+          ) : (
+            <OrderDialog tool={tool}>
+              <button
+                type="button"
+                className="group/btn inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
+                style={{ background: "var(--gradient-brand)" }}
+              >
+                Get
+                <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-0.5" />
+              </button>
+            </OrderDialog>
+          )}
         </div>
       </motion.div>
     </motion.div>

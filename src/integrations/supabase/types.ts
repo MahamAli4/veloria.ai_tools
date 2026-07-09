@@ -107,6 +107,7 @@ export type Database = {
           plans: Json
           slug: string
           sort_order: number
+          status: string
           tagline: string
           updated_at: string
           use_cases: Json
@@ -133,6 +134,7 @@ export type Database = {
           plans?: Json
           slug: string
           sort_order?: number
+          status?: string
           tagline?: string
           updated_at?: string
           use_cases?: Json
@@ -159,6 +161,7 @@ export type Database = {
           plans?: Json
           slug?: string
           sort_order?: number
+          status?: string
           tagline?: string
           updated_at?: string
           use_cases?: Json

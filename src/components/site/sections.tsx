@@ -146,7 +146,12 @@ export function WhyChooseUs() {
 
 /* ---------- Testimonials ---------- */
 export function Testimonials() {
-  const row = [...testimonials, ...testimonials];
+  const { data } = useTestimonials();
+  const list = data && data.length
+    ? data
+    : fallbackTestimonials.map((t, i) => ({ ...t, id: String(i), avatar_url: "", rating: 5 }));
+  if (!list.length) return null;
+  const row = [...list, ...list];
   return (
     <section className="overflow-hidden py-20" id="testimonials">
       <div className="px-4">
@@ -158,12 +163,16 @@ export function Testimonials() {
         <div className="flex w-max animate-marquee gap-5 hover:[animation-play-state:paused]">
           {row.map((t, i) => (
             <div key={i} className="w-[340px] shrink-0 rounded-2xl border border-border bg-white/55 p-6 backdrop-blur-xl">
-              <div className="flex text-brand">{"★★★★★".split("").map((s, j) => <span key={j}>{s}</span>)}</div>
+              <div className="flex text-brand">{Array.from({ length: Math.max(1, Math.min(5, (t as { rating?: number }).rating ?? 5)) }).map((_, j) => <span key={j}>★</span>)}</div>
               <p className="mt-4 text-[15px] leading-relaxed text-ink">"{t.quote}"</p>
               <div className="mt-5 flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-full font-display font-semibold text-white" style={{ background: "var(--gradient-brand)" }}>
-                  {t.name[0]}
-                </div>
+                {(t as { avatar_url?: string }).avatar_url ? (
+                  <img src={(t as { avatar_url?: string }).avatar_url} alt={t.name} className="h-10 w-10 shrink-0 rounded-full object-cover" />
+                ) : (
+                  <div className="grid h-10 w-10 place-items-center rounded-full font-display font-semibold text-white" style={{ background: "var(--gradient-brand)" }}>
+                    {t.name[0]}
+                  </div>
+                )}
                 <div>
                   <p className="text-sm font-semibold text-ink">{t.name}</p>
                   <p className="text-xs text-ink-soft">{t.role}</p>

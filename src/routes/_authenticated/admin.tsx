@@ -95,7 +95,7 @@ function AdminPage() {
       </div>
 
       <div className="mt-8 flex gap-1 rounded-full border border-border bg-white/50 p-1 text-sm">
-        {([["tools", "Tools", Wrench], ["orders", "Orders", Package], ["messages", "Messages", MessageSquare]] as const).map(([id, label, Icon]) => (
+        {([["tools", "Tools", Wrench], ["reviews", "Reviews", Star], ["orders", "Orders", Package], ["messages", "Messages", MessageSquare]] as const).map(([id, label, Icon]) => (
           <button key={id} onClick={() => setTab(id)} className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 font-medium transition-colors ${tab === id ? "bg-white text-ink shadow-sm" : "text-ink-soft"}`}>
             <Icon size={15} /> {label}
           </button>
@@ -104,6 +104,7 @@ function AdminPage() {
 
       <div className="mt-8">
         {tab === "tools" && <ToolsTab />}
+        {tab === "reviews" && <ReviewsTab />}
         {tab === "orders" && <OrdersTab />}
         {tab === "messages" && <MessagesTab />}
       </div>

@@ -5,8 +5,9 @@ import {
   ShieldCheck, Zap, BadgeCheck, Lock, Headphones, Sparkles,
   ChevronDown, MousePointerClick, CreditCard, Mail, Rocket, Loader2, ArrowRight,
 } from "lucide-react";
-import { testimonials, faqs } from "@/data/tools";
+import { testimonials as fallbackTestimonials, faqs } from "@/data/tools";
 import { useTools } from "@/lib/tools";
+import { useTestimonials } from "@/lib/testimonials";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ToolCard } from "./ToolCard";

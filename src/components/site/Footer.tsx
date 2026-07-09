@@ -62,8 +62,9 @@ export function Footer() {
             <img
               src={veloriaLogoLight.url}
               alt="Veloria.AI"
-              className="h-16 w-auto object-contain md:h-20"
+              className="h-28 w-auto object-contain md:h-36"
             />
+
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
               The premium marketplace for AI subscriptions. Original accounts, honest prices, instant delivery.
             </p>

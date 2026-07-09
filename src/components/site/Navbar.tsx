@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Magnetic } from "./primitives";
+import veloriaLogo from "@/assets/veloria-logo.png.asset.json";
 
 const links = [
   { to: "#tools", label: "Tools" },
@@ -29,13 +30,11 @@ export function Navbar() {
         }`}
       >
         <a href="#top" className="flex items-center gap-2.5">
-          <span
-            className="grid h-9 w-9 place-items-center rounded-xl font-display text-lg font-semibold text-white"
-            style={{ background: "var(--gradient-brand)" }}
-          >
-            A
-          </span>
-          <span className="font-display text-xl font-semibold tracking-tight text-ink">AI Vault</span>
+          <img
+            src={veloriaLogo.url}
+            alt="Veloria.AI"
+            className="h-10 w-auto object-contain"
+          />
         </a>
 
         <nav className="hidden items-center gap-1 md:flex">

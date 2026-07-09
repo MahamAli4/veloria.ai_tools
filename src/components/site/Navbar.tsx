@@ -33,7 +33,7 @@ export function Navbar() {
           <img
             src={veloriaLogo.url}
             alt="Veloria.AI"
-            className="h-16 w-auto object-contain md:h-20"
+            className="h-24 w-auto object-contain md:h-28"
           />
         </a>
 

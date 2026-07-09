@@ -218,8 +218,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function ImageUpload({ label, value, onChange, folder, aspect }: { label: string; value: string; onChange: (url: string) => void; folder: string; aspect: "cover" | "logo" }) {
   const ref = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+  const [drag, setDrag] = useState(false);
   const pick = async (file?: File) => {
     if (!file) return;
+    if (!file.type.startsWith("image/")) return toast.error("Sirf image files allowed hain.");
     if (file.size > 5 * 1024 * 1024) return toast.error("Image 5MB se choti honi chahiye.");
     setBusy(true);
     try {
@@ -232,32 +234,50 @@ function ImageUpload({ label, value, onChange, folder, aspect }: { label: string
       setBusy(false);
     }
   };
-  const box = aspect === "cover" ? "aspect-[16/9] w-full" : "h-24 w-24";
+  const box = aspect === "cover" ? "aspect-[16/9] w-full" : "aspect-square w-full max-w-[9rem]";
   return (
     <div>
       <FieldLabel>{label}</FieldLabel>
-      <div className="flex items-center gap-3">
-        <button type="button" onClick={() => ref.current?.click()} className={`relative grid ${box} place-items-center overflow-hidden rounded-xl border border-dashed border-border bg-white/60 text-ink-soft transition-colors hover:border-brand`}>
-          {value ? (
+      <div
+        onClick={() => !busy && ref.current?.click()}
+        onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
+        onDragLeave={() => setDrag(false)}
+        onDrop={(e) => { e.preventDefault(); setDrag(false); pick(e.dataTransfer.files?.[0]); }}
+        className={`group relative grid ${box} cursor-pointer place-items-center overflow-hidden rounded-xl border-2 border-dashed bg-white/60 text-ink-soft transition-colors ${drag ? "border-brand bg-brand/5" : "border-border hover:border-brand"}`}
+      >
+        {value ? (
+          <>
             <img src={value} alt={label} className="h-full w-full object-cover" />
-          ) : busy ? (
-            <Loader2 size={20} className="animate-spin" />
-          ) : (
-            <span className="flex flex-col items-center gap-1 text-xs"><ImageIcon size={20} /> Upload</span>
-          )}
-          {busy && value && <span className="absolute inset-0 grid place-items-center bg-black/30"><Loader2 size={20} className="animate-spin text-white" /></span>}
-        </button>
-        <div className="flex flex-col gap-2">
-          <button type="button" onClick={() => ref.current?.click()} className="inline-flex items-center gap-2 rounded-lg border border-border bg-white/70 px-3 py-1.5 text-xs font-semibold text-ink">
-            <Upload size={13} /> {value ? "Change" : "Choose image"}
-          </button>
-          {value && <button type="button" onClick={() => onChange("")} className="text-xs text-ink-soft hover:text-red-500">Remove</button>}
-        </div>
+            {/* hover overlay with actions */}
+            <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/45 opacity-0 backdrop-blur-[1px] transition-opacity group-hover:opacity-100">
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-white/90 px-3 py-1.5 text-xs font-semibold text-ink shadow-sm">
+                <Upload size={13} /> Change
+              </span>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); onChange(""); }}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-white/90 px-3 py-1.5 text-xs font-semibold text-red-500 shadow-sm hover:bg-white"
+              >
+                <Trash2 size={13} /> Remove
+              </button>
+            </div>
+          </>
+        ) : busy ? (
+          <Loader2 size={22} className="animate-spin text-brand-deep" />
+        ) : (
+          <span className="flex flex-col items-center gap-1.5 px-3 text-center">
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-brand/10 text-brand-deep"><ImageIcon size={18} /></span>
+            <span className="text-xs font-semibold text-ink">Click ya drag &amp; drop</span>
+            <span className="text-[10px] text-ink-soft">PNG, JPG · max 5MB</span>
+          </span>
+        )}
+        {busy && value && <span className="absolute inset-0 grid place-items-center bg-black/40"><Loader2 size={20} className="animate-spin text-white" /></span>}
       </div>
-      <input ref={ref} type="file" accept="image/*" className="hidden" onChange={(e) => pick(e.target.files?.[0])} />
+      <input ref={ref} type="file" accept="image/*" className="hidden" onChange={(e) => { pick(e.target.files?.[0]); e.target.value = ""; }} />
     </div>
   );
 }
+
 
 function CategorySelect({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
   const [custom, setCustom] = useState("");

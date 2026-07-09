@@ -45,7 +45,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
 
         <div className="flex items-start justify-between" style={{ transform: "translateZ(30px)" }}>
           {tool.logoUrl ? (
-            <img src={tool.logoUrl} alt={tool.name} className="h-[54px] w-[54px] rounded-2xl object-cover transition-transform duration-500 group-hover:scale-110" />
+            <img src={tool.logoUrl} alt={tool.name} loading="lazy" decoding="async" className="h-[54px] w-[54px] rounded-2xl object-cover transition-transform duration-500 group-hover:scale-110" />
           ) : (
             <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
           )}

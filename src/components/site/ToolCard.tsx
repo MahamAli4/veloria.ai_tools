@@ -78,8 +78,9 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         <div className="mt-auto flex items-end justify-between pt-6">
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="font-display text-3xl font-semibold text-ink">${tool.ourPrice}</span>
-              <span className="text-sm text-ink-soft line-through opacity-60">${tool.originalPrice}</span>
+              <span className="font-display text-3xl font-semibold text-ink">{cur}{tool.ourPrice}</span>
+              <span className="text-sm text-ink-soft line-through opacity-60">{cur}{tool.originalPrice}</span>
+
             </div>
             <p className="text-xs text-ink-soft">{tool.duration}</p>
           </div>

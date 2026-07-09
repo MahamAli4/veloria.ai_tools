@@ -86,6 +86,45 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonials: {
+        Row: {
+          avatar_url: string
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          quote: string
+          rating: number
+          role: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          quote: string
+          rating?: number
+          role?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          quote?: string
+          rating?: number
+          role?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tools: {
         Row: {
           advantages: Json

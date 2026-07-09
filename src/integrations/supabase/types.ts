@@ -90,21 +90,26 @@ export type Database = {
         Row: {
           advantages: Json
           benefits: Json
+          categories: Json
           category: string
           created_at: string
+          currency: string
           description: string
           duration: string
           faqs: Json
           features: Json
           gradient: string
           id: string
+          image_url: string
           is_active: boolean
+          logo_url: string
           mark: string
           name: string
           original_price: number
           our_price: number
           overview: string
           plans: Json
+          post_link: string
           slug: string
           sort_order: number
           status: string
@@ -117,21 +122,26 @@ export type Database = {
         Insert: {
           advantages?: Json
           benefits?: Json
+          categories?: Json
           category?: string
           created_at?: string
+          currency?: string
           description?: string
           duration?: string
           faqs?: Json
           features?: Json
           gradient?: string
           id?: string
+          image_url?: string
           is_active?: boolean
+          logo_url?: string
           mark?: string
           name: string
           original_price?: number
           our_price?: number
           overview?: string
           plans?: Json
+          post_link?: string
           slug: string
           sort_order?: number
           status?: string
@@ -144,21 +154,26 @@ export type Database = {
         Update: {
           advantages?: Json
           benefits?: Json
+          categories?: Json
           category?: string
           created_at?: string
+          currency?: string
           description?: string
           duration?: string
           faqs?: Json
           features?: Json
           gradient?: string
           id?: string
+          image_url?: string
           is_active?: boolean
+          logo_url?: string
           mark?: string
           name?: string
           original_price?: number
           our_price?: number
           overview?: string
           plans?: Json
+          post_link?: string
           slug?: string
           sort_order?: number
           status?: string

@@ -6,7 +6,7 @@ import { uploadImage } from "@/lib/upload";
 import { toast } from "sonner";
 import {
   Loader2, LogOut, Plus, Pencil, Trash2, Package, MessageSquare, Wrench, ShieldAlert, X,
-  Upload, ImageIcon, Link2,
+  Upload, ImageIcon, Link2, Star,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 

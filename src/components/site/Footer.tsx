@@ -62,14 +62,8 @@ export function Footer() {
         {/* Links */}
         <div className="mt-14 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <a href="#top" className="inline-flex items-center">
-              <img
-                src={veloriaLogo.url}
-                alt="Veloria.AI"
-                className="h-20 w-auto object-contain md:h-24"
-              />
-            </a>
-            <p className="mt-4 max-w-xs text-sm text-ink-soft">
+            <span className="font-display text-xl font-semibold text-white">Veloria.AI</span>
+            <p className="mt-4 max-w-xs text-sm text-white/70">
               The premium marketplace for AI subscriptions. Original accounts, honest prices, instant delivery.
             </p>
           </div>

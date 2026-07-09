@@ -143,9 +143,15 @@ function ToolsTab() {
               <p className="font-display font-semibold text-ink">{t.name}</p>
               <p className="text-xs text-ink-soft">{t.category} · ${Number(t.our_price)} <span className="line-through opacity-60">${Number(t.original_price)}</span></p>
             </div>
-            <button onClick={() => toggleActive(t)} className={`rounded-full px-3 py-1 text-xs font-semibold ${t.is_active ? "bg-brand/15 text-brand-deep" : "bg-black/5 text-ink-soft"}`}>
-              {t.is_active ? "Active" : "Hidden"}
-            </button>
+            <select
+              value={(t as { status?: string }).status ?? (t.is_active ? "active" : "inactive")}
+              onChange={(e) => setStatus(t, e.target.value)}
+              className="rounded-full border border-border bg-white/70 px-3 py-1.5 text-xs font-semibold text-ink"
+            >
+              <option value="active">Active</option>
+              <option value="inactive">Non-active</option>
+              <option value="coming_soon">Coming soon</option>
+            </select>
             <button onClick={() => setEditing(t)} className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-white/60 text-ink-soft hover:text-ink"><Pencil size={15} /></button>
             <button onClick={() => remove(t.id)} className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-white/60 text-ink-soft hover:text-red-500"><Trash2 size={15} /></button>
           </div>

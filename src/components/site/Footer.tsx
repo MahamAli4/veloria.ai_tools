@@ -25,10 +25,10 @@ export function Footer() {
                 <Mail size={13} /> Newsletter
               </div>
               <h3 className="font-display text-3xl font-semibold text-white md:text-4xl">
-                Get early access to new drops.
+                Get smart subscription tips.
               </h3>
               <p className="mt-3 max-w-md text-white/80">
-                New AI tools and members-only pricing, delivered to your inbox. No spam, ever.
+                New guides and money-saving tips for AI & digital tools, straight to your inbox. No spam, ever.
               </p>
             </div>
             <form
@@ -66,14 +66,14 @@ export function Footer() {
             />
 
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
-              The premium marketplace for AI subscriptions. Original accounts, honest prices, instant delivery.
+              We help you get AI & digital tool subscriptions the smart way — with honest tips, ideas and full guidance to save money.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/80">
-                <ShieldCheck size={13} /> Secure payments
+                <ShieldCheck size={13} /> Trusted guidance
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/80">
-                <Zap size={13} /> Instant delivery
+                <Zap size={13} /> Fast support
               </span>
             </div>
           </div>

@@ -58,7 +58,7 @@ export function Footer() {
         </div>
 
         {/* Main grid: brand + links */}
-        <div className="mt-16 grid items-center gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="mt-10 grid items-center gap-8 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <img
               src={veloriaLogoLight.url}

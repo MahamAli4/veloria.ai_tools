@@ -17,6 +17,10 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
 
   const selectedPlan = plans.find((p) => p.name === planName) ?? plans[0];
 
+  const waHref = `https://wa.me/923087601864?text=${encodeURIComponent(
+    `Hi! I'm interested in ${tool.name} (${selectedPlan.name} · ${selectedPlan.duration}). Please guide me.`,
+  )}`;
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);

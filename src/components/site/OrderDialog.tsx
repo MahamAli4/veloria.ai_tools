@@ -104,6 +104,15 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
               {loading && <Loader2 size={15} className="animate-spin" />}
               Request guidance
             </button>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
+            >
+              <MessageCircle size={16} />
+              Chat on WhatsApp
+            </a>
           </form>
         )}
       </DialogContent>

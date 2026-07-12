@@ -14,9 +14,8 @@ const stats = [
 const headlineTop = ["Premium", "AI", "Tools"];
 const headlineBottom = ["Without", "Premium", "Prices"];
 
-function discount(t: Tool) {
-  return Math.round(((t.originalPrice - t.ourPrice) / t.originalPrice) * 100);
-}
+
+
 
 
 /* one premium acrylic product card */

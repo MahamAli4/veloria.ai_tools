@@ -10,10 +10,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const rx = useSpring(useTransform(my, [-0.5, 0.5], [7, -7]), { stiffness: 150, damping: 15 });
   const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 150, damping: 15 });
 
-  const discount = Math.round(((tool.originalPrice - tool.ourPrice) / tool.originalPrice) * 100);
   const comingSoon = (tool as { status?: string }).status === "coming_soon";
-  const CUR: Record<string, string> = { USD: "$", PKR: "₨", EUR: "€", GBP: "£", INR: "₹", AED: "د.إ", SAR: "﷼" };
-  const cur = CUR[tool.currency ?? "USD"] ?? "$";
   const primaryCategory = tool.categories?.length ? tool.categories[0] : tool.category;
 
   return (

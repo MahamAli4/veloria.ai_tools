@@ -60,7 +60,51 @@ export function FeaturedTools() {
   );
 }
 
+/* ---------- About Us ---------- */
+const aboutPoints = [
+  { icon: Sparkles, title: "Our mission", desc: "Make premium AI & digital tools affordable for everyone through honest guidance." },
+  { icon: ShieldCheck, title: "What we do", desc: "We share tips, ideas and step-by-step help so you get subscriptions the smart, low-cost way." },
+  { icon: Headphones, title: "How we help", desc: "Real human support that answers your questions fast — from first query to final setup." },
+];
+
+export function AboutUs() {
+  return (
+    <section className="px-4 py-20" id="about">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+        <div>
+          <SectionHeading
+            eyebrow="About us"
+            title="We help you unlock AI tools for less"
+            subtitle="AI Vault by Veloria.AI is a small, dedicated team that guides people to get AI & digital tool subscriptions affordably — with clear, honest advice and no confusion."
+          />
+          <Reveal delay={0.1}>
+            <p className="mt-5 max-w-xl text-ink-soft">
+              We don't just point you to a tool — we walk you through every step, share money-saving tips and stay available whenever you need help. Thousands of people already trust us to get their favourite tools for less.
+            </p>
+          </Reveal>
+        </div>
+        <div className="space-y-4">
+          {aboutPoints.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.1}>
+              <div className="flex items-start gap-4 rounded-2xl border border-border bg-white/55 p-6 backdrop-blur-xl">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl" style={{ background: "var(--gradient-brand)" }}>
+                  <p.icon size={22} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl font-semibold text-ink">{p.title}</h3>
+                  <p className="mt-1.5 text-sm text-ink-soft">{p.desc}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- How It Works ---------- */
+
 const steps = [
   { icon: MousePointerClick, title: "Tell Us the Tool", desc: "Share which AI or digital tool subscription you want to get." },
   { icon: Mail, title: "Get Expert Guidance", desc: "We share tips, ideas and a clear guide on how to get it for less." },

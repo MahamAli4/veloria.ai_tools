@@ -62,17 +62,17 @@ export function FeaturedTools() {
 
 /* ---------- How It Works ---------- */
 const steps = [
-  { icon: MousePointerClick, title: "Choose Tool", desc: "Browse the collection and pick the AI subscription you need." },
-  { icon: CreditCard, title: "Complete Order", desc: "Check out securely in seconds with your preferred method." },
-  { icon: Mail, title: "Receive Subscription", desc: "Get your original, upgraded account delivered in minutes." },
-  { icon: Rocket, title: "Start Using Premium AI", desc: "Log in and enjoy full premium features immediately." },
+  { icon: MousePointerClick, title: "Tell Us the Tool", desc: "Share which AI or digital tool subscription you want to get." },
+  { icon: Mail, title: "Get Expert Guidance", desc: "We share tips, ideas and a clear guide on how to get it for less." },
+  { icon: CreditCard, title: "Follow the Steps", desc: "Use our guidance to set up the subscription the smart, affordable way." },
+  { icon: Rocket, title: "Start Using It", desc: "Enjoy your premium tool — with our support whenever you need it." },
 ];
 
 export function HowItWorks() {
   return (
     <section className="px-4 py-20" id="how">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading center eyebrow="Simple process" title="How it works" subtitle="From browsing to premium access in four effortless steps." />
+        <SectionHeading center eyebrow="Simple process" title="How we help you" subtitle="From your first question to using your tool — we guide you every step." />
         <div className="relative mt-16 grid gap-6 md:grid-cols-4">
           <div className="pointer-events-none absolute left-0 right-0 top-9 hidden h-px md:block" style={{ background: "var(--hairline)" }} />
           {steps.map((s, i) => (
@@ -97,19 +97,19 @@ export function HowItWorks() {
 
 /* ---------- Why Choose Us ---------- */
 const reasons = [
-  { icon: BadgeCheck, title: "Affordable Prices", desc: "Save up to 60% versus paying retail for every tool." },
-  { icon: ShieldCheck, title: "Original Accounts", desc: "Genuine, fully-featured subscriptions — never shared junk." },
-  { icon: Zap, title: "Fast Delivery", desc: "Most orders arrive within minutes of checkout." },
-  { icon: Lock, title: "Secure Payments", desc: "Encrypted checkout with trusted payment providers." },
+  { icon: BadgeCheck, title: "Save More", desc: "Smart tips and ideas to get your tools for far less." },
+  { icon: ShieldCheck, title: "Trusted Guidance", desc: "Honest, step-by-step help — no guesswork, no confusion." },
+  { icon: Zap, title: "Quick Answers", desc: "Fast responses so you never stay stuck." },
+  { icon: Lock, title: "Safe & Reliable", desc: "We guide you the right, secure way — always." },
   { icon: Headphones, title: "24/7 Support", desc: "Real humans ready to help, any time of day." },
-  { icon: Sparkles, title: "Trusted Service", desc: "Thousands of five-star reviews from happy members." },
+  { icon: Sparkles, title: "Every Popular Tool", desc: "Guidance for all the top AI and digital subscriptions." },
 ];
 
 export function WhyChooseUs() {
   return (
     <section className="px-4 py-20">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading eyebrow="The AI Vault difference" title="Why choose us" subtitle="Premium service, premium trust — every single order." />
+        <SectionHeading eyebrow="The AI Vault difference" title="Why choose us" subtitle="We guide you to get every subscription the smart, affordable way." />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {reasons.map((r, i) => (
             <Reveal key={r.title} delay={(i % 3) * 0.08}>
@@ -127,7 +127,7 @@ export function WhyChooseUs() {
         {/* stats */}
         <div className="mt-8 grid gap-5 rounded-[1.6rem] border border-border bg-white/50 p-8 backdrop-blur-xl sm:grid-cols-3">
           {[
-            { n: 20000, s: "+", l: "Subscriptions delivered" },
+            { n: 20000, s: "+", l: "People guided" },
             { n: 60, s: "%", l: "Average savings" },
             { n: 99, s: "%", l: "Satisfaction rate" },
           ].map((stat) => (
@@ -155,7 +155,7 @@ export function Testimonials() {
   return (
     <section className="overflow-hidden py-20" id="testimonials">
       <div className="px-4">
-        <SectionHeading center eyebrow="Loved by members" title="What people say" subtitle="Join thousands who upgraded their AI stack for less." />
+        <SectionHeading center eyebrow="Loved by members" title="What people say" subtitle="Join thousands who got their AI tools for less with our guidance." />
       </div>
       <div className="relative mt-14">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#fff2e0] to-transparent" />
@@ -250,11 +250,11 @@ export function Contact() {
       <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-border bg-white/50 backdrop-blur-xl">
         <div className="grid md:grid-cols-2">
           <div className="relative p-8 md:p-12" style={{ background: "var(--gradient-soft)" }}>
-            <SectionHeading eyebrow="Get in touch" title="Let's talk" subtitle="Questions about a tool or a bulk order? We reply fast." />
+            <SectionHeading eyebrow="Get in touch" title="Let's talk" subtitle="Want help getting a tool subscription for less? We reply fast." />
             <div className="mt-8 space-y-4 text-sm text-ink-soft">
               <p className="flex items-center gap-3"><Mail size={16} className="text-brand-deep" /> hello@aivault.com</p>
               <p className="flex items-center gap-3"><Headphones size={16} className="text-brand-deep" /> 24/7 live chat support</p>
-              <p className="flex items-center gap-3"><ShieldCheck size={16} className="text-brand-deep" /> Money-back guarantee</p>
+              <p className="flex items-center gap-3"><ShieldCheck size={16} className="text-brand-deep" /> Honest, expert guidance</p>
             </div>
           </div>
           <form onSubmit={submit} className="space-y-4 p-8 md:p-12">
@@ -291,10 +291,10 @@ export function CTABand() {
         <div className="pointer-events-none absolute -left-10 -top-10 h-56 w-56 rounded-full bg-white/20 blur-2xl" />
         <div className="pointer-events-none absolute -bottom-16 -right-10 h-64 w-64 rounded-full bg-white/15 blur-2xl" />
         <Reveal>
-          <h2 className="relative font-display text-4xl font-semibold text-white md:text-5xl text-balance">Ready to upgrade your AI workflow?</h2>
+          <h2 className="relative font-display text-4xl font-semibold text-white md:text-5xl text-balance">Ready to get your AI tools for less?</h2>
         </Reveal>
         <Reveal delay={0.08}>
-          <p className="relative mx-auto mt-4 max-w-lg text-white/85">Join thousands of members getting premium AI for a fraction of the price.</p>
+          <p className="relative mx-auto mt-4 max-w-lg text-white/85">Tell us the tool you want — we'll guide you on how to get the subscription affordably.</p>
         </Reveal>
         <Reveal delay={0.15}>
           <div className="relative mt-8 flex flex-wrap justify-center gap-3">

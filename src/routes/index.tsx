@@ -5,9 +5,9 @@ import {
 } from "@/components/site/sections";
 import { faqs } from "@/data/tools";
 
-const title = "AI Vault — Premium AI Subscriptions for Less | Veloria.AI";
+const title = "AI Vault — Get AI & Digital Tool Subscriptions for Less | Veloria.AI";
 const description =
-  "AI Vault by Veloria.AI is the premium marketplace for AI subscriptions. Get ChatGPT Plus, Claude, Lovable, Cursor and more — original accounts, delivered in minutes, up to 60% off.";
+  "AI Vault by Veloria.AI helps you get AI & digital tool subscriptions — ChatGPT, Claude, Canva, CapCut and more. We share tips, ideas and full guidance on how to get them for less.";
 
 const jsonLd = [
   {

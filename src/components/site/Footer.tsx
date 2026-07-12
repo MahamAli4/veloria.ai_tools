@@ -7,7 +7,7 @@ export function Footer() {
   const [done, setDone] = useState(false);
 
   return (
-    <footer className="relative mt-24 overflow-hidden px-4 pb-8 pt-16" style={{ background: "#153179" }}>
+    <footer className="relative mt-24 overflow-hidden px-4 pb-6 pt-10" style={{ background: "#153179" }}>
       {/* soft ambient glows */}
       <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
@@ -15,9 +15,10 @@ export function Footer() {
       <div className="relative mx-auto max-w-6xl">
         {/* Newsletter */}
         <div
-          className="relative overflow-hidden rounded-[2rem] p-8 md:p-12"
+          className="relative overflow-hidden rounded-[2rem] p-6 md:p-8"
           style={{ background: "var(--gradient-brand)" }}
         >
+
           <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/20 blur-2xl" />
           <div className="relative grid gap-8 md:grid-cols-2 md:items-center">
             <div>
@@ -57,7 +58,7 @@ export function Footer() {
         </div>
 
         {/* Main grid: brand + links */}
-        <div className="mt-16 grid items-center gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="mt-10 grid items-center gap-8 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <img
               src={veloriaLogoLight.url}
@@ -79,11 +80,12 @@ export function Footer() {
           </div>
 
           <FooterCol title="Explore" items={[["Tools", "#tools"], ["How it works", "#how"], ["FAQ", "#faq"]]} />
-          <FooterCol title="Company" items={[["Reviews", "#testimonials"], ["Contact", "#contact"], ["Admin", "/admin"]]} />
-          <FooterCol title="Legal" items={[["Terms", "#top"], ["Privacy", "#top"], ["Refunds", "#top"]]} />
+          <FooterCol title="Company" items={[["Reviews", "#testimonials"], ["Contact", "#contact"]]} />
+          <FooterCol title="Legal" items={[["Terms", "#top"], ["Privacy", "#top"]]} />
+
         </div>
 
-        <div className="my-8 h-px w-full bg-white/15" />
+        <div className="my-6 h-px w-full bg-white/15" />
 
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm text-white/60">© {new Date().getFullYear()} Veloria.AI. All rights reserved.</p>

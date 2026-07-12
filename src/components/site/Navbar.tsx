@@ -28,15 +28,15 @@ export function Navbar() {
           scrolled ? "glass shadow-[0_12px_40px_-12px_rgba(137,138,196,0.45)]" : "border border-transparent"
         }`}
       >
-        <a href="#top" className="flex items-center gap-0">
+        <a href="#top" className="flex items-center gap-0" aria-label="AI Vault by Veloria.AI — home">
           <img
             src="/favicon.png"
-            alt="Logo"
+            alt="AI Vault logo"
             className="h-10 w-auto my-1 object-contain md:h-12"
           />
           <img
             src="/favicon-text.png"
-            alt="Veloria"
+            alt="Veloria.AI"
             className="h-6 w-auto my-1  object-contain md:h-8"
           />
         </a>

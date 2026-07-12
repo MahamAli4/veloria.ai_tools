@@ -91,7 +91,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
                 className="group/btn inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
                 style={{ background: "var(--gradient-brand)" }}
               >
-                Get
+                Get subscription
                 <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-0.5" />
               </button>
             </OrderDialog>

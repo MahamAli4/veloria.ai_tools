@@ -41,7 +41,7 @@ export function Navbar() {
           />
         </a>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {links.map((l) => (
             <a
               key={l.to}
@@ -54,7 +54,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Magnetic className="hidden md:block">
+          <Magnetic className="hidden lg:block">
             <a
               href="#tools"
               className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgba(109,110,176,0.7)] transition-transform hover:scale-[1.03]"
@@ -65,7 +65,7 @@ export function Navbar() {
           </Magnetic>
           <button
             onClick={() => setOpen((o) => !o)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-white/50 text-ink md:hidden"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-white/50 text-ink lg:hidden"
             aria-label="Toggle menu"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
@@ -74,7 +74,7 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="mx-auto mt-2 max-w-6xl rounded-2xl glass p-3 md:hidden">
+        <div className="mx-auto mt-2 max-w-6xl rounded-2xl glass p-3 lg:hidden">
           {links.map((l) => (
             <a
               key={l.to}

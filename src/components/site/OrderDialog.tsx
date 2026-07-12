@@ -88,7 +88,6 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
                     }`}
                   >
                     <span className="font-medium text-ink">{p.name} <span className="text-ink-soft">· {p.duration}</span></span>
-                    <span className="font-display font-semibold text-ink">${p.price}</span>
                   </button>
                 ))}
               </div>
@@ -99,7 +98,7 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
             <textarea value={form.note} onChange={(e) => setForm((f) => ({ ...f, note: e.target.value }))} maxLength={500} rows={2} placeholder="Note (optional)" className="w-full resize-none rounded-xl border border-border bg-white/70 px-4 py-3 text-sm text-ink outline-none focus:border-brand" />
             <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.02] disabled:opacity-70" style={{ background: "var(--gradient-brand)" }}>
               {loading && <Loader2 size={15} className="animate-spin" />}
-              Place order · ${selectedPlan.price}
+              Request guidance
             </button>
           </form>
         )}

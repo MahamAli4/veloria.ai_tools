@@ -15,9 +15,10 @@ export function Footer() {
       <div className="relative mx-auto max-w-6xl">
         {/* Newsletter */}
         <div
-          className="relative overflow-hidden rounded-[2rem] p-8 md:p-12"
+          className="relative overflow-hidden rounded-[2rem] p-6 md:p-8"
           style={{ background: "var(--gradient-brand)" }}
         >
+
           <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/20 blur-2xl" />
           <div className="relative grid gap-8 md:grid-cols-2 md:items-center">
             <div>

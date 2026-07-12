@@ -53,11 +53,11 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="font-display">{done ? "Order confirmed" : `Order ${tool.name}`}</DialogTitle>
+          <DialogTitle className="font-display">{done ? "Request received" : `Get ${tool.name}`}</DialogTitle>
           <DialogDescription>
             {done
-              ? "Shukriya! Aap ka order mil gaya hai — hum jald aap se raabta karenge."
-              : "Apni details bharein, hum minutes mein subscription deliver karte hain."}
+              ? "Shukriya! Aap ki request mil gayi — hum aap ko guide karenge ke ye subscription kam paison mein kaise milegi."
+              : "Apni details bharein — hum aap ko guide karenge ke ye subscription kam paison mein kaise le sakte hain."}
           </DialogDescription>
         </DialogHeader>
 

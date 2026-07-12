@@ -38,7 +38,7 @@ function ProductCard({ tool }: { tool: Tool }) {
             {tool.category}
           </div>
         </div>
-        <span className="acrylic-badge ml-auto">-{discount(tool)}%</span>
+        <span className="acrylic-badge ml-auto">Available</span>
       </div>
 
       <p className="mt-3 line-clamp-2 text-[12.5px] leading-relaxed text-muted-foreground">

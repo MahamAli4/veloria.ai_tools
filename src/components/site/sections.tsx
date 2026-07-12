@@ -155,7 +155,7 @@ export function Testimonials() {
   return (
     <section className="overflow-hidden py-20" id="testimonials">
       <div className="px-4">
-        <SectionHeading center eyebrow="Loved by members" title="What people say" subtitle="Join thousands who upgraded their AI stack for less." />
+        <SectionHeading center eyebrow="Loved by members" title="What people say" subtitle="Join thousands who got their AI tools for less with our guidance." />
       </div>
       <div className="relative mt-14">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#fff2e0] to-transparent" />
@@ -250,11 +250,11 @@ export function Contact() {
       <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-border bg-white/50 backdrop-blur-xl">
         <div className="grid md:grid-cols-2">
           <div className="relative p-8 md:p-12" style={{ background: "var(--gradient-soft)" }}>
-            <SectionHeading eyebrow="Get in touch" title="Let's talk" subtitle="Questions about a tool or a bulk order? We reply fast." />
+            <SectionHeading eyebrow="Get in touch" title="Let's talk" subtitle="Want help getting a tool subscription for less? We reply fast." />
             <div className="mt-8 space-y-4 text-sm text-ink-soft">
               <p className="flex items-center gap-3"><Mail size={16} className="text-brand-deep" /> hello@aivault.com</p>
               <p className="flex items-center gap-3"><Headphones size={16} className="text-brand-deep" /> 24/7 live chat support</p>
-              <p className="flex items-center gap-3"><ShieldCheck size={16} className="text-brand-deep" /> Money-back guarantee</p>
+              <p className="flex items-center gap-3"><ShieldCheck size={16} className="text-brand-deep" /> Honest, expert guidance</p>
             </div>
           </div>
           <form onSubmit={submit} className="space-y-4 p-8 md:p-12">
@@ -291,10 +291,10 @@ export function CTABand() {
         <div className="pointer-events-none absolute -left-10 -top-10 h-56 w-56 rounded-full bg-white/20 blur-2xl" />
         <div className="pointer-events-none absolute -bottom-16 -right-10 h-64 w-64 rounded-full bg-white/15 blur-2xl" />
         <Reveal>
-          <h2 className="relative font-display text-4xl font-semibold text-white md:text-5xl text-balance">Ready to upgrade your AI workflow?</h2>
+          <h2 className="relative font-display text-4xl font-semibold text-white md:text-5xl text-balance">Ready to get your AI tools for less?</h2>
         </Reveal>
         <Reveal delay={0.08}>
-          <p className="relative mx-auto mt-4 max-w-lg text-white/85">Join thousands of members getting premium AI for a fraction of the price.</p>
+          <p className="relative mx-auto mt-4 max-w-lg text-white/85">Tell us the tool you want — we'll guide you on how to get the subscription affordably.</p>
         </Reveal>
         <Reveal delay={0.15}>
           <div className="relative mt-8 flex flex-wrap justify-center gap-3">

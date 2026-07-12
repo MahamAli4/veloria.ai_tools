@@ -43,7 +43,7 @@ export function FeaturedTools() {
   return (
     <section className="px-4 py-20" id="tools">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading eyebrow="Curated collection" title="Featured AI tools" subtitle="Hand-picked subscriptions at prices that actually make sense." />
+        <SectionHeading eyebrow="Curated collection" title="Featured AI tools" subtitle="Tell us the tool you need — we help you get the subscription and guide you every step." />
         {isLoading ? (
           <div className="mt-16 flex justify-center">
             <Loader2 className="animate-spin text-brand-deep" />

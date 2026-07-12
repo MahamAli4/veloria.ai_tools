@@ -10,10 +10,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const rx = useSpring(useTransform(my, [-0.5, 0.5], [7, -7]), { stiffness: 150, damping: 15 });
   const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 150, damping: 15 });
 
-  const discount = Math.round(((tool.originalPrice - tool.ourPrice) / tool.originalPrice) * 100);
   const comingSoon = (tool as { status?: string }).status === "coming_soon";
-  const CUR: Record<string, string> = { USD: "$", PKR: "₨", EUR: "€", GBP: "£", INR: "₹", AED: "د.إ", SAR: "﷼" };
-  const cur = CUR[tool.currency ?? "USD"] ?? "$";
   const primaryCategory = tool.categories?.length ? tool.categories[0] : tool.category;
 
   return (
@@ -50,7 +47,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
             <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
           )}
           <span className="rounded-full bg-brand/12 px-3 py-1 text-xs font-semibold text-brand-deep">
-            {comingSoon ? "Coming soon" : `−${discount}%`}
+            {comingSoon ? "Coming soon" : "Available"}
           </span>
         </div>
 
@@ -75,15 +72,10 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
           ))}
         </ul>
 
-        <div className="mt-auto flex items-end justify-between pt-6">
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-display text-3xl font-semibold text-ink">{cur}{tool.ourPrice}</span>
-              <span className="text-sm text-ink-soft line-through opacity-60">{cur}{tool.originalPrice}</span>
-
-            </div>
-            <p className="text-xs text-ink-soft">{tool.duration}</p>
-          </div>
+        <div className="mt-auto flex items-end justify-between gap-3 pt-6">
+          <p className="max-w-[60%] text-xs leading-relaxed text-ink-soft">
+            We help you get this subscription at the lowest price — with full guidance.
+          </p>
           {comingSoon ? (
             <button
               type="button"
@@ -99,7 +91,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
                 className="group/btn inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
                 style={{ background: "var(--gradient-brand)" }}
               >
-                Get
+                Get subscription
                 <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-0.5" />
               </button>
             </OrderDialog>

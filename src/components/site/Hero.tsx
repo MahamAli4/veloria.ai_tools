@@ -14,9 +14,8 @@ const stats = [
 const headlineTop = ["Premium", "AI", "Tools"];
 const headlineBottom = ["Without", "Premium", "Prices"];
 
-function discount(t: Tool) {
-  return Math.round(((t.originalPrice - t.ourPrice) / t.originalPrice) * 100);
-}
+
+
 
 
 /* one premium acrylic product card */
@@ -38,7 +37,7 @@ function ProductCard({ tool }: { tool: Tool }) {
             {tool.category}
           </div>
         </div>
-        <span className="acrylic-badge ml-auto">-{discount(tool)}%</span>
+        <span className="acrylic-badge ml-auto">Available</span>
       </div>
 
       <p className="mt-3 line-clamp-2 text-[12.5px] leading-relaxed text-muted-foreground">
@@ -46,15 +45,7 @@ function ProductCard({ tool }: { tool: Tool }) {
       </p>
 
       <div className="mt-4 flex items-end justify-between">
-        <div className="flex items-baseline gap-2">
-          <span className="font-display text-xl font-semibold text-foreground">
-            ${tool.ourPrice}
-          </span>
-          <span className="text-xs text-muted-foreground line-through">
-            ${tool.originalPrice}
-          </span>
-          <span className="text-[11px] text-muted-foreground">/mo</span>
-        </div>
+        <span className="text-[11px] font-medium text-brand-deep">Fully guided</span>
         <span className="acrylic-cta">
           View <ArrowUpRight size={13} />
         </span>
@@ -158,8 +149,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground"
           >
-            Access original subscriptions for the world&apos;s best AI tools with affordable
-            pricing, instant delivery and trusted support.
+            We help you get subscriptions to the world&apos;s best digital tools — with full
+            guidance on how to get them for less, plus fast delivery and trusted support.
           </motion.p>
 
           <motion.div

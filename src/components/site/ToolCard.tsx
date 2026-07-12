@@ -50,7 +50,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
             <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
           )}
           <span className="rounded-full bg-brand/12 px-3 py-1 text-xs font-semibold text-brand-deep">
-            {comingSoon ? "Coming soon" : `−${discount}%`}
+            {comingSoon ? "Coming soon" : "Available"}
           </span>
         </div>
 

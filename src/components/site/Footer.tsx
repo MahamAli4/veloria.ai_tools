@@ -85,7 +85,7 @@ export function Footer() {
 
         </div>
 
-        <div className="my-8 h-px w-full bg-white/15" />
+        <div className="my-6 h-px w-full bg-white/15" />
 
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm text-white/60">© {new Date().getFullYear()} Veloria.AI. All rights reserved.</p>

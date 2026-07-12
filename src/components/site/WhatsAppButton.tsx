@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 
 // 👉 Apna WhatsApp number yahan daalein (country code ke saath, bina + ya spaces)
-const WHATSAPP_NUMBER = "923001234567";
+const WHATSAPP_NUMBER = "923087601864";
 const PREFILL_MESSAGE = "Hi! I'm interested in your premium AI tools.";
 
 export function WhatsAppButton() {

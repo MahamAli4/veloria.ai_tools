@@ -67,6 +67,7 @@ function Index() {
     <div id="top">
       <Hero />
       <FeaturedTools />
+      <AboutUs />
       <HowItWorks />
       <WhyChooseUs />
       <Testimonials />

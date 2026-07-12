@@ -62,17 +62,17 @@ export function FeaturedTools() {
 
 /* ---------- How It Works ---------- */
 const steps = [
-  { icon: MousePointerClick, title: "Choose Tool", desc: "Browse the collection and pick the AI subscription you need." },
-  { icon: CreditCard, title: "Complete Order", desc: "Check out securely in seconds with your preferred method." },
-  { icon: Mail, title: "Receive Subscription", desc: "Get your original, upgraded account delivered in minutes." },
-  { icon: Rocket, title: "Start Using Premium AI", desc: "Log in and enjoy full premium features immediately." },
+  { icon: MousePointerClick, title: "Tell Us the Tool", desc: "Share which AI or digital tool subscription you want to get." },
+  { icon: Mail, title: "Get Expert Guidance", desc: "We share tips, ideas and a clear guide on how to get it for less." },
+  { icon: CreditCard, title: "Follow the Steps", desc: "Use our guidance to set up the subscription the smart, affordable way." },
+  { icon: Rocket, title: "Start Using It", desc: "Enjoy your premium tool — with our support whenever you need it." },
 ];
 
 export function HowItWorks() {
   return (
     <section className="px-4 py-20" id="how">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading center eyebrow="Simple process" title="How it works" subtitle="From browsing to premium access in four effortless steps." />
+        <SectionHeading center eyebrow="Simple process" title="How we help you" subtitle="From your first question to using your tool — we guide you every step." />
         <div className="relative mt-16 grid gap-6 md:grid-cols-4">
           <div className="pointer-events-none absolute left-0 right-0 top-9 hidden h-px md:block" style={{ background: "var(--hairline)" }} />
           {steps.map((s, i) => (
@@ -97,19 +97,19 @@ export function HowItWorks() {
 
 /* ---------- Why Choose Us ---------- */
 const reasons = [
-  { icon: BadgeCheck, title: "Affordable Prices", desc: "Save up to 60% versus paying retail for every tool." },
-  { icon: ShieldCheck, title: "Original Accounts", desc: "Genuine, fully-featured subscriptions — never shared junk." },
-  { icon: Zap, title: "Fast Delivery", desc: "Most orders arrive within minutes of checkout." },
-  { icon: Lock, title: "Secure Payments", desc: "Encrypted checkout with trusted payment providers." },
+  { icon: BadgeCheck, title: "Save More", desc: "Smart tips and ideas to get your tools for far less." },
+  { icon: ShieldCheck, title: "Trusted Guidance", desc: "Honest, step-by-step help — no guesswork, no confusion." },
+  { icon: Zap, title: "Quick Answers", desc: "Fast responses so you never stay stuck." },
+  { icon: Lock, title: "Safe & Reliable", desc: "We guide you the right, secure way — always." },
   { icon: Headphones, title: "24/7 Support", desc: "Real humans ready to help, any time of day." },
-  { icon: Sparkles, title: "Trusted Service", desc: "Thousands of five-star reviews from happy members." },
+  { icon: Sparkles, title: "Every Popular Tool", desc: "Guidance for all the top AI and digital subscriptions." },
 ];
 
 export function WhyChooseUs() {
   return (
     <section className="px-4 py-20">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading eyebrow="The AI Vault difference" title="Why choose us" subtitle="Premium service, premium trust — every single order." />
+        <SectionHeading eyebrow="The AI Vault difference" title="Why choose us" subtitle="We guide you to get every subscription the smart, affordable way." />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {reasons.map((r, i) => (
             <Reveal key={r.title} delay={(i % 3) * 0.08}>
@@ -127,7 +127,7 @@ export function WhyChooseUs() {
         {/* stats */}
         <div className="mt-8 grid gap-5 rounded-[1.6rem] border border-border bg-white/50 p-8 backdrop-blur-xl sm:grid-cols-3">
           {[
-            { n: 20000, s: "+", l: "Subscriptions delivered" },
+            { n: 20000, s: "+", l: "People guided" },
             { n: 60, s: "%", l: "Average savings" },
             { n: 99, s: "%", l: "Satisfaction rate" },
           ].map((stat) => (

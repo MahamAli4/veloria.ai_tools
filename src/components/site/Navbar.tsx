@@ -4,6 +4,7 @@ import { Magnetic } from "./primitives";
 
 const links = [
   { to: "#tools", label: "Tools" },
+  { to: "#about", label: "About" },
   { to: "#how", label: "How it works" },
   { to: "#testimonials", label: "Reviews" },
   { to: "#faq", label: "FAQ" },

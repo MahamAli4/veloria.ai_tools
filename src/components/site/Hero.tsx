@@ -46,15 +46,7 @@ function ProductCard({ tool }: { tool: Tool }) {
       </p>
 
       <div className="mt-4 flex items-end justify-between">
-        <div className="flex items-baseline gap-2">
-          <span className="font-display text-xl font-semibold text-foreground">
-            ${tool.ourPrice}
-          </span>
-          <span className="text-xs text-muted-foreground line-through">
-            ${tool.originalPrice}
-          </span>
-          <span className="text-[11px] text-muted-foreground">/mo</span>
-        </div>
+        <span className="text-[11px] font-medium text-brand-deep">Fully guided</span>
         <span className="acrylic-cta">
           View <ArrowUpRight size={13} />
         </span>

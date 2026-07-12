@@ -88,19 +88,19 @@ export type Database = {
       }
       page_views: {
         Row: {
+          created_at: string
           id: string
           path: string
-          created_at: string
         }
         Insert: {
+          created_at?: string
           id?: string
           path: string
-          created_at?: string
         }
         Update: {
+          created_at?: string
           id?: string
           path?: string
-          created_at?: string
         }
         Relationships: []
       }

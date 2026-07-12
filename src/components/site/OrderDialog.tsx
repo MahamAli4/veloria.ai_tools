@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Loader2, Check } from "lucide-react";
+import { Loader2, Check, MessageCircle } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger,
 } from "@/components/ui/dialog";
@@ -16,6 +16,10 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
   const [form, setForm] = useState({ name: "", email: "", whatsapp: "", note: "" });
 
   const selectedPlan = plans.find((p) => p.name === planName) ?? plans[0];
+
+  const waHref = `https://wa.me/923087601864?text=${encodeURIComponent(
+    `Hi! I'm interested in ${tool.name} (${selectedPlan.name} · ${selectedPlan.duration}). Please guide me.`,
+  )}`;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,6 +104,15 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
               {loading && <Loader2 size={15} className="animate-spin" />}
               Request guidance
             </button>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
+            >
+              <MessageCircle size={16} />
+              Chat on WhatsApp
+            </a>
           </form>
         )}
       </DialogContent>

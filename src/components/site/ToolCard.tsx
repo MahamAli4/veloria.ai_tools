@@ -72,15 +72,15 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
           ))}
         </ul>
 
-        <div className="mt-auto flex items-end justify-between gap-3 pt-6">
-          <p className="max-w-[60%] text-xs leading-relaxed text-ink-soft">
+        <div className="mt-auto flex flex-col gap-3 pt-6">
+          <p className="text-xs leading-relaxed text-ink-soft">
             We help you get this subscription at the lowest price — with full guidance.
           </p>
           {comingSoon ? (
             <button
               type="button"
               disabled
-              className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full border border-border bg-white/50 px-4 py-2.5 text-sm font-semibold text-ink-soft"
+              className="inline-flex w-full cursor-not-allowed items-center justify-center gap-1.5 rounded-full border border-border bg-white/50 px-4 py-3 text-sm font-semibold text-ink-soft"
             >
               Coming soon
             </button>
@@ -88,7 +88,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
             <OrderDialog tool={tool}>
               <button
                 type="button"
-                className="group/btn inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
+                className="group/btn inline-flex w-full items-center justify-center gap-1.5 rounded-full px-4 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
                 style={{ background: "var(--gradient-brand)" }}
               >
                 Get subscription

@@ -149,8 +149,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground"
           >
-            Access original subscriptions for the world&apos;s best AI tools with affordable
-            pricing, instant delivery and trusted support.
+            We help you get subscriptions to the world&apos;s best digital tools — with full
+            guidance on how to get them for less, plus fast delivery and trusted support.
           </motion.p>
 
           <motion.div

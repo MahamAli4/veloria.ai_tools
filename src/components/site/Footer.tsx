@@ -90,12 +90,17 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm text-white/60">© {new Date().getFullYear()} Veloria.AI. All rights reserved.</p>
           <div className="flex items-center gap-2">
-            {[Twitter, Github, Linkedin, Instagram].map((Icon, i) => (
+            {[
+              { Icon: Linkedin, href: "https://www.linkedin.com/company/veloria-ai/about/", label: "LinkedIn" },
+              { Icon: Facebook, href: "https://www.facebook.com/share/1E7Qqbpzcb/", label: "Facebook" },
+            ].map(({ Icon, href, label }) => (
               <a
-                key={i}
-                href="#"
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-white/10 text-white/80 transition-all hover:scale-110 hover:bg-white/20 hover:text-white"
-                aria-label="social link"
+                aria-label={label}
               >
                 <Icon size={16} />
               </a>

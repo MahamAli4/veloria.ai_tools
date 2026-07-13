@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Twitter, Github, Linkedin, Instagram, ArrowUpRight, Mail, ShieldCheck, Zap } from "lucide-react";
+import { Facebook, Linkedin, ArrowUpRight, Mail, ShieldCheck, Zap } from "lucide-react";
 import veloriaLogoLight from "@/assets/veloria-logo-light.png.asset.json";
 
 export function Footer() {

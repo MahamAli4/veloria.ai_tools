@@ -7,7 +7,7 @@ import { faqs } from "@/data/tools";
 
 const title = "AI Vault — Get AI & Digital Tool Subscriptions for Less | Veloria.AI";
 const description =
-  "AI Vault by Veloria.AI helps you get AI & digital tool subscriptions — ChatGPT, Claude, Canva, CapCut and more. We share tips, ideas and full guidance on how to get them for less.";
+  "Veloria.AI helps you get AI & digital tool subscriptions like ChatGPT, Claude and Canva — with full guidance on how to get them for less.";
 
 const jsonLd = [
   {

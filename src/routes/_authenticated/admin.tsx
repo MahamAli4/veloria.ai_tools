@@ -109,12 +109,12 @@ function AnalyticsTab() {
   const { data: analytics, isLoading } = useQuery({
     queryKey: ["admin-analytics"],
     queryFn: async () => {
-      // Fetch delivered orders for tools and revenue
-      const { data: ordersData, error: ordersError } = await supabase
+      // Fetch delivered orders count
+      const { count: deliveredCount, error: ordersError } = await supabase
         .from("orders")
-        .select("price")
+        .select("*", { count: "exact", head: true })
         .eq("status", "delivered");
-        
+
       if (ordersError) throw ordersError;
 
       // Fetch total page views (traffic)
@@ -127,14 +127,11 @@ function AnalyticsTab() {
          console.error(trafficError);
       }
 
-      const deliveredCount = ordersData?.length || 0;
-      const totalRevenue = ordersData?.reduce((sum, order) => sum + (Number(order.price) || 0), 0) || 0;
-
       return {
         traffic: trafficCount || 0,
-        delivered: deliveredCount,
-        revenue: totalRevenue,
+        delivered: deliveredCount || 0,
       };
+
     },
   });
 

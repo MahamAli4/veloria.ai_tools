@@ -84,19 +84,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AI Vault — Premium AI Subscriptions for Less" },
+      { title: "Veloria.AI — Get AI & Digital Tool Subscriptions for Less" },
       {
         name: "description",
         content:
-          "AI Vault is the premium marketplace for AI subscriptions. Get ChatGPT Plus, Claude, Lovable, Cursor and more — original accounts, delivered in minutes, up to 60% off.",
+          "Veloria.AI helps you get AI & digital tool subscriptions like ChatGPT, Claude, Canva and more — with full guidance on how to get them affordably.",
       },
-      { name: "author", content: "AI Vault" },
-      { property: "og:title", content: "AI Vault — Premium AI Subscriptions for Less" },
+      { name: "author", content: "Veloria.AI" },
+      { property: "og:title", content: "Veloria.AI — Get AI & Digital Tool Subscriptions for Less" },
       {
         property: "og:description",
         content:
-          "Premium AI tools at affordable subscription prices. Original accounts, instant delivery.",
+          "We guide you on how to get premium AI & digital tool subscriptions for less — step by step.",
       },
+      { property: "og:site_name", content: "Veloria.AI" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

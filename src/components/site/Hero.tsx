@@ -183,7 +183,7 @@ export function Hero() {
                 href="#faq"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-7 py-3.5 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-card"
               >
-                Learn more
+                See how it works
               </a>
             </Magnetic>
           </motion.div>

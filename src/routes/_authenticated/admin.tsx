@@ -474,20 +474,6 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
             </div>
           </Section>
 
-          <Section title="Pricing">
-            <div className="grid gap-3 sm:grid-cols-4">
-              <label className="block">
-                <FieldLabel>Currency</FieldLabel>
-                <select value={f.currency} onChange={(e) => set("currency", e.target.value)} className="w-full rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand">
-                  {CURRENCIES.map((c) => <option key={c.code} value={c.code}>{c.code} ({c.symbol})</option>)}
-                </select>
-              </label>
-              <TextInput label="Original price" value={f.original_price} onChange={(v) => set("original_price", v)} type="number" />
-              <TextInput label="Discounted price" value={f.our_price} onChange={(v) => set("our_price", v)} type="number" />
-              <TextInput label="Duration" value={f.duration} onChange={(v) => set("duration", v)} ph="per month" />
-            </div>
-          </Section>
-
           <Section title="Descriptions">
             <div className="space-y-3">
               <TextArea label="Short description" value={f.description} onChange={(v) => set("description", v)} rows={2} />

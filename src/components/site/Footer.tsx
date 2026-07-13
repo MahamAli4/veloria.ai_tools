@@ -60,11 +60,19 @@ export function Footer() {
         {/* Main grid: brand + links */}
         <div className="mt-10 grid items-center gap-8 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <img
-              src={veloriaLogoLight.url}
-              alt="Veloria.AI"
-              className="h-28 w-auto object-contain md:h-36"
-            />
+            <a href="#top" className="flex items-center gap-0">
+              <img
+                src="/favicon.png"
+                alt="AI Vault logo"
+                className="h-10 w-auto object-contain md:h-12"
+              />
+              <img
+                src="/favicon-text.png"
+                alt="Veloria.AI"
+                className="h-6 w-auto object-contain md:h-8"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
+            </a>
 
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
               We help you get AI & digital tool subscriptions the smart way — with honest tips, ideas and full guidance to save money.

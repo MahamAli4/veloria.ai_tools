@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: veloria_postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: veloria_db
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: secure_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: veloria_django_backend
+    restart: always
+    command: sh -c "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn veloria_backend.wsgi:application --bind 0.0.0.0:8000 --access-logfile -"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=django-insecure-prod-veloria-key-change-me-later-987654321
+      - DB_HOST=db
+      - DB_NAME=veloria_db
+      - DB_USER=django_user
+      - DB_PASSWORD=secure_password
+      - DB_PORT=5432
+      - SUPABASE_URL=https://mjjgxsdqsoywllpbaicl.supabase.co
+      - SUPABASE_PUBLISHABLE_KEY=sb_publishable_rxC3lRXQiGSEPiDs37b17g_7-k4_f7A
+    depends_on:
+      - db
+    volumes:
+      - backend_media:/app/media
+      - backend_static:/app/staticfiles
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./
+    container_name: veloria_react_frontend
+    restart: always
+    environment:
+      - VITE_API_URL=http://backend:8000
+      - PORT=3000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
+  backend_media:
+  backend_static:

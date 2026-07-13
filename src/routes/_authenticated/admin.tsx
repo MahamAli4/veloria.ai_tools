@@ -224,7 +224,7 @@ function ToolsTab() {
             )}
             <div className="min-w-0 flex-1">
               <p className="font-display font-semibold text-ink">{t.name}</p>
-              <p className="text-xs text-ink-soft">{(Array.isArray((t as { categories?: string[] }).categories) && (t as { categories?: string[] }).categories!.length ? (t as { categories?: string[] }).categories!.join(", ") : t.category)} · {Number(t.our_price)} <span className="line-through opacity-60">{Number(t.original_price)}</span> {(t as { currency?: string }).currency ?? ""}</p>
+              <p className="text-xs text-ink-soft">{(Array.isArray((t as { categories?: string[] }).categories) && (t as { categories?: string[] }).categories!.length ? (t as { categories?: string[] }).categories!.join(", ") : t.category)}</p>
             </div>
 
             <select

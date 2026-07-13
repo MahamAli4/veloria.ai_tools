@@ -10,15 +10,6 @@ import {
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
-const CURRENCIES = [
-  { code: "USD", symbol: "$" },
-  { code: "PKR", symbol: "₨" },
-  { code: "EUR", symbol: "€" },
-  { code: "GBP", symbol: "£" },
-  { code: "INR", symbol: "₹" },
-  { code: "AED", symbol: "د.إ" },
-  { code: "SAR", symbol: "﷼" },
-];
 
 const CATEGORY_PRESETS = [
   "Conversational AI", "AI App Builder", "Productivity AI", "AI Search",

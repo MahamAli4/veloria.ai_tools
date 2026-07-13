@@ -459,42 +459,27 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
             <div className="mt-3">
               <CategorySelect value={f.categories} onChange={(v) => set("categories", v)} />
             </div>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              <TextInput label="Tagline" value={f.tagline} onChange={(v) => set("tagline", v)} />
-              <TextInput label="Post / product link" value={f.post_link} onChange={(v) => set("post_link", v)} ph="https://..." />
-            </div>
           </Section>
 
-          <Section title="Descriptions">
-            <div className="space-y-3">
-              <TextArea label="Short description" value={f.description} onChange={(v) => set("description", v)} rows={2} />
-              <TextArea label="Overview" value={f.overview} onChange={(v) => set("overview", v)} />
-              <div className="grid gap-3 sm:grid-cols-2">
-                <TextArea label="What it does" value={f.what_it_does} onChange={(v) => set("what_it_does", v)} rows={2} />
-                <TextArea label="Who it's for" value={f.who_for} onChange={(v) => set("who_for", v)} rows={2} />
-              </div>
-            </div>
+          <Section title="Description">
+            <TextArea label="Short description (shown on card)" value={f.description} onChange={(v) => set("description", v)} rows={3} />
           </Section>
 
-          <Section title="Highlights (one per line)">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <TextArea label="Benefits" value={f.benefits} onChange={(v) => set("benefits", v)} />
-              <TextArea label="Features" value={f.features} onChange={(v) => set("features", v)} />
-              <TextArea label="Advantages" value={f.advantages} onChange={(v) => set("advantages", v)} />
-              <TextArea label="Use cases" value={f.use_cases} onChange={(v) => set("use_cases", v)} />
-            </div>
+          <Section title="Benefits (one per line, shown on card)">
+            <TextArea label="Benefits" value={f.benefits} onChange={(v) => set("benefits", v)} />
           </Section>
 
-          <Section title="Advanced (optional)">
+          <Section title="Order plans">
+            <TextArea label="Plans (JSON — name & duration used in order form)" value={f.plans} onChange={(v) => set("plans", v)} rows={5} />
+          </Section>
+
+          <Section title="Logo fallback (optional)">
             <div className="grid gap-3 sm:grid-cols-2">
               <TextInput label="Mark (letter fallback)" value={f.mark} onChange={(v) => set("mark", v)} />
               <TextInput label="Gradient (CSS fallback)" value={f.gradient} onChange={(v) => set("gradient", v)} />
             </div>
-            <div className="mt-3 space-y-3">
-              <TextArea label="Plans (JSON)" value={f.plans} onChange={(v) => set("plans", v)} rows={5} />
-              <TextArea label="FAQs (JSON)" value={f.faqs} onChange={(v) => set("faqs", v)} rows={4} />
-            </div>
           </Section>
+
 
           <label className="flex items-center gap-2 text-sm text-ink">
             <input type="checkbox" checked={f.is_active} onChange={(e) => set("is_active", e.target.checked)} /> Active (visible on site)

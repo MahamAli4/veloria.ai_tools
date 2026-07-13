@@ -63,9 +63,23 @@ TEMPLATES = [
 WSGI_APPLICATION = "veloria_backend.wsgi.application"
 
 # Database configuration
-# If DB_HOST environment variable is present, use PostgreSQL; otherwise, fallback to SQLite.
+DATABASE_URL = os.getenv("DATABASE_URL", "")
 DB_HOST = os.getenv("DB_HOST", "")
-if DB_HOST:
+
+if DATABASE_URL:
+    import urllib.parse
+    url = urllib.parse.urlparse(DATABASE_URL)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": url.path.lstrip("/"),
+            "USER": url.username,
+            "PASSWORD": url.password,
+            "HOST": url.hostname,
+            "PORT": str(url.port or 5432),
+        }
+    }
+elif DB_HOST:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",

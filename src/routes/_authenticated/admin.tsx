@@ -141,7 +141,7 @@ function AnalyticsTab() {
   if (isLoading) return <Loader2 className="mx-auto animate-spin text-brand-deep" />;
 
   return (
-    <div className="grid gap-4 sm:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2">
       <div className="rounded-2xl border border-border bg-white/55 p-6 shadow-sm">
         <p className="text-sm font-semibold uppercase tracking-wider text-ink-soft">Total Traffic</p>
         <p className="mt-2 font-display text-4xl font-bold text-ink">{analytics?.traffic}</p>
@@ -152,12 +152,8 @@ function AnalyticsTab() {
         <p className="mt-2 font-display text-4xl font-bold text-ink">{analytics?.delivered}</p>
         <p className="mt-1 text-xs text-ink-soft">Completed orders</p>
       </div>
-      <div className="rounded-2xl border border-border bg-white/55 p-6 shadow-sm">
-        <p className="text-sm font-semibold uppercase tracking-wider text-ink-soft">Total Revenue</p>
-        <p className="mt-2 font-display text-4xl font-bold text-ink">${analytics?.revenue?.toFixed(2)}</p>
-        <p className="mt-1 text-xs text-ink-soft">From delivered tools</p>
-      </div>
     </div>
+
   );
 }
 

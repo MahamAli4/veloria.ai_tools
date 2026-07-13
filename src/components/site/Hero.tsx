@@ -4,12 +4,16 @@ import { useEffect, useMemo, useRef } from "react";
 import { Magnetic } from "./primitives";
 import type { Tool } from "@/data/tools";
 import { useTools } from "@/lib/tools";
+import { useSiteStats } from "@/lib/stats";
 
-const stats = [
-  { value: "20+", label: "Premium AI Tools" },
-  { value: "5000+", label: "Customers" },
-  { value: "24/7", label: "Support" },
-];
+// Round down to a clean "+" milestone (e.g. 36 -> "30+", 5432 -> "5000+")
+function niceCount(n: number): string {
+  if (n <= 0) return "0";
+  if (n < 10) return `${n}`;
+  if (n < 100) return `${Math.floor(n / 10) * 10}+`;
+  if (n < 1000) return `${Math.floor(n / 100) * 100}+`;
+  return `${Math.floor(n / 1000) * 1000}+`;
+}
 
 const headlineTop = ["Premium", "AI", "Tools"];
 const headlineBottom = ["Without", "Premium", "Prices"];

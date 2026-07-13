@@ -43,19 +43,34 @@ export function FeaturedTools() {
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState("All");
 
-  const categories = [
-    "All",
-    ...Array.from(
-      new Set(
-        tools.flatMap((t) => (t.categories?.length ? t.categories : [t.category])).filter(Boolean),
-      ),
-    ),
+  // Broad, simple filter groups — each bucket collects all related tools.
+  const groupDefs: { label: string; cats: string[] }[] = [
+    { label: "AI Assistants", cats: ["Conversational AI", "AI Search", "Productivity AI", "AI App Builder"] },
+    { label: "Coding & Dev", cats: ["AI Coding", "Web & Hosting"] },
+    { label: "Design & Media", cats: ["Design & Creative", "AI Image & Video", "Video Editing", "Creator Tools", "Music & Audio"] },
+    { label: "Writing & Productivity", cats: ["Writing AI", "Productivity"] },
+    { label: "Career & LinkedIn", cats: ["Career & Networking"] },
+    { label: "Learning", cats: ["Learning"] },
+    { label: "VPN & Security", cats: ["VPN & Security"] },
+    { label: "Streaming & Shopping", cats: ["Streaming & Music", "Streaming & Shopping"] },
+    { label: "Finance & Trading", cats: ["Finance & Trading"] },
   ];
+
+  const toolCats = (t: (typeof tools)[number]) => (t.categories?.length ? t.categories : [t.category]);
+  const groupOf = (t: (typeof tools)[number]) => {
+    const cats = toolCats(t);
+    const found = groupDefs.find((g) => cats.some((c) => g.cats.includes(c)));
+    return found?.label ?? "More tools";
+  };
+
+  const usedGroups = groupDefs.filter((g) => tools.some((t) => groupOf(t) === g.label)).map((g) => g.label);
+  const hasMore = tools.some((t) => groupOf(t) === "More tools");
+  const categories = ["All", ...usedGroups, ...(hasMore ? ["More tools"] : [])];
 
   const q = query.trim().toLowerCase();
   const filtered = tools.filter((t) => {
-    const cats = t.categories?.length ? t.categories : [t.category];
-    const matchCat = activeCat === "All" || cats.includes(activeCat);
+    const cats = toolCats(t);
+    const matchCat = activeCat === "All" || groupOf(t) === activeCat;
     const matchQuery =
       !q ||
       t.name.toLowerCase().includes(q) ||
@@ -63,6 +78,7 @@ export function FeaturedTools() {
       cats.some((c) => (c ?? "").toLowerCase().includes(q));
     return matchCat && matchQuery;
   });
+
 
   return (
     <section className="px-4 py-20" id="tools">

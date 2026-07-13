@@ -388,12 +388,12 @@ export const tools: Tool[] = [
 export const getTool = (slug: string) => tools.find((t) => t.slug === slug);
 
 export const testimonials = [
-  { name: "Sarah Chen", role: "Product Designer", quote: "Got my ChatGPT Plus in 5 minutes for half the price. The whole experience felt premium." },
-  { name: "Marcus Reid", role: "Startup Founder", quote: "AI Vault is how I subscribe to every tool now. Original accounts, instant delivery, zero hassle." },
-  { name: "Priya Nair", role: "Content Strategist", quote: "The savings across Canva, Grammarly and Notion AI paid for my entire toolkit." },
-  { name: "Diego Alvarez", role: "Software Engineer", quote: "Cursor and Copilot at these prices is unreal. Support answered me at 2am." },
-  { name: "Lena Ford", role: "Marketing Lead", quote: "Beautiful storefront, honest pricing, and everything just works. Highly recommend." },
-  { name: "Tom Becker", role: "Freelance Writer", quote: "Perplexity Pro with citations changed my research workflow. Delivery was instant." },
+  { name: "Sarah Chen", role: "Product Designer", quote: "They guided me step-by-step on how to get ChatGPT Plus for much less. So clear and honest." },
+  { name: "Marcus Reid", role: "Startup Founder", quote: "Their guidance helps me subscribe to every tool the affordable way. Honest advice, real support." },
+  { name: "Priya Nair", role: "Content Strategist", quote: "With their tips I saved big on Canva, Grammarly and Notion AI subscriptions. Highly recommend." },
+  { name: "Diego Alvarez", role: "Software Engineer", quote: "They showed me how to get Cursor and Copilot for less. Support answered all my questions at 2am." },
+  { name: "Lena Ford", role: "Marketing Lead", quote: "Honest, friendly guidance that helped me get my subscriptions affordably. Everything was easy." },
+  { name: "Tom Becker", role: "Freelance Writer", quote: "Their guidance helped me get Perplexity Pro for less — it changed my research workflow." },
 ];
 
 export const faqs = [

@@ -10,15 +10,6 @@ import {
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
-const CURRENCIES = [
-  { code: "USD", symbol: "$" },
-  { code: "PKR", symbol: "₨" },
-  { code: "EUR", symbol: "€" },
-  { code: "GBP", symbol: "£" },
-  { code: "INR", symbol: "₹" },
-  { code: "AED", symbol: "د.إ" },
-  { code: "SAR", symbol: "﷼" },
-];
 
 const CATEGORY_PRESETS = [
   "Conversational AI", "AI App Builder", "Productivity AI", "AI Search",
@@ -224,7 +215,7 @@ function ToolsTab() {
             )}
             <div className="min-w-0 flex-1">
               <p className="font-display font-semibold text-ink">{t.name}</p>
-              <p className="text-xs text-ink-soft">{(Array.isArray((t as { categories?: string[] }).categories) && (t as { categories?: string[] }).categories!.length ? (t as { categories?: string[] }).categories!.join(", ") : t.category)} · {Number(t.our_price)} <span className="line-through opacity-60">{Number(t.original_price)}</span> {(t as { currency?: string }).currency ?? ""}</p>
+              <p className="text-xs text-ink-soft">{(Array.isArray((t as { categories?: string[] }).categories) && (t as { categories?: string[] }).categories!.length ? (t as { categories?: string[] }).categories!.join(", ") : t.category)}</p>
             </div>
 
             <select
@@ -471,20 +462,6 @@ function ToolEditor({ tool, onClose, onSaved }: { tool: Partial<ToolRow>; onClos
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <TextInput label="Tagline" value={f.tagline} onChange={(v) => set("tagline", v)} />
               <TextInput label="Post / product link" value={f.post_link} onChange={(v) => set("post_link", v)} ph="https://..." />
-            </div>
-          </Section>
-
-          <Section title="Pricing">
-            <div className="grid gap-3 sm:grid-cols-4">
-              <label className="block">
-                <FieldLabel>Currency</FieldLabel>
-                <select value={f.currency} onChange={(e) => set("currency", e.target.value)} className="w-full rounded-lg border border-border bg-white/70 px-3 py-2 text-sm text-ink outline-none focus:border-brand">
-                  {CURRENCIES.map((c) => <option key={c.code} value={c.code}>{c.code} ({c.symbol})</option>)}
-                </select>
-              </label>
-              <TextInput label="Original price" value={f.original_price} onChange={(v) => set("original_price", v)} type="number" />
-              <TextInput label="Discounted price" value={f.our_price} onChange={(v) => set("our_price", v)} type="number" />
-              <TextInput label="Duration" value={f.duration} onChange={(v) => set("duration", v)} ph="per month" />
             </div>
           </Section>
 

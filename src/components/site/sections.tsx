@@ -381,7 +381,9 @@ export function Contact() {
           <div className="relative p-8 md:p-12" style={{ background: "var(--gradient-soft)" }}>
             <SectionHeading eyebrow="Get in touch" title="Let's talk" subtitle="Want help getting a tool subscription for less? We reply fast." />
             <div className="mt-8 space-y-4 text-sm text-ink-soft">
-              <p className="flex items-center gap-3"><Mail size={16} className="text-brand-deep" /> hello@aivault.com</p>
+              <p className="flex items-center gap-3"><Mail size={16} className="text-brand-deep" /> info@veloria-ai.com</p>
+              <p className="flex items-center gap-3"><Mail size={16} className="text-brand-deep" /> support@veloria-ai.com</p>
+
               <p className="flex items-center gap-3"><Headphones size={16} className="text-brand-deep" /> 24/7 live chat support</p>
               <p className="flex items-center gap-3"><ShieldCheck size={16} className="text-brand-deep" /> Honest, expert guidance</p>
             </div>

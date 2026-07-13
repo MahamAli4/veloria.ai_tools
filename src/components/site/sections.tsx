@@ -40,17 +40,86 @@ export function SectionHeading({
 /* ---------- Featured Tools ---------- */
 export function FeaturedTools() {
   const { data: tools = [], isLoading } = useTools();
+  const [query, setQuery] = useState("");
+  const [activeCat, setActiveCat] = useState("All");
+
+  const categories = [
+    "All",
+    ...Array.from(
+      new Set(
+        tools.flatMap((t) => (t.categories?.length ? t.categories : [t.category])).filter(Boolean),
+      ),
+    ),
+  ];
+
+  const q = query.trim().toLowerCase();
+  const filtered = tools.filter((t) => {
+    const cats = t.categories?.length ? t.categories : [t.category];
+    const matchCat = activeCat === "All" || cats.includes(activeCat);
+    const matchQuery =
+      !q ||
+      t.name.toLowerCase().includes(q) ||
+      (t.description ?? "").toLowerCase().includes(q) ||
+      cats.some((c) => (c ?? "").toLowerCase().includes(q));
+    return matchCat && matchQuery;
+  });
+
   return (
     <section className="px-4 py-20" id="tools">
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Curated collection" title="Featured AI tools" subtitle="Tell us the tool you need — we help you get the subscription and guide you every step." />
+
+        {/* Search + filters */}
+        <div className="mt-10 flex flex-col gap-4">
+          <div className="relative max-w-md">
+            <Search size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-soft" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search tools by name…"
+              className="w-full rounded-full border border-border bg-white/60 py-3 pl-11 pr-10 text-sm text-ink outline-none backdrop-blur-xl transition-colors focus:border-brand"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-soft hover:bg-brand/10 hover:text-brand-deep"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActiveCat(cat)}
+                className={
+                  "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors " +
+                  (activeCat === cat
+                    ? "border-transparent bg-brand-deep text-white"
+                    : "border-border bg-white/50 text-ink-soft hover:border-brand hover:text-brand-deep")
+                }
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {isLoading ? (
           <div className="mt-16 flex justify-center">
             <Loader2 className="animate-spin text-brand-deep" />
           </div>
+        ) : filtered.length === 0 ? (
+          <p className="mt-16 text-center text-ink-soft">No tools found. Try a different search or filter.</p>
         ) : (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {tools.map((t, i) => (
+            {filtered.map((t, i) => (
               <ToolCard key={t.slug} tool={t} index={i} />
             ))}
           </div>

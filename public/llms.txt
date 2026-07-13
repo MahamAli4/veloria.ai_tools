@@ -1,0 +1,9 @@
+# Veloria.AI
+
+> Veloria.AI helps you get AI and digital tool subscriptions like ChatGPT, Claude, Canva and more — with full guidance on how to get them affordably.
+
+Veloria.AI is a guidance service, not an account reseller. We share tips, ideas and step-by-step help so you can get premium AI and digital tool subscriptions for less.
+
+## Pages
+
+- [Home](/): Browse AI and digital tools we help you subscribe to, with guidance and support.

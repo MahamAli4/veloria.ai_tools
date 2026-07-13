@@ -1,0 +1,6 @@
+UPDATE public.testimonials SET quote = 'They guided me step-by-step on how to get ChatGPT Plus for much less. So clear and honest.' WHERE id = '8b87c948-d5b4-4e20-8c79-53e801f3604f';
+UPDATE public.testimonials SET quote = 'Their guidance helps me subscribe to every tool the affordable way. Honest advice, real support.' WHERE id = 'ec4a8360-70c0-48be-ab34-31b532ebc236';
+UPDATE public.testimonials SET quote = 'With their tips I saved big on Canva, Grammarly and Notion AI subscriptions. Highly recommend.' WHERE id = '0c8b7a00-a0e3-4547-be63-e134ddc7ba41';
+UPDATE public.testimonials SET quote = 'They showed me how to get Cursor and Copilot for less. Support answered all my questions at 2am.' WHERE id = 'a5a41ca1-2936-4146-9671-3056080ea7ae';
+UPDATE public.testimonials SET quote = 'Honest, friendly guidance that helped me get my subscriptions affordably. Everything was easy.' WHERE id = '1d4de65a-5483-4eb5-a59b-682036711136';
+UPDATE public.testimonials SET quote = 'Their guidance helped me get Perplexity Pro for less — it changed my research workflow.' WHERE id = '72a3c1f3-21a7-4682-a0d4-3fe868e87893';

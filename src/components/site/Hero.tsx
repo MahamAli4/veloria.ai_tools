@@ -75,6 +75,12 @@ function CardColumn({ items, direction }: { items: Tool[]; direction: "up" | "do
 export function Hero() {
   const stageRef = useRef<HTMLDivElement>(null);
   const { data: tools = [] } = useTools();
+  const { data: siteStats } = useSiteStats();
+  const stats = [
+    { value: niceCount(siteStats?.tools ?? tools.length), label: "Premium AI Tools" },
+    { value: niceCount(siteStats?.customers ?? 0), label: "Customers" },
+    { value: "24/7", label: "Support" },
+  ];
   const { colA, colB } = useMemo(() => {
     const list = tools.slice(0, 9);
     return {

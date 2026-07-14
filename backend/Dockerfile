@@ -1,28 +1,17 @@
-# Use official Python runtime as a parent image
-FROM python:3.13-slim
+# Use official Node.js runtime as a parent image (alpine is already cached locally)
+FROM node:20-alpine
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV NODE_ENV=production
 
 # Set work directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the backend project code
+# Copy the backend project code (including locally installed node_modules)
 COPY . /app/
 
 # Expose port 8000
 EXPOSE 8000
 
-# Run migrations and start Gunicorn server
-CMD ["sh", "-c", "python manage.py migrate && gunicorn veloria_backend.wsgi:application --bind 0.0.0.0:8000"]
+# Start Node server
+CMD ["node", "index.js"]

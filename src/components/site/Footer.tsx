@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Facebook, Linkedin, ArrowUpRight, Mail, ShieldCheck, Zap } from "lucide-react";
+import { Facebook, Linkedin, Instagram, ArrowUpRight, Mail, ShieldCheck, Zap } from "lucide-react";
 import veloriaLogoLight from "@/assets/veloria-logo-light.png.asset.json";
 
 export function Footer() {
@@ -101,6 +101,7 @@ export function Footer() {
             {[
               { Icon: Linkedin, href: "https://www.linkedin.com/company/veloria-ai/about/", label: "LinkedIn" },
               { Icon: Facebook, href: "https://www.facebook.com/share/1E7Qqbpzcb/", label: "Facebook" },
+              { Icon: Instagram, href: "https://www.instagram.com/veloriaai786?igsh=NzA2M2dlaXhkdWJ1", label: "Instagram" },
             ].map(({ Icon, href, label }) => (
               <a
                 key={label}

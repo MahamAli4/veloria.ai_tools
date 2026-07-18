@@ -1,29 +1,15 @@
-# Use Node.js official image
-FROM node:22-alpine AS builder
+# Use official Node.js runtime as a parent image (alpine is already cached locally)
+FROM node:20-alpine
 
+# Set environment variables
+ENV NODE_ENV=production
+
+# Set work directory
 WORKDIR /app
 
-# Copy dependency configs
-COPY package.json package-lock.json ./
-
-# Install packages
-RUN npm ci
-
-# Copy the rest of the application code
-COPY . .
-
-# Build the project with the node-server preset for Hostinger compatibility
-ENV NITRO_PRESET=node-server
-RUN npm run build
-
-# Use a clean production runtime image
-FROM node:22-alpine
-
-WORKDIR /app
-
-# Copy only the compiled output and static assets from builder stage
-COPY --from=builder /app/.output /app/.output
-COPY --from=builder /app/package.json /app/package.json
+# Copy only the compiled output and package config from the host Windows machine
+COPY .output /app/.output
+COPY package.json /app/package.json
 
 EXPOSE 3000
 

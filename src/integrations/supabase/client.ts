@@ -1,11 +1,14 @@
 const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl) return envUrl;
+
   if (typeof window !== "undefined") {
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return "http://localhost:8000";
     }
     return "";
   }
-  return (import.meta.env.VITE_API_URL || process.env.VITE_API_URL || "http://localhost:8000");
+  return (process.env.VITE_API_URL || "http://localhost:8000");
 };
 const BASE_URL = getBaseUrl();
 const authCallbacks: Array<(event: string, session: any) => void> = [];

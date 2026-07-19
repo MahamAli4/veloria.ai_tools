@@ -96,7 +96,10 @@ export function Footer() {
         <div className="my-6 h-px w-full bg-white/15" />
 
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-white/60">© {new Date().getFullYear()} Veloria.AI. All rights reserved.</p>
+          <div className="text-center sm:text-left">
+            <p className="text-sm text-white/60">© {new Date().getFullYear()} Veloria.AI. All rights reserved.</p>
+            <p className="mt-1 text-xs text-white/40">Support: <a href="mailto:support@veloria-ai.com" className="hover:text-white transition-colors">support@veloria-ai.com</a></p>
+          </div>
           <div className="flex items-center gap-2">
             {[
               { Icon: Linkedin, href: "https://www.linkedin.com/company/veloria-ai/about/", label: "LinkedIn" },

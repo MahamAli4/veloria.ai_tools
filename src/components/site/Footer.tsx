@@ -116,6 +116,12 @@ export function Footer() {
             ))}
           </div>
         </div>
+
+        <div className="mt-6 border-t border-white/10 pt-4 text-center">
+          <p className="text-[11px] leading-relaxed text-white/40 max-w-3xl mx-auto">
+            Disclaimer: Veloria.AI is not affiliated with, associated with, or endorsed by OpenAI, Canva, Midjourney, or any other trademark owners. All product names, logos, and brands are property of their respective owners.
+          </p>
+        </div>
       </div>
     </footer>
   );

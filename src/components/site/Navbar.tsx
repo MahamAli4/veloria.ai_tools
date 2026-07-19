@@ -3,12 +3,12 @@ import { Menu, X } from "lucide-react";
 import { Magnetic } from "./primitives";
 
 const links = [
-  { to: "#tools", label: "Tools" },
-  { to: "#about", label: "About" },
-  { to: "#how", label: "How it works" },
-  { to: "#testimonials", label: "Reviews" },
-  { to: "#faq", label: "FAQ" },
-  { to: "#contact", label: "Contact" },
+  { to: "/#tools", label: "Tools" },
+  { to: "/#about", label: "About" },
+  { to: "/#how", label: "How it works" },
+  { to: "/#testimonials", label: "Reviews" },
+  { to: "/#faq", label: "FAQ" },
+  { to: "/#contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -29,7 +29,7 @@ export function Navbar() {
           scrolled ? "glass shadow-[0_12px_40px_-12px_rgba(137,138,196,0.45)]" : "border border-transparent"
         }`}
       >
-        <a href="#top" className="flex items-center gap-0" aria-label="AI Vault by Veloria.AI — home">
+        <a href="/" className="flex items-center gap-0" aria-label="AI Vault by Veloria.AI — home">
           <img
             src="/favicon.png"
             alt="AI Vault logo"
@@ -57,7 +57,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Magnetic className="hidden lg:block">
             <a
-              href="#tools"
+              href="/#tools"
               className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgba(109,110,176,0.7)] transition-transform hover:scale-[1.03]"
               style={{ background: "var(--gradient-brand)" }}
             >

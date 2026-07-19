@@ -89,7 +89,7 @@ export function Footer() {
 
           <FooterCol title="Explore" items={[["Tools", "#tools"], ["How it works", "#how"], ["FAQ", "#faq"]]} />
           <FooterCol title="Company" items={[["Reviews", "#testimonials"], ["Contact", "#contact"]]} />
-          <FooterCol title="Legal" items={[["Terms", "#top"], ["Privacy", "#top"]]} />
+          <FooterCol title="Legal" items={[["Terms", "/terms"], ["Privacy", "/privacy"], ["Refunds", "/refund"]]} />
 
         </div>
 

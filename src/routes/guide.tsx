@@ -45,7 +45,8 @@ const toolsList: ToolInfo[] = [
       "Use the 'Keyword Magic Tool' to find high-volume, low-competition keywords for your niche.",
       "Set up a 'Site Audit' project to crawl your website and identify technical health errors like broken links or redirect loops."
     ],
-    gradient: "from-orange-500 to-red-600"
+    gradient: "from-orange-500 to-red-600",
+    badge: "Most Popular"
   },
   {
     name: "Moz Pro",
@@ -58,7 +59,8 @@ const toolsList: ToolInfo[] = [
       "Check any website's 'Spam Score' and link authority using the 'Link Explorer' tool before building backlinks.",
       "Input target pages into 'Page Optimizer' to get concrete suggestions for improving meta titles and heading structures."
     ],
-    gradient: "from-blue-500 to-indigo-600"
+    gradient: "from-blue-500 to-indigo-600",
+    badge: "Pro Choice"
   },
   {
     name: "Ubersuggest",
@@ -71,7 +73,8 @@ const toolsList: ToolInfo[] = [
       "Look at the 'Content Ideas' tab to see articles that got the most social media shares for your keyword.",
       "Review the 'SEO Analyzer' report to get a prioritized checklist of speed and schema improvements for your site."
     ],
-    gradient: "from-red-500 to-orange-600"
+    gradient: "from-red-500 to-orange-600",
+    badge: "Best Value"
   },
   {
     name: "SimilarWeb",
@@ -203,7 +206,8 @@ const toolsList: ToolInfo[] = [
       "Upload files (PDFs, CSVs, images) to perform instant data analysis, summarization, or coding feedback.",
       "Create or use Custom GPTs in the GPT Store to automate repetitive tasks like writing newsletters or social media templates."
     ],
-    gradient: "from-emerald-600 to-teal-500"
+    gradient: "from-emerald-600 to-teal-500",
+    badge: "Trending"
   },
   {
     name: "Grok AI",
@@ -230,7 +234,8 @@ const toolsList: ToolInfo[] = [
       "Set your writing goals (Audience, Formality, Domain, Tone) in the sidebar to custom-tailor suggestion rules.",
       "Review flagged red (grammar) and blue (clarity) lines to rewrite long, confusing sentences instantly."
     ],
-    gradient: "from-emerald-500 to-green-600"
+    gradient: "from-emerald-500 to-green-600",
+    badge: "Best Seller"
   },
   {
     name: "Notegpt",
@@ -276,13 +281,14 @@ const toolsList: ToolInfo[] = [
     category: "AI Search Engine",
     tag: "writing",
     tagline: "Conversational answer engine with direct citations.",
-    description: "Perplexity answers questions by running real-time web searches and compiling synthesized answers, providing clear source citations for every claim.",
+    description: "Perplexity answers questions by running real-time web searches and compiling synthesized answers, providing web source citations for every claim.",
     howToUse: [
       "Ask a complex question and select a focus (e.g. Academic, Writing, or YouTube).",
       "Read the generated summary and click the footnote numbers to verify the source websites.",
       "Use the 'Pro' switch to enable advanced models (like Claude 3.5 or GPT-4o) for deeper research questions."
     ],
-    gradient: "from-teal-600 to-emerald-700"
+    gradient: "from-teal-600 to-emerald-700",
+    badge: "Hot"
   },
   {
     name: "Linguix AI",
@@ -388,7 +394,8 @@ const toolsList: ToolInfo[] = [
       "Drag and drop premium graphics, illustrations, and stock images onto your canvas.",
       "Use the 'Brand Kit' to apply your brand colors and fonts in one click, and export as print-ready PDF, PNG, or MP4."
     ],
-    gradient: "from-cyan-500 to-purple-600"
+    gradient: "from-cyan-500 to-purple-600",
+    badge: "Highly Rated"
   },
   {
     name: "Leonardo AI",
@@ -546,10 +553,11 @@ const toolsList: ToolInfo[] = [
     description: "CapCut is a highly popular video editor packed with transitions, overlays, audio libraries, keyframe animations, and automated speech-to-text captions.",
     howToUse: [
       "Import your video clips, drag them to the timeline track, and slice unwanted segments.",
-      "Go to 'Text' -> 'Auto Captions' to generate synchronized subtitles for voiceovers in seconds.",
-      "Add trending filters, transitions, and audio tracks, then export in up to 4K resolution."
+      "Go to 'Text' -> 'Auto Captions' to generate synchronized subtitles for video content in seconds.",
+      "Add trending filters, transitions, and audio tracks, then export in up to 4K resolution.",
     ],
-    gradient: "from-black to-slate-800"
+    gradient: "from-black to-slate-800",
+    badge: "Trending"
   },
   {
     name: "VidIQ Boost",
@@ -709,11 +717,15 @@ export function GuidePage() {
                     {tool.tagline}
                   </p>
                 </div>
-                <div className="mt-6 flex items-center justify-between border-t border-white/5 pt-3 text-[11px] font-semibold text-primary">
-                  <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    <Info size={12} /> Playbook & Guide
+                <div className="mt-6 flex items-center justify-between border-t border-white/5 pt-3 text-[11px] font-semibold">
+                  <span className="inline-flex items-center gap-1.5 text-emerald-500">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Active & Available
                   </span>
-                  <span className="rounded bg-white/5 px-2 py-0.5 text-white/50 text-[10px]">Read Playbook</span>
+                  <span className="rounded bg-white/5 px-2 py-0.5 text-white/50 text-[10px] group-hover:bg-primary/20 group-hover:text-primary transition-all">Read Playbook</span>
                 </div>
               </div>
             ))}

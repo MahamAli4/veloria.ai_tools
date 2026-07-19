@@ -815,7 +815,9 @@ export function GuidePage() {
                     Close Playbook
                   </button>
                   <a
-                    href="/#tools"
+                    href={`https://wa.me/923087601864?text=${encodeURIComponent(`Hi! I'm interested in getting a subscription for ${selectedTool.name} from Veloria.AI.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => setSelectedTool(null)}
                     className="inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-xs font-semibold text-white shadow-lg transition-transform hover:scale-[1.02]"
                     style={{ background: "var(--gradient-brand)" }}

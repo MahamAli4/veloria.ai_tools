@@ -70,9 +70,24 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
             <span className="grid h-14 w-14 place-items-center rounded-full text-white" style={{ background: "var(--gradient-brand)" }}>
               <Check size={26} />
             </span>
+            <h4 className="font-display text-base font-semibold text-ink text-center">Request Received!</h4>
+            <p className="text-xs text-ink-soft text-center max-w-[280px] leading-relaxed">
+              To activate your subscription immediately, please click below to confirm your order and send payment proof on WhatsApp.
+            </p>
+            <a
+              href={`https://wa.me/923087601864?text=${encodeURIComponent(
+                `Hi! I just placed an order request on Veloria.AI.\n\nName: ${form.name.trim()}\nTool: ${tool.name}\nPlan: ${selectedPlan.name} · ${selectedPlan.duration}\nWhatsApp: ${form.whatsapp.trim()}\n\nPlease guide me on the payment process.`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.02] shadow-[0_8px_20px_-6px_rgba(37,211,102,0.5)]"
+            >
+              <MessageCircle size={16} />
+              Confirm on WhatsApp
+            </a>
             <button
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full border border-border bg-white/60 px-6 py-2.5 text-sm font-semibold text-ink"
+              className="mt-2 rounded-full border border-border bg-white/60 px-6 py-2 text-xs font-semibold text-ink hover:bg-white/80 transition-colors"
             >
               Close
             </button>

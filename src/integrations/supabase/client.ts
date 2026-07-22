@@ -11,6 +11,18 @@ const getBaseUrl = () => {
   return (process.env.VITE_API_URL || "http://localhost:8000");
 };
 const BASE_URL = getBaseUrl();
+
+export const getApiUrl = (subpath: string) => {
+  let base = BASE_URL.replace(/\/$/, ""); // strip trailing slash
+  if (base === "") {
+    base = "/api";
+  } else if (!base.endsWith("/api")) {
+    base = `${base}/api`;
+  }
+  const formattedSubpath = subpath.startsWith("/") ? subpath : `/${subpath}`;
+  return `${base}${formattedSubpath}`;
+};
+
 const authCallbacks: Array<(event: string, session: any) => void> = [];
 
 class DjangoClientBuilder {
@@ -82,7 +94,7 @@ class DjangoClientBuilder {
     // 1. Handle special Page View counts and active Tool counts via /api/stats/ view
     if (this.countOnly) {
       try {
-        const res = await fetch(`${BASE_URL}/api/stats/`);
+        const res = await fetch(getApiUrl("/stats/"));
         if (!res.ok) throw new Error("Stats failed");
         const stats = await res.json();
         if (this.table === "tools") {
@@ -101,7 +113,7 @@ class DjangoClientBuilder {
       const token = localStorage.getItem("access_token");
       if (!token) return [];
       try {
-        const res = await fetch(`${BASE_URL}/api/auth/me/`, {
+        const res = await fetch(getApiUrl("/auth/me/"), {
           headers: { "Authorization": `Bearer ${token}` }
         });
         if (res.ok) {
@@ -117,21 +129,21 @@ class DjangoClientBuilder {
       return this.isSingle ? null : [];
     }
 
-    // 3. Map table name to API path
+    // 3. Map table name to API path (without duplicate /api segment)
     let apiPath = "";
-    if (this.table === "tools") apiPath = "/api/tools/";
-    else if (this.table === "orders") apiPath = "/api/orders/";
-    else if (this.table === "contact_messages") apiPath = "/api/contact/";
-    else if (this.table === "testimonials") apiPath = "/api/testimonials/";
-    else if (this.table === "page_views") apiPath = "/api/views/";
-    else apiPath = `/api/${this.table}/`;
+    if (this.table === "tools") apiPath = "/tools/";
+    else if (this.table === "orders") apiPath = "/orders/";
+    else if (this.table === "contact_messages") apiPath = "/contact/";
+    else if (this.table === "testimonials") apiPath = "/testimonials/";
+    else if (this.table === "page_views") apiPath = "/views/";
+    else apiPath = `/${this.table}/`;
 
-    // 4. Construct URL
-    let url = `${BASE_URL}${apiPath}`;
+    // 4. Construct URL using getApiUrl
+    let url = getApiUrl(apiPath);
     
     // For detail routes (PATCH, DELETE, or GET by ID)
     if (this.targetId && (this.method === "PATCH" || this.method === "DELETE")) {
-      url = `${BASE_URL}${apiPath}${this.targetId}/`;
+      url = getApiUrl(`${apiPath}${this.targetId}/`);
     }
 
     // Append query params for filtering/ordering on GET requests
@@ -242,7 +254,7 @@ export const supabase = {
       const token = localStorage.getItem("access_token");
       if (!token) return { data: { session: null }, error: null };
       try {
-        const userRes = await fetch(`${BASE_URL}/api/auth/me/`, {
+        const userRes = await fetch(getApiUrl("/auth/me/"), {
           headers: { "Authorization": `Bearer ${token}` }
         });
         if (!userRes.ok) {
@@ -273,7 +285,7 @@ export const supabase = {
       const token = localStorage.getItem("access_token");
       if (!token) return { data: { user: null }, error: new Error("No session token found") };
       try {
-        const userRes = await fetch(`${BASE_URL}/api/auth/me/`, {
+        const userRes = await fetch(getApiUrl("/auth/me/"), {
           headers: { "Authorization": `Bearer ${token}` }
         });
         if (!userRes.ok) throw new Error("Unauthorized");
@@ -295,7 +307,7 @@ export const supabase = {
 
     async signInWithPassword({ email, password }: any) {
       try {
-        const res = await fetch(`${BASE_URL}/api/auth/token/`, {
+        const res = await fetch(getApiUrl("/auth/token/"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username: email, password })
@@ -319,7 +331,7 @@ export const supabase = {
 
     async signUp({ email, password }: any) {
       try {
-        const res = await fetch(`${BASE_URL}/api/auth/signup/`, {
+        const res = await fetch(getApiUrl("/auth/signup/"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })

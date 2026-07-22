@@ -1,3 +1,5 @@
+import { getApiUrl } from "@/integrations/supabase/client";
+
 // Downscale + compress an image in the browser before upload so we never
 // store multi-MB originals (the main cause of slow image loading).
 async function compressImage(file: File, maxDim: number, quality = 0.82): Promise<Blob> {
@@ -37,14 +39,13 @@ export async function uploadImage(file: File, folder: string): Promise<string> {
   formData.append("file", compressed, file.name);
   formData.append("folder", folder);
 
-  const BASE_URL = import.meta.env.VITE_API_URL || "";
   const headers: { [key: string]: string } = {};
   const token = localStorage.getItem("access_token");
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${BASE_URL}/api/upload/`, {
+  const res = await fetch(getApiUrl("/upload/"), {
     method: "POST",
     headers,
     body: formData,

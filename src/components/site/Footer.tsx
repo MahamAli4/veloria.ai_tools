@@ -106,6 +106,7 @@ export function Footer() {
               { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=61592557285546", label: "Facebook" },
               { Icon: Instagram, href: "https://www.instagram.com/veloriaai30/", label: "Instagram" },
               { Icon: Twitter, href: "https://x.com/Veloriaai", label: "Twitter" },
+              { Icon: Mail, href: "mailto:veloriaai30@gmail.com", label: "Email" },
             ].map(({ Icon, href, label }) => (
               <a
                 key={label}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Facebook, Linkedin, Instagram, ArrowUpRight, Mail, ShieldCheck, Zap } from "lucide-react";
+import { Facebook, Linkedin, Instagram, Twitter, ArrowUpRight, Mail, ShieldCheck, Zap } from "lucide-react";
 import veloriaLogoLight from "@/assets/veloria-logo-light.png.asset.json";
 
 export function Footer() {
@@ -102,9 +102,10 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-2">
             {[
-              { Icon: Linkedin, href: "https://www.linkedin.com/company/veloria-ai/about/", label: "LinkedIn" },
-              { Icon: Facebook, href: "https://www.facebook.com/share/1E7Qqbpzcb/", label: "Facebook" },
-              { Icon: Instagram, href: "https://www.instagram.com/veloriaai786?igsh=NzA2M2dlaXhkdWJ1", label: "Instagram" },
+              { Icon: Linkedin, href: "https://www.linkedin.com/company/135236497/", label: "LinkedIn" },
+              { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=61592557285546", label: "Facebook" },
+              { Icon: Instagram, href: "https://www.instagram.com/veloriaai30/", label: "Instagram" },
+              { Icon: Twitter, href: "https://x.com/Veloriaai", label: "Twitter" },
             ].map(({ Icon, href, label }) => (
               <a
                 key={label}

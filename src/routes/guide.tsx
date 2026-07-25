@@ -827,7 +827,7 @@ export function GuidePage() {
                     Close Playbook
                   </button>
                   <a
-                    href={`https://wa.me/923087601864?text=${encodeURIComponent(`Hi! I'm interested in getting a subscription for ${selectedTool.name} from Veloria.AI.`)}`}
+                    href={`https://wa.me/923202013362?text=${encodeURIComponent(`Hi! I'm interested in getting a subscription for ${selectedTool.name} from Veloria.AI.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setSelectedTool(null)}

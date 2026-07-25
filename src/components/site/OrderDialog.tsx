@@ -17,7 +17,7 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
 
   const selectedPlan = plans.find((p) => p.name === planName) ?? plans[0];
 
-  const waHref = `https://wa.me/923087601864?text=${encodeURIComponent(
+  const waHref = `https://wa.me/923202013362?text=${encodeURIComponent(
     `Hi! I'm interested in ${tool.name} (${selectedPlan.name} · ${selectedPlan.duration}). Please guide me.`,
   )}`;
 
@@ -75,7 +75,7 @@ export function OrderDialog({ tool, children }: { tool: Tool; children: React.Re
               To activate your subscription immediately, please click below to confirm your order and send payment proof on WhatsApp.
             </p>
             <a
-              href={`https://wa.me/923087601864?text=${encodeURIComponent(
+              href={`https://wa.me/923202013362?text=${encodeURIComponent(
                 `Hi! I just placed an order request on Veloria.AI.\n\nName: ${form.name.trim()}\nTool: ${tool.name}\nPlan: ${selectedPlan.name} · ${selectedPlan.duration}\nWhatsApp: ${form.whatsapp.trim()}\n\nPlease guide me on the payment process.`
               )}`}
               target="_blank"

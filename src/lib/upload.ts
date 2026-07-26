@@ -1,4 +1,6 @@
-import { getApiUrl } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
+
+const BUCKET = "tool-assets";
 
 // Downscale + compress an image in the browser before upload so we never
 // store multi-MB originals (the main cause of slow image loading).
@@ -34,33 +36,16 @@ export async function uploadImage(file: File, folder: string): Promise<string> {
   // Logos are small; covers can be wider.
   const maxDim = folder.includes("logo") ? 400 : 1600;
   const compressed = await compressImage(file, maxDim);
+  const contentType = compressed instanceof File ? compressed.type : "image/webp";
+  const ext = contentType === "image/webp" ? "webp" : (file.name.split(".").pop() || "png");
+  const path = `${folder}/${crypto.randomUUID()}.${ext}`;
 
-  const formData = new FormData();
-  formData.append("file", compressed, file.name);
-  formData.append("folder", folder);
-
-  const headers: { [key: string]: string } = {};
-  const token = localStorage.getItem("access_token");
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-
-  const res = await fetch(getApiUrl("/upload/"), {
-    method: "POST",
-    headers,
-    body: formData,
+  const { error } = await supabase.storage.from(BUCKET).upload(path, compressed, {
+    contentType,
+    upsert: false,
   });
+  if (error) throw new Error(error.message);
 
-  if (!res.ok) {
-    const errText = await res.text();
-    let message = `Upload failed: ${res.status}`;
-    try {
-      const errObj = JSON.parse(errText);
-      message = errObj.detail || errObj.error || message;
-    } catch {}
-    throw new Error(message);
-  }
-
-  const data = await res.json();
-  return data.url;
+  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+  return data.publicUrl;
 }

@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ArrowRight, Sparkles, ArrowUpRight } from "lucide-react";
 import { useEffect, useMemo, useRef } from "react";
-import { Magnetic } from "./primitives";
+import { Magnetic, ToolLogo } from "./primitives";
 import type { Tool } from "@/data/tools";
 import { useTools } from "@/lib/tools";
 import { useSiteStats } from "@/lib/stats";
@@ -30,9 +30,7 @@ function ProductCard({ tool }: { tool: Tool }) {
       className="acrylic-card group block"
     >
       <div className="flex items-center gap-3">
-        <span className="acrylic-mark" style={{ background: tool.gradient }}>
-          {tool.mark}
-        </span>
+        <ToolLogo toolName={tool.name} mark={tool.mark} gradient={tool.gradient} size={42} className="!rounded-[13px] !shadow-none" />
         <div className="min-w-0">
           <div className="truncate font-display text-[15px] font-semibold leading-tight text-foreground">
             {tool.name}

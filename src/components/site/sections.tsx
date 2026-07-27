@@ -42,6 +42,17 @@ export function FeaturedTools() {
   const { data: tools = [], isLoading } = useTools();
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState("All");
+  const [showAll, setShowAll] = useState(false);
+
+  const handleCatChange = (cat: string) => {
+    setActiveCat(cat);
+    setShowAll(false);
+  };
+
+  const handleQueryChange = (val: string) => {
+    setQuery(val);
+    setShowAll(false);
+  };
 
   // Broad, simple filter groups — each bucket collects all related tools.
   const groupDefs: { label: string; cats: string[] }[] = [
@@ -92,14 +103,14 @@ export function FeaturedTools() {
             <input
               type="text"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => handleQueryChange(e.target.value)}
               placeholder="Search tools by name…"
               className="w-full rounded-full border border-border bg-white/60 py-3 pl-11 pr-10 text-sm text-ink outline-none backdrop-blur-xl transition-colors focus:border-brand"
             />
             {query && (
               <button
                 type="button"
-                onClick={() => setQuery("")}
+                onClick={() => handleQueryChange("")}
                 aria-label="Clear search"
                 className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-ink-soft hover:bg-brand/10 hover:text-brand-deep"
               >
@@ -113,7 +124,7 @@ export function FeaturedTools() {
               <button
                 key={cat}
                 type="button"
-                onClick={() => setActiveCat(cat)}
+                onClick={() => handleCatChange(cat)}
                 className={
                   "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors " +
                   (activeCat === cat
@@ -134,11 +145,26 @@ export function FeaturedTools() {
         ) : filtered.length === 0 ? (
           <p className="mt-16 text-center text-ink-soft">No tools found. Try a different search or filter.</p>
         ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((t, i) => (
-              <ToolCard key={t.slug} tool={t} index={i} />
-            ))}
-          </div>
+          <>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {filtered.slice(0, showAll ? undefined : 9).map((t, i) => (
+                <ToolCard key={t.slug} tool={t} index={i} />
+              ))}
+            </div>
+
+            {filtered.length > 9 && (
+              <div className="mt-12 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAll(!showAll)}
+                  className="group inline-flex items-center gap-2 rounded-full border border-border bg-white/60 px-8 py-3 text-sm font-semibold text-brand-deep hover:bg-white/80 hover:text-brand transition-all shadow-sm active:scale-[0.98]"
+                >
+                  {showAll ? "Show Less" : `Show More (${filtered.length - 9} more tools)`}
+                  <ChevronDown size={16} className={`text-brand transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} />
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

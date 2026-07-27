@@ -131,7 +131,12 @@ export function ToolLogo({
     return fallbackGradients[index];
   };
 
-  const rawGradient = gradient && gradient.trim() ? gradient.trim() : getFallbackGradient(toolName);
+  const isDefault = !gradient || 
+    gradient.trim() === "" || 
+    gradient.trim().replace(/\s+/g, '') === 'linear-gradient(135deg,#6d6eb0,#a5a6dc)' ||
+    gradient.trim().replace(/\s+/g, '') === 'linear-gradient(135deg,#6d6eb0,#a5a6dc)';
+
+  const rawGradient = !isDefault ? gradient.trim() : getFallbackGradient(toolName);
 
   // Check if rawGradient contains tailwind gradient classes (e.g. "from-", "to-")
   const isTailwind = rawGradient.includes("from-") || rawGradient.includes("to-");

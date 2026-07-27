@@ -96,20 +96,59 @@ export function Magnetic({ children, className }: { children: ReactNode; classNa
 export function ToolLogo({
   mark,
   gradient,
+  toolName = "",
   size = 56,
   className,
 }: {
-  mark: string;
-  gradient: string;
+  mark?: string;
+  gradient?: string;
+  toolName?: string;
   size?: number;
   className?: string;
 }) {
+  const displayMark = mark && mark.trim() 
+    ? mark.trim() 
+    : (toolName ? toolName.trim().charAt(0).toUpperCase() : "?");
+
+  const fallbackGradients = [
+    "linear-gradient(135deg, #ff6b6b, #ff8e53)", // Red-Orange
+    "linear-gradient(135deg, #4facfe, #00f2fe)", // Blue-Cyan
+    "linear-gradient(135deg, #43e97b, #38f9d7)", // Green-Teal
+    "linear-gradient(135deg, #fa709a, #fee140)", // Pink-Yellow
+    "linear-gradient(135deg, #30cfd0, #330867)", // Teal-Purple
+    "linear-gradient(135deg, #a18cd1, #fbc2eb)", // Purple-Pink
+    "linear-gradient(135deg, #f093fb, #f5576c)", // Violet-Red
+    "linear-gradient(135deg, #5ee7df, #b490ca)", // Soft Mint-Lavender
+  ];
+
+  const getFallbackGradient = (name: string) => {
+    if (!name) return fallbackGradients[0];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % fallbackGradients.length;
+    return fallbackGradients[index];
+  };
+
+  const rawGradient = gradient && gradient.trim() ? gradient.trim() : getFallbackGradient(toolName);
+
+  // Check if rawGradient contains tailwind gradient classes (e.g. "from-", "to-")
+  const isTailwind = rawGradient.includes("from-") || rawGradient.includes("to-");
+
   return (
     <div
-      className={`flex shrink-0 items-center justify-center rounded-2xl font-display font-semibold text-white shadow-[0_10px_30px_-10px_rgba(109,110,176,0.6)] ${className ?? ""}`}
-      style={{ width: size, height: size, background: gradient, fontSize: size * 0.42 }}
+      className={`flex shrink-0 items-center justify-center rounded-2xl font-display font-semibold text-white shadow-[0_10px_30px_-10px_rgba(109,110,176,0.6)] ${
+        isTailwind ? `bg-gradient-to-br ${rawGradient}` : ""
+      } ${className ?? ""}`}
+      style={{
+        width: size,
+        height: size,
+        background: isTailwind ? undefined : rawGradient,
+        fontSize: size * 0.42,
+      }}
     >
-      {mark}
+      {displayMark}
     </div>
   );
 }

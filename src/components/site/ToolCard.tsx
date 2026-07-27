@@ -44,7 +44,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
           {tool.logoUrl ? (
             <img src={tool.logoUrl} alt={`${tool.name} logo`} loading="lazy" decoding="async" className="h-[54px] w-[54px] rounded-2xl object-cover transition-transform duration-500 group-hover:scale-110" />
           ) : (
-            <ToolLogo mark={tool.mark} gradient={tool.gradient} size={54} className="transition-transform duration-500 group-hover:scale-110" />
+            <ToolLogo mark={tool.mark} gradient={tool.gradient} toolName={tool.name} size={54} className="transition-transform duration-500 group-hover:scale-110" />
           )}
           <span className="rounded-full bg-brand/12 px-3 py-1 text-xs font-semibold text-brand-deep">
             {comingSoon ? "Coming soon" : "Available"}
